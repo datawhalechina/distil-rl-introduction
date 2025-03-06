@@ -6,7 +6,7 @@ This chapter considers methods for learning the policy parameter (the policy is 
 
 $$\theta_{t+1} = \theta_t + \alpha \nabla \widehat{J}(\theta_t)$$
 
-where $\nabla \widehat{J}(\theta_t)$ is a stohastic estimate whose expectation approximates the gradient of the performance measure with respect to its argument $\theta_t$. All methods that follow this general schema are called $\textit{policy gradient methods}$.
+where $\nabla \widehat{J}(\theta_t)$ is a stochastic estimate whose expectation approximates the gradient of the performance measure with respect to its argument $\theta_t$. All methods that follow this general schema are called $\textit{policy gradient methods}$.
 
 Among $\textit{policy gradient methods}$, methods that learn approximations to both policy and value functions are often called $\textit{actor–critic methods}$, where $\textit{'actor'}$ is a reference to the learned policy, and $\textit{'critic'}$ refers to the learned value function.
 
@@ -22,7 +22,7 @@ Among $\textit{policy gradient methods}$, methods that learn approximations to b
 
         We call this kind of policy parameterization soft-max in action preferences.
 
-    - **Parameterization of the state-action pair**: The action preferences $h(s, a, \theta) \in R$ themselves can be parameterized arbitrarily. For exapmle, by:
+    - **Parameterization of the state-action pair**: The action preferences $h(s, a, \theta) \in R$ themselves can be parameterized arbitrarily. For example, by:
         - a deep artificial network (ANN), where $\theta$ is the vector of all the connection weights of the network (as in the AlphaGo system, readers of interest can refer to the book section 16.6), or
         - a linear system in features as 
             
@@ -51,7 +51,7 @@ Among $\textit{policy gradient methods}$, methods that learn approximations to b
 
         - Policy approximation can do significantly better since it learns a specific probability with which to select right (allowing more stochasticity). As shown in the image, the best probability of selecting the right action with policy approximation is about $0.59$, which achieves a value of about $-11.6$.
 
-## 10.2 The Poliy Gradient Theorem
+## 10.2 The Policy Gradient Theorem
 
 - **Policy Gradient Objective**: 
     
@@ -93,7 +93,7 @@ Among $\textit{policy gradient methods}$, methods that learn approximations to b
     \nabla J(\theta) \propto \sum_s \mu(s) \sum_a q_{\pi}(s, a) \nabla \pi(a | s, \theta)
     $$
 
-    The symbol $\propto$ here means "proportional to". In the episodic case, the constant of proportionality is the average length of an episode, and in the continuing case it is 1. The distribution $\mu$ hereis the on-policy distribution under $\pi$ as introduced in the last chapter.
+    The symbol $\propto$ here means "proportional to". In the episodic case, the constant of proportionality is the average length of an episode, and in the continuing case it is 1. The distribution $\mu$ here is the on-policy distribution under $\pi$ as introduced in the last chapter.
 
     This [optional lecture video](https://www.coursera.org/learn/prediction-control-function-approximation/lecture/Wv6wa/the-policy-gradient-theorem) (between 2:08 - 4:27) provides an intuition of what the term $\sum_a q_{\pi}(s, a) \nabla \pi(a | s, \theta)$ does. For a detailed derivation of the policy gradient theorem, please refer to the book chapter 13.2, page 325.
 
@@ -104,7 +104,7 @@ Among $\textit{policy gradient methods}$, methods that learn approximations to b
 
 - **Derivation of REINFORCE's update rule**:
 
-    The strategy of stohastic gradient ascent requires a way to obtain samples such that the expectation of the sample gradient is proportional to the actual gradient of the performance measure, i.e., we need some way of sampling whose expectation equals or approximates the expression given by the policy gradient theorem. 
+    The strategy of stochastic gradient ascent requires a way to obtain samples such that the expectation of the sample gradient is proportional to the actual gradient of the performance measure, i.e., we need some way of sampling whose expectation equals or approximates the expression given by the policy gradient theorem. 
 
     Naturally, we can reformulate the policy gradient theorem as
 
@@ -145,7 +145,7 @@ Among $\textit{policy gradient methods}$, methods that learn approximations to b
 
         - The vector $\frac{\nabla \pi(A_t|S_t, \theta)}{\pi(A_t|S_t, \theta)}$, on the other hand, is a typical form of what is called $\textit{relative rate of change}$. In this case, it indicates the direction in parameter space that most increases the probability of repeating the action $A_t$ on future visits to state $S_t$. 
         
-            Moreover, the update is inversely proportional to the action probability, giving actions that are less frequently selected an advantag, i.e., encouraging exploration.
+            Moreover, the update is inversely proportional to the action probability, giving actions that are less frequently selected an advantage, i.e., encouraging exploration.
     
     - **Why Monte Carlo**: Note that REINFORCE uses the complete return $G_t$ from time $t$, which includes all future rewards up until the end of the episode. In this sense it is a Monte Carlo algorithm and is well defined **only for the episodic case**.
 
@@ -161,7 +161,7 @@ Among $\textit{policy gradient methods}$, methods that learn approximations to b
 
     - Results: as shown, with a good step size, the total reward per episode approaches the optimal value of the start state ($v_\star(s_0)$).
 
-    - Properties of REINFORCE: for suffciently small $\alpha$, the improvement in expected performance is assured, and convergence to a local optimum under standard stochastic approximation conditions happens for decreasing $\alpha$. However, as a Monte Carlo method REINFORCE may be of high variance and thus produce slow learning.
+    - Properties of REINFORCE: for sufficiently small $\alpha$, the improvement in expected performance is assured, and convergence to a local optimum under standard stochastic approximation conditions happens for decreasing $\alpha$. However, as a Monte Carlo method REINFORCE may be of high variance and thus produce slow learning.
 
 
 ### 10.3.2 REINFORCE with Baseline
@@ -309,9 +309,9 @@ In AC methods, **the state-value function assigns credit to "critizes" the polic
 
 ## 10.5 Policy Parameterization for Continuous Actions
 
-- **Setup of Gausssian Policies for Continuous Actions**:
+- **Setup of Gaussian Policies for Continuous Actions**:
 
-    We now turn out attention to continuous actions spaces with an infinite number of actions. For such problems, instead of computing learned probabilities for each of the many actions, we instead learn statistics of the probability distribution, and choose actions by sampling from this distribution.
+    We now turn our attention to continuous action spaces with an infinite number of actions. For such problems, instead of computing learned probabilities for each of the many actions, we instead learn statistics of the probability distribution, and choose actions by sampling from this distribution.
 
     Assume the distribution is normal, to produce a policy parameterization, the policy can be defined as the normal probability density over a real-valued scalar action, with mean and standard deviation given by parametric function approximators that depend on the state, as follows:
 
@@ -339,7 +339,7 @@ In AC methods, **the state-value function assigns credit to "critizes" the polic
     
     - **Parameterization**: We now use Gaussian policy and draw actions from a state-dependent Gaussian distribution. $\mu(s)$ and $\sigma(s)$ are modeled as linear and exponential functions as mentioned above respectively. 
 
-    - **Action selection**: 1) Compute $\mu(s)$ and $\sigma(s)$ based on the current state $s$. 2) Sample an action from the Gaussian poliyc with these parameters. 
+    - **Action selection**: 1) Compute $\mu(s)$ and $\sigma(s)$ based on the current state $s$. 2) Sample an action from the Gaussian policy with these parameters. 
     
         During selection, $\sigma(s)$ controls exploration: large $\sigma$ means high variance and leads to high exploration, in contrast, small $\sigma$ leads to low exploration. We typically initialize $\sigma(s)$ to be large and as learning progresses, we expect the variance to shrink and the policy to concentrate around the best action in each state. 
 

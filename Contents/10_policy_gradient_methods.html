@@ -441,7 +441,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-approximation-and-its-advantages">10.1 Policy Approximation and its Advantages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-poliy-gradient-theorem">10.2 The Poliy Gradient Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-policy-gradient-theorem">10.2 The Policy Gradient Theorem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reinforce-with-baseline-monte-carlo-policy-gradient">10.3 REINFORCE (with Baseline): Monte Carlo Policy Gradient</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reinforce">10.3.1 REINFORCE</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reinforce-with-baseline">10.3.2 REINFORCE with Baseline</a></li>
@@ -470,7 +470,7 @@ document.write(`
 <p>This chapter considers methods for learning the policy parameter (the policy is represented as <span class="math notranslate nohighlight">\(\pi(a \mid s, \theta) = \Pr\{ A_t = a \mid S_t = s, \theta_t = \theta \}\)</span>) based on the gradient of some scalar performance measure <span class="math notranslate nohighlight">\(J(\theta)\)</span>, which we aim to maximize. Therefore the update of policy parameter follows gradient ascent:</p>
 <div class="math notranslate nohighlight">
 \[\theta_{t+1} = \theta_t + \alpha \nabla \widehat{J}(\theta_t)\]</div>
-<p>where <span class="math notranslate nohighlight">\(\nabla \widehat{J}(\theta_t)\)</span> is a stohastic estimate whose expectation approximates the gradient of the performance measure with respect to its argument <span class="math notranslate nohighlight">\(\theta_t\)</span>. All methods that follow this general schema are called <span class="math notranslate nohighlight">\(\textit{policy gradient methods}\)</span>.</p>
+<p>where <span class="math notranslate nohighlight">\(\nabla \widehat{J}(\theta_t)\)</span> is a stochastic estimate whose expectation approximates the gradient of the performance measure with respect to its argument <span class="math notranslate nohighlight">\(\theta_t\)</span>. All methods that follow this general schema are called <span class="math notranslate nohighlight">\(\textit{policy gradient methods}\)</span>.</p>
 <p>Among <span class="math notranslate nohighlight">\(\textit{policy gradient methods}\)</span>, methods that learn approximations to both policy and value functions are often called <span class="math notranslate nohighlight">\(\textit{actor–critic methods}\)</span>, where <span class="math notranslate nohighlight">\(\textit{'actor'}\)</span> is a reference to the learned policy, and <span class="math notranslate nohighlight">\(\textit{'critic'}\)</span> refers to the learned value function.</p>
 <section id="policy-approximation-and-its-advantages">
 <h2>10.1 Policy Approximation and its Advantages<a class="headerlink" href="#policy-approximation-and-its-advantages" title="Link to this heading">#</a></h2>
@@ -483,7 +483,7 @@ document.write(`
 \[\pi(a|s,\theta) \ \dot= \ \frac{e^{h(s,a,\theta)}}{\sum_b e^{h(s,b,\theta)}}\]</div>
 <p>We call this kind of policy parameterization soft-max in action preferences.</p>
 </li>
-<li><p><strong>Parameterization of the state-action pair</strong>: The action preferences <span class="math notranslate nohighlight">\(h(s, a, \theta) \in R\)</span> themselves can be parameterized arbitrarily. For exapmle, by:</p>
+<li><p><strong>Parameterization of the state-action pair</strong>: The action preferences <span class="math notranslate nohighlight">\(h(s, a, \theta) \in R\)</span> themselves can be parameterized arbitrarily. For example, by:</p>
 <ul>
 <li><p>a deep artificial network (ANN), where <span class="math notranslate nohighlight">\(\theta\)</span> is the vector of all the connection weights of the network (as in the AlphaGo system, readers of interest can refer to the book section 16.6), or</p></li>
 <li><p>a linear system in features as</p>
@@ -521,8 +521,8 @@ document.write(`
 </li>
 </ul>
 </section>
-<section id="the-poliy-gradient-theorem">
-<h2>10.2 The Poliy Gradient Theorem<a class="headerlink" href="#the-poliy-gradient-theorem" title="Link to this heading">#</a></h2>
+<section id="the-policy-gradient-theorem">
+<h2>10.2 The Policy Gradient Theorem<a class="headerlink" href="#the-policy-gradient-theorem" title="Link to this heading">#</a></h2>
 <ul>
 <li><p><strong>Policy Gradient Objective</strong>:</p>
 <p>When we parameterize our policy directly, we can use the ultimate goal of reinforcement learning directly as the learning objective, i.e., to learn a policy that obtains as much reward as possible in the long run. Recall that our three form of reward formulations are:</p>
@@ -556,7 +556,7 @@ document.write(`
 \[
     \nabla J(\theta) \propto \sum_s \mu(s) \sum_a q_{\pi}(s, a) \nabla \pi(a | s, \theta)
     \]</div>
-<p>The symbol <span class="math notranslate nohighlight">\(\propto\)</span> here means “proportional to”. In the episodic case, the constant of proportionality is the average length of an episode, and in the continuing case it is 1. The distribution <span class="math notranslate nohighlight">\(\mu\)</span> hereis the on-policy distribution under <span class="math notranslate nohighlight">\(\pi\)</span> as introduced in the last chapter.</p>
+<p>The symbol <span class="math notranslate nohighlight">\(\propto\)</span> here means “proportional to”. In the episodic case, the constant of proportionality is the average length of an episode, and in the continuing case it is 1. The distribution <span class="math notranslate nohighlight">\(\mu\)</span> here is the on-policy distribution under <span class="math notranslate nohighlight">\(\pi\)</span> as introduced in the last chapter.</p>
 <p>This <a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/Wv6wa/the-policy-gradient-theorem">optional lecture video</a> (between 2:08 - 4:27) provides an intuition of what the term <span class="math notranslate nohighlight">\(\sum_a q_{\pi}(s, a) \nabla \pi(a | s, \theta)\)</span> does. For a detailed derivation of the policy gradient theorem, please refer to the book chapter 13.2, page 325.</p>
 </li>
 </ul>
@@ -567,7 +567,7 @@ document.write(`
 <h3>10.3.1 REINFORCE<a class="headerlink" href="#reinforce" title="Link to this heading">#</a></h3>
 <ul>
 <li><p><strong>Derivation of REINFORCE’s update rule</strong>:</p>
-<p>The strategy of stohastic gradient ascent requires a way to obtain samples such that the expectation of the sample gradient is proportional to the actual gradient of the performance measure, i.e., we need some way of sampling whose expectation equals or approximates the expression given by the policy gradient theorem.</p>
+<p>The strategy of stochastic gradient ascent requires a way to obtain samples such that the expectation of the sample gradient is proportional to the actual gradient of the performance measure, i.e., we need some way of sampling whose expectation equals or approximates the expression given by the policy gradient theorem.</p>
 <p>Naturally, we can reformulate the policy gradient theorem as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -601,7 +601,7 @@ document.write(`
 <ul>
 <li><p>The return <span class="math notranslate nohighlight">\(G_t\)</span> in the incremental term causes the parameter to move most in the directions that favor actions that yield the highest return. (This is where the name REINFORCE comes from, because the algorithm reinforces good actions and discourages bad ones.)</p></li>
 <li><p>The vector <span class="math notranslate nohighlight">\(\frac{\nabla \pi(A_t|S_t, \theta)}{\pi(A_t|S_t, \theta)}\)</span>, on the other hand, is a typical form of what is called <span class="math notranslate nohighlight">\(\textit{relative rate of change}\)</span>. In this case, it indicates the direction in parameter space that most increases the probability of repeating the action <span class="math notranslate nohighlight">\(A_t\)</span> on future visits to state <span class="math notranslate nohighlight">\(S_t\)</span>.</p>
-<p>Moreover, the update is inversely proportional to the action probability, giving actions that are less frequently selected an advantag, i.e., encouraging exploration.</p>
+<p>Moreover, the update is inversely proportional to the action probability, giving actions that are less frequently selected an advantage, i.e., encouraging exploration.</p>
 </li>
 </ul>
 </li>
@@ -617,7 +617,7 @@ document.write(`
   <img src="../_static/img/chapter10/reinforce_performance.png" alt="Performance of REINFORCE on the short corridor example with different step sizes" style="width:70%;">
 <ul class="simple">
 <li><p>Results: as shown, with a good step size, the total reward per episode approaches the optimal value of the start state (<span class="math notranslate nohighlight">\(v_\star(s_0)\)</span>).</p></li>
-<li><p>Properties of REINFORCE: for suffciently small <span class="math notranslate nohighlight">\(\alpha\)</span>, the improvement in expected performance is assured, and convergence to a local optimum under standard stochastic approximation conditions happens for decreasing <span class="math notranslate nohighlight">\(\alpha\)</span>. However, as a Monte Carlo method REINFORCE may be of high variance and thus produce slow learning.</p></li>
+<li><p>Properties of REINFORCE: for sufficiently small <span class="math notranslate nohighlight">\(\alpha\)</span>, the improvement in expected performance is assured, and convergence to a local optimum under standard stochastic approximation conditions happens for decreasing <span class="math notranslate nohighlight">\(\alpha\)</span>. However, as a Monte Carlo method REINFORCE may be of high variance and thus produce slow learning.</p></li>
 </ul>
 </li>
 </ul>
@@ -758,8 +758,8 @@ document.write(`
 <section id="policy-parameterization-for-continuous-actions">
 <h2>10.5 Policy Parameterization for Continuous Actions<a class="headerlink" href="#policy-parameterization-for-continuous-actions" title="Link to this heading">#</a></h2>
 <ul>
-<li><p><strong>Setup of Gausssian Policies for Continuous Actions</strong>:</p>
-<p>We now turn out attention to continuous actions spaces with an infinite number of actions. For such problems, instead of computing learned probabilities for each of the many actions, we instead learn statistics of the probability distribution, and choose actions by sampling from this distribution.</p>
+<li><p><strong>Setup of Gaussian Policies for Continuous Actions</strong>:</p>
+<p>We now turn our attention to continuous action spaces with an infinite number of actions. For such problems, instead of computing learned probabilities for each of the many actions, we instead learn statistics of the probability distribution, and choose actions by sampling from this distribution.</p>
 <p>Assume the distribution is normal, to produce a policy parameterization, the policy can be defined as the normal probability density over a real-valued scalar action, with mean and standard deviation given by parametric function approximators that depend on the state, as follows:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -780,7 +780,7 @@ document.write(`
 <li><p><strong>States and Reward</strong>: Remain the same</p></li>
 <li><p><strong>Actions</strong>: Instead of three discrete actions, the agent now selects continuous angular acceleration in the range [-3, 3].</p></li>
 <li><p><strong>Parameterization</strong>: We now use Gaussian policy and draw actions from a state-dependent Gaussian distribution. <span class="math notranslate nohighlight">\(\mu(s)\)</span> and <span class="math notranslate nohighlight">\(\sigma(s)\)</span> are modeled as linear and exponential functions as mentioned above respectively.</p></li>
-<li><p><strong>Action selection</strong>: 1) Compute <span class="math notranslate nohighlight">\(\mu(s)\)</span> and <span class="math notranslate nohighlight">\(\sigma(s)\)</span> based on the current state <span class="math notranslate nohighlight">\(s\)</span>. 2) Sample an action from the Gaussian poliyc with these parameters.</p>
+<li><p><strong>Action selection</strong>: 1) Compute <span class="math notranslate nohighlight">\(\mu(s)\)</span> and <span class="math notranslate nohighlight">\(\sigma(s)\)</span> based on the current state <span class="math notranslate nohighlight">\(s\)</span>. 2) Sample an action from the Gaussian policy with these parameters.</p>
 <p>During selection, <span class="math notranslate nohighlight">\(\sigma(s)\)</span> controls exploration: large <span class="math notranslate nohighlight">\(\sigma\)</span> means high variance and leads to high exploration, in contrast, small <span class="math notranslate nohighlight">\(\sigma\)</span> leads to low exploration. We typically initialize <span class="math notranslate nohighlight">\(\sigma(s)\)</span> to be large and as learning progresses, we expect the variance to shrink and the policy to concentrate around the best action in each state.</p>
 </li>
 </ul>
@@ -965,7 +965,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-approximation-and-its-advantages">10.1 Policy Approximation and its Advantages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-poliy-gradient-theorem">10.2 The Poliy Gradient Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-policy-gradient-theorem">10.2 The Policy Gradient Theorem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reinforce-with-baseline-monte-carlo-policy-gradient">10.3 REINFORCE (with Baseline): Monte Carlo Policy Gradient</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reinforce">10.3.1 REINFORCE</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reinforce-with-baseline">10.3.2 REINFORCE with Baseline</a></li>
