@@ -4,7 +4,7 @@ In this chapter, we now focus on estimating the state-value function from on-pol
 
 For example, $\hat{v}$ might be a linear function in features of the state, with $w$ being the vector of feature weights. More generally, $\hat{v}$ might be the function computed by a multi-layer artificial neural network, with $w$ the vector of connection weights in all the layers. 
 
-**Typically, the number of weights (the dimensionality of $w$) is much less than the number of states ($d << |S|$)**, and changing one weight changes the estimated value of many states. Consequently, when a single state is updated, the change generalizes from that state to affect the values of many other states. Such generalization makes the learning potentially more powerful but also potentially more diffcult to manage and understand.
+**Typically, the number of weights (the dimensionality of $w$) is much less than the number of states ($d << |S|$)**, and changing one weight changes the estimated value of many states. Consequently, when a single state is updated, the change generalizes from that state to affect the values of many other states. Such generalization makes the learning potentially more powerful but also potentially more difficult to manage and understand.
 
 ## 8.1 Value-function Approximation
 
@@ -16,7 +16,7 @@ For example, $\hat{v}$ might be a linear function in features of the state, with
     - Monte Carlo:
     $s \rightarrow G_t$
 
-    - Temperal Difference:
+    - Temporal Difference:
     $s \rightarrow R_{t+1} + \gamma \hat{v}(S_{t+1}, w_t)$
 
 - **Supervised learning for function approximation**
@@ -40,7 +40,7 @@ For example, $\hat{v}$ might be a linear function in features of the state, with
     ```{note}
     - The best value function for finding a better policy in control is not necessarily the best for minimizing $\overline{VE}$. Nevertheless, it is not yet clear what a more useful alternative goal for value prediction might be. For now, we will focus on $\overline{VE}$.
 
-    - Often times, for complex function approximators such as Neural Networks, we can not find a global optimum of $w_\star$, for which  $\overline{VE}(w_\star) \le \overline{VE}(w)$ for all $w$. Rather, we can only find a local optimum for which  $\overline{VE}(w_\star) \le \overline{VE}(w)$ for all $w$ in some neighborhood of $w_\star$, but oftern this is enough.
+    - Often times, for complex function approximators such as Neural Networks, we can not find a global optimum of $w_\star$, for which  $\overline{VE}(w_\star) \le \overline{VE}(w)$ for all $w$. Rather, we can only find a local optimum for which  $\overline{VE}(w_\star) \le \overline{VE}(w)$ for all $w$ in some neighborhood of $w_\star$, but often this is enough.
     ```
 
 ## 8.2 Stochastic-gradient and Semi-gradient Methods
@@ -51,7 +51,7 @@ For example, $\hat{v}$ might be a linear function in features of the state, with
 
     - the approximate value function $v(s,w)$ is a differentiable function of $w$ for all $s \in S$. 
 
-- **Sotchastic gradient method (SGD)**
+- **Stochastic gradient method (SGD)**
 
     - **Setup**: assume that on each step, we observe a new example $S_t \rightarrow v_\pi(S_t)$ consisting of a (possibly randomly selected) state $S_t$ and its true value under the policy.
 
@@ -79,7 +79,7 @@ For example, $\hat{v}$ might be a linear function in features of the state, with
 
 - **Semi-gradient method**:
 
-    - **Setup**: the training example $S_t \rightarrow U_t$ with $U_t \in \mathbb{R}$ is not the true value $v_\pi(S_t)$ but a **boostraping target** using $\hat{v}$
+    - **Setup**: the training example $S_t \rightarrow U_t$ with $U_t \in \mathbb{R}$ is not the true value $v_\pi(S_t)$ but a **boostrapping target** using $\hat{v}$
 
     - **Semi-gradient methods**:
 
@@ -105,11 +105,11 @@ For example, $\hat{v}$ might be a linear function in features of the state, with
 		<img src="../_static/img/chapter8/algo_semi_gradient_td.png" alt="Algorithm: Semi-gradient TD" style="width: 100%;">        
 		</div>
 
--  **Example: State Aggregatioin**:
+-  **Example: State Aggregation**:
 
     - $\textit{State Aggregation}$: a method for generalizing function approximation by grouping states together, each group of states share one estimated value.
 
-    - Using state aggregation for gradent MC (Lecture video):
+    - Using state aggregation for gradient MC (Lecture video):
 
         <a href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/aJ9j6/state-aggregation-with-monte-carlo">
         <img src="../_static/img/chapter8/state_aggregation_mc.png" alt="Video: State Aggregation for MC" style="width:60%;">
@@ -133,7 +133,7 @@ For example, $\hat{v}$ might be a linear function in features of the state, with
 
     - In this case the approximate value function is said to be $\textit{linear in the weights}$, or simply $\textit{linear}$.
     
-    - the feature vector $\boldsymbol{x}(s) \dot= (x_1(s), x_2(s), ... x_d(s))^{\intercal}$ has the same dimension $d$ as the weight vector $\boldsymbol{w}$. Each feature $x_i: S \rightarrow \mathbb{R}$ is a socalled $\textit{basis function}$ which assigns a value ($x_i(s)$) to the state $s$ (the feature of $s$)
+    - the feature vector $\boldsymbol{x}(s) \dot= (x_1(s), x_2(s), ... x_d(s))^{\intercal}$ has the same dimension $d$ as the weight vector $\boldsymbol{w}$. Each feature $x_i: S \rightarrow \mathbb{R}$ is a so-called $\textit{basis function}$ which assigns a value ($x_i(s)$) to the state $s$ (the feature of $s$)
 
 - **(Semi-)Gradient methods for linear value function**
 
@@ -196,7 +196,7 @@ For example, $\hat{v}$ might be a linear function in features of the state, with
 
 Choosing features appropriate to the task is an important way of adding prior domain knowledge to reinforcement learning systems. Intuitively, the features should correspond to the aspects of the state space along which generalization may be appropriate. 
 
-A limitation of the linear form is that it cannot take into account any interactions between features, such as the presence of feature $i$ being good only in the absence of feature $j$, or to put it in another word, we need features that can take the combinations of different states or state dimensions into consideration. 
+A limitation of the linear form is that it cannot take into account any interactions between features, such as the presence of feature $i$ being good only in the absence of feature $j$, or to put it in other words, we need features that can take the combinations of different states or state dimensions into consideration. 
 
 In this last section we study **how to construct such $x(s)$** for approximating the value function and balancing between generalization and discrimination.
 
@@ -209,7 +209,7 @@ In this last section we study **how to construct such $x(s)$** for approximating
 
     - **Feature construction**: If the state is inside a circle, then the corresponding feature has the value 1 and is said to be present; otherwise the feature is 0 and is said to be absent. (This kind of 1–0-valued feature is called a $\textit{binary feature}$.)
 
-        <img src="../_static/img/chapter8/coarse_coding.png" alt="Demostration for Coarse Coding" style="width:45%;">
+        <img src="../_static/img/chapter8/coarse_coding.png" alt="Demonstration for Coarse Coding" style="width:45%;">
 
         Corresponding to each circle / feature is a single weight (a component of $\boldsymbol{w}$) that is affected by learning.
 
@@ -221,19 +221,19 @@ In this last section we study **how to construct such $x(s)$** for approximating
 
     - You may choose to watch this [lecture video](https://www.coursera.org/learn/prediction-control-function-approximation/lecture/JnNF5/generalization-properties-of-coarse-coding) instead, since the following content is well covered in it and if you prefer visual&audio contents over texts.
 
-    - **Demostration**: 
+    - **Demonstration**: 
     
         Intuitively, if the circles are small, then the generalization will be over a short distance, as in the below Figure on the left, whereas if they are large, it will be over a large distance, as in the middle. And the shape of the features will also determine the nature of the generalization (on the right side).
 
         <img src="../_static/img/chapter8/coarse_coding_generalization.png" alt="Generalization for Coarse Coding" style="width:90%;">
 
-        As above, features with large $\textit{receptive fields}$ give broad generalization, and might seem to fall short with discrimination, but conterintuitively, this is not true. Initial generalization from one point to another is indeed controlled by the size and shape of the $\textit{receptive fields}$, but finest discrimination is ultimately  controlled more **by the total number of features**, as shown by the next example. 
+        As above, features with large $\textit{receptive fields}$ give broad generalization, and might seem to fall short with discrimination, but counterintuitively, this is not true. Initial generalization from one point to another is indeed controlled by the size and shape of the $\textit{receptive fields}$, but finest discrimination is ultimately  controlled more **by the total number of features**, as shown by the next example. 
 
     - **Example: Coarseness of Coarse Coding**
 
         - Setup: Linear function approximation based on coarse coding and Semi-Gradient method was used to learn a one-dimensional square-wave function, the values of this function were used as the targets, $U_t$.
 
-        - Results: as below, the width of the features had a strong e↵ect early in learning. However, the final function learned was a↵ected only slightly by the width of the features
+        - Results: as below, the width of the features had a strong effect early in learning. However, the final function learned was affected only slightly by the width of the features
 
             <img src="../_static/img/chapter8/coarseness.png" alt="Example of Generalization for Coarse Coding" style="width:77%;">
 

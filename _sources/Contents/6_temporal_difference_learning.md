@@ -18,16 +18,16 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 
 	- **Monte Carlo methods** use an estimate of equation (1) as a target:
 
-		$V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))$ with $G_t$ as the single realisation from each episode .
+		$V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))$ with $G_t$ as the single realization from each episode .
 
-	- **Dynamic Programming methods** use an estiamte of equation (3) as a target:
+	- **Dynamic Programming methods** use an estimate of equation (3) as a target:
 
 		$V(s) = \sum_a \pi(a|s) \sum_{s', r} p(s',r|s,a) [r + \gamma V(s')]$
 
 
 	- **Temporal Difference methods** also uses an estimate of equation (3), yet requires no model of the environment's dynamics. It combines the above two in the following way:
 
-		$V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))$ with $R_{t+1} + \gamma V(S_{t+1})$ as the single realisation of $R_{t+1} + \gamma v_{\pi}(S_{t+1})$ each time. 
+		$V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))$ with $R_{t+1} + \gamma V(S_{t+1})$ as the single realization of $R_{t+1} + \gamma v_{\pi}(S_{t+1})$ each time. 
 		- The target for the TD update is $R_{t+1} + \gamma V(S_{t+1})$, this TD method is called **TD(0) or one-step TD**, which is a special case of the TD($\lambda$) or n-step TD (not included in this tutorial)
 
 		- TD combines the sampling of MC and the bootstrapping of DP: 
@@ -58,7 +58,7 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 
 - **Advantages of TD prediction**:
 
-	- Over dynamic programming: TD methods do not need a model of the environment. Over Monte Carlo: TD methods are naturally implemented in an online, fully incremental fashion, i.e., they do not require to wait until the end of an episode.
+	- Over dynamic programming: TD methods do not need a model of the environment. Over Monte Carlo: TD methods are naturally implemented in an online, fully incremental fashion, i.e., they do not require waiting until the end of an episode.
 
 	- For any fixed policy $\pi$, TD(0) has been proved to converge to $v_\pi$. For details, refer to the book chapter 6.2, we skip the proof in this tutorial.
 
@@ -72,7 +72,7 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 
 ### 6.2.1 Sarsa: On-policy TD Control
 
-- **Backgound for Sarsa**:
+- **Background for Sarsa**:
 	- Since TD methods deal with tasks where there is no model of environment available, it is natural to estimate $Q_\pi(s,a)$ instead of $V_\pi(s)$. Similar to [section 6.1](#61-td-prediction), the **update rule for Sarsa** is: 
 
 		$$Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)]$$
@@ -91,11 +91,11 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 
 
 	```{note}
-	- **There is no need to initialize a policy $\pi$ in the beginning**, the action can be derived directly from a given policy wth $Q(s,a), \text{ for all } s \in S, a \in A(s)$ available.
+	- **There is no need to initialize a policy $\pi$ in the beginning**, the action can be derived directly from a given policy with $Q(s,a), \text{ for all } s \in S, a \in A(s)$ available.
 
 	- While deriving the next action, make sure to use a soft-policy to ensure exploration.
 
-	- Notice that after transit to the state $S'$, you still need to take another action $A'$ to be able to update $Q(S,A)$.
+	- Notice that after transition to the state $S'$, you still need to take another action $A'$ to be able to update $Q(S,A)$.
 
 	- Sarsa converges with probability 1 to an optimal policy and action-value function as long as all state–action pairs are visited an infinite number of times and the policy converges in the limit to the greedy policy (which can be arranged, for example, with $\epsilon$-greedy policies by setting $\epsilon = 1/t$).
 	```
@@ -108,12 +108,12 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 
 	- Notice that the first few episodes take a couple thousand steps to complete. The curve gradually gets steeper indicating that episodes are completed more quickly.
 
-	- Notice the episode completion rate stops increasing. This means the agents policy hovers around the optimal policy and won't be exactly optimal, because of exploration.
+	- Notice the episode completion rate stops increasing. This means the agent's policy hovers around the optimal policy and won't be exactly optimal, because of exploration.
 
 
 ### 6.2.2 Q-learning: Off-policy TD Control
 
-- **Backgound for Q-learning**:
+- **Background for Q-learning**:
 
 	- The update rule for Q-learning is: 
 
@@ -129,9 +129,9 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 
 
 	```{note}
-	- **Different from Sarsa, at target state $S'$, Q-learning choose the greedy action that maximizes $Q(S', a)$ directly**, but not according to a policy derived from $Q$ (although, the derived policy from $Q$ can also be the greedy policy, if so, the update rules of Sarsa and Q-learning are identical).
+	- **Different from Sarsa, at target state $S'$, Q-learning chooses the greedy action that maximizes $Q(S', a)$ directly**, but not according to a policy derived from $Q$ (although, the derived policy from $Q$ can also be the greedy policy, if so, the update rules of Sarsa and Q-learning are identical).
 
-	- **Q-learning is off-policy, but why?** Consider the derived policy from current $Q$ as the $\textit{behaviour policy}$, which can be e.g., $\epsilon$-greedy. but the $\textit{target policy}$ for Q-learning is actually the greedy policy according to the $max$ term in the update rule from above (actions are chosen according to $\epsilon$-greedy, updates are made according to the greedy policy). Readers of interest about why exactly Q-learning is off-policy can further refer to this [lecture video.](https://www.coursera.org/learn/sample-based-learning-methods/lecture/1OikH/how-is-q-learning-off-policy) 
+	- **Q-learning is off-policy, but why?** Consider the derived policy from current $Q$ as the $\textit{behavior policy}$, which can be e.g., $\epsilon$-greedy. but the $\textit{target policy}$ for Q-learning is actually the greedy policy according to the $max$ term in the update rule from above (actions are chosen according to $\epsilon$-greedy, updates are made according to the greedy policy). Readers of interest about why exactly Q-learning is off-policy can further refer to this [lecture video.](https://www.coursera.org/learn/sample-based-learning-methods/lecture/1OikH/how-is-q-learning-off-policy) 
 	```
 		
 - **Example: Q-learning in the Windy Gridworld**
@@ -142,7 +142,7 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 
 	- In the beginning, the two algorithms learn at a similar pace. Towards the end, Q-Learning seems to learn a better final policy. 
 
-	- When we descrease the step-size $\alpha$, Sarsa learns the same final policy as Q-Learning, but more slowly. This experiment highlights the impact of parameter choices in reinforcement learning. $\alpha$, $\epsilon$, initial values, and the length of the experiment can all influence the final result.
+	- When we decrease the step-size $\alpha$, Sarsa learns the same final policy as Q-Learning, but more slowly. This experiment highlights the impact of parameter choices in reinforcement learning. $\alpha$, $\epsilon$, initial values, and the length of the experiment can all influence the final result.
 
 - **Example of Cliff Walking - Another comparison between Sarsa and Q-learning**
 
@@ -166,7 +166,7 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 
 ### 6.2.3 Expected Sarsa
 
-- **Backgound for expected Sarsa**:
+- **Background for expected Sarsa**:
 
 	- update rule: 
 
@@ -200,7 +200,7 @@ As usual, we start by focusing on the policy evaluation or prediction problem, t
 	```{note}
 	- The algorithm is just like Q-learning except that instead of using the maximum over next state-action pairs it uses the expected value, taking into account how likely each action is under the current policy.
 
-	- The fun part about Expected Sarsa is that **it can be both on- and off-policy**. The above algorithm is a on-policy setting, but in general expected sarsa might use a policy different from the target policy $\pi$ to generate behavior, in which case it becomes an off-policy algorithm. 
+	- The fun part about Expected Sarsa is that **it can be both on- and off-policy**. The above algorithm is an on-policy setting, but in general expected sarsa might use a policy different from the target policy $\pi$ to generate behavior, in which case it becomes an off-policy algorithm. 
 		- For example, suppose $\pi$ is the greedy policy while behavior is more exploratory; then Expected Sarsa is then exactly Q-learning. 
 			
 		- In the above sense Expected Sarsa subsumes and generalizes Q-learning while reliably improving over Sarsa. **Except for the small additional computational cost, Expected Sarsa may completely dominate both of the other more-well-known TD control algorithms.**

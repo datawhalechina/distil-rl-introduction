@@ -1,6 +1,6 @@
 # Chapter 5. Monte Carlo Methods
 
-Monte Carlo methods are ways of solving the reinforcement learning problem based on **experience only**, i.e., averaging sample returns. To ensure that well-defined returns are available, here we define Monte Carlo methods only for **episodic tasks**.
+Monte Carlo methods a way of solving the reinforcement learning problem based on **experience only**, i.e., averaging sample returns. To ensure that well-defined returns are available, here we define Monte Carlo methods only for **episodic tasks**.
 
 Only on the completion of an episode are value estimates and policies changed. Monte Carlo methods can thus be incremental in an **episode-by-episode** sense, but not in a step-by-step (online) sense.
 
@@ -30,7 +30,7 @@ Basics of MC methods:
 
     - Intuition: the realizations of return $G_t$ for each state is calculated backwards from $S_{T-1}$ to $S_0$, by the law of large number, the average of $G_t$ for each state will be the value of that state: $v(S_t) = E_{\pi}[G_t|S_t]$
 
-    - Visualization of return calculation ($T=5$, intergers on arrows are the rewards):
+    - Visualization of return calculation ($T=5$, integers on arrows are the rewards):
         <div style="display: flex; justify-content: center;">
         <img src="../_static/img/chapter5/computing_gt.png" alt="Backward calculation of returns" style="width: 350px;">
         </div>
@@ -46,7 +46,7 @@ Basics of MC methods:
 - **Motivation**: state values $v_{\pi}$ are only usable when we have the model of the environment. Since MC methods assume there is **no model available**, one of our primary goals in this case is to actually estimate $q_\star$.
 
 ```{todo}
-Turn this algo below into a book-similar image
+Turn this algo below into a book-style image
 ```
 
 - **First-visit MC prediction, for estimating $Q \approx q_{\pi}$**
@@ -82,7 +82,7 @@ General problems and two basic assumptions we rely on in [section 5.1](#51-monte
 - **Problem of $\textit{maintaining exploration}$**: in estimating $q_{\pi}$, many state-action pairs may never be visited. E.g., if the policy is deterministic, many actions at a state may not be taken.
     - **Assumption (1)** of $\textit{exploring starts}$: episodes start in a state-action pair, and every pair has a nonzero probability of being selected as the start. (So every state-action pair will be visited an infinite number of times in the limit of an infinite number of episodes.)
 
-- **Problem of estimating $\hat{q}_{\pi}(S_t, A_t)$**: by default, we used the law of large number and rely on the following assumption:
+- **Problem of estimating $\hat{q}_{\pi}(S_t, A_t)$**: by default, we used the law of large numbers and rely on the following assumption:
     - **Assumption (2)** of infinite number of episodes: policy evaluation can be done with infinite number of episodes (complete policy evaluation).
 
 Apparently, these two assumptions are hardly truth in practice, so we are now going to introduce methods that remove them gradually.
@@ -91,7 +91,7 @@ Apparently, these two assumptions are hardly truth in practice, so we are now go
 
 - How to **remove Assumption (2)**:
 
-    - To avoid infinite number of episodes nominally required for policy evaluation, we could **give up trying to complete policy evaluation** before returning to policy improvement. Value iteration can be seen as an extrem example of this idea.
+    - To avoid infinite number of episodes nominally required for policy evaluation, we could **give up trying to complete policy evaluation** before returning to policy improvement. Value iteration can be seen as an extreme example of this idea.
 
     - For Monte Carlo policy iteration it is natural to alternate between evaluation and improvement on an **episode-by-episode** basis. After each episode, the observed returns are used for policy evaluation, and then the policy is improved at all the states visited in the episode.
 
@@ -102,20 +102,20 @@ Apparently, these two assumptions are hardly truth in practice, so we are now go
     </div>
 
     ```{note}
-    The essential technique of above algorithm is that after each update of $Q(S_t,A_t)$, the improvement (greedification) will be made directly, which removes the second assumption.
+    The essential technique of the above algorithm is that after each update of $Q(S_t,A_t)$, the improvement (greedification) will be made directly, which removes the second assumption.
     ```
 
 ### 5.2.2 Monte Carlo Control removing both assumptions
 
 - **On & Off-policy methods**:
 
-    - On policy methods: attempt to evaluate or improve the policy that is used to make decisions. (e.g., MC with ES, dynamic programming etc.)
+    - On-policy methods: attempt to evaluate or improve the policy that is used to make decisions. (e.g., MC with ES, dynamic programming etc.)
 
-    - Off policy methods: evaluate or improve a policy different from that used to generate the data.
+    - Off-policy methods: evaluate or improve a policy different from that used to generate the data.
 
 - **$\epsilon$-soft policies**:
 
-    - **$\epsilon$-greedy policy**: as introduced in Chapter 2 [section 2.2](../Contents/2_multi_armed_bandits.md#22-action-value-methods) all non-greedy action are given the minimal probability of selection $\frac{\epsilon}{|A(s)|}$ (**uniform distribution**), the greedy action has the probability of $1 - \epsilon + \frac{\epsilon}{|A(s)|}$. 
+    - **$\epsilon$-greedy policy**: as introduced in Chapter 2 [section 2.2](../Contents/2_multi_armed_bandits.md#22-action-value-methods) all non-greedy actions are given the minimal probability of selection $\frac{\epsilon}{|A(s)|}$ (**uniform distribution**), the greedy action has the probability of $1 - \epsilon + \frac{\epsilon}{|A(s)|}$. 
         - $\epsilon$-greedy policy is a type of $\epsilon$-soft policies. Among $\epsilon$-soft policies, $\epsilon$-greedy policies are in some sense those that are closest to greedy.
 
     - **$\epsilon$-soft policy**: all actions have probability of $\pi(a|s)>\frac{\epsilon}{|A(s)|}$ for all states. This means that the agent explores all possible actions with non-zero probability $\frac{\epsilon}{|A(s)|}$, but **not necessarily uniformly**.
@@ -128,7 +128,7 @@ Apparently, these two assumptions are hardly truth in practice, so we are now go
         <img src="../_static/img/chapter5/algo_mc_control.png" alt="Algorithm: On-policy Monte Carlo control" style="width: 100%;">
         </div>
 
-    - Intuition: If we remove the assumption of exploring starts, we cannot simply improve the policy by making it greedy with respect to the current value function, because that would prevent further exploration of nongreedy actions. So on the basis of Monte Carlo ES (Exploring Starts) in [section 5.2.1](#521-monte-carlo-control-removing-assumption-2), this algorithm removes the assumptions of exploring start by:
+    - Intuition: If we remove the assumption of exploring starts, we cannot simply improve the policy by making it greedy with respect to the current value function, because that would prevent further exploration of non-greedy actions. So on the basis of Monte Carlo ES (Exploring Starts) in [section 5.2.1](#521-monte-carlo-control-removing-assumption-2), this algorithm removes the assumptions of exploring start by:
 
         - defining the initial policy to be $\epsilon$-soft and, 
         - updating the old policy to be $\epsilon$-greedy policy during policy improvement. 
@@ -151,7 +151,7 @@ Let's recap On / Off-policy learning:
 
 - **Off-policy learning**: the learning is from data generated by $\textit{behavior policy}$ $b$ and is "off" the $\textit{target policy}$ $\pi$. Off-policy methods require additional concepts and notation, and because the data is due to a different policy, **off-policy methods are often of greater variance and are slower to converge.** \
 **On the other hand, off-policy methods are more powerful and general.** They include on-policy methods as the special case in which the target and behavior policies are the same.
-    - In order to use episodes from $b$ to estimate values for $\pi$, we proceede based on the **assumption of coverage**: wherever $\pi(a|s) \ge 0$, $b(a|s) \ge 0$ must also hold. This means, behavior policy $b$ must be stohastic in states where it is not identical to the target policy $\pi$.
+    - In order to use episodes from $b$ to estimate values for $\pi$, we proceed based on the **assumption of coverage**: wherever $\pi(a|s) \ge 0$, $b(a|s) \ge 0$ must also hold. This means, behavior policy $b$ must be stochastic in states where it is not identical to the target policy $\pi$.
 
 ### 5.3.1 Off-policy Monte Carlo Prediction via Importance Sampling
 
@@ -209,8 +209,8 @@ Let's recap On / Off-policy learning:
 
         $$q_{\pi}(s,a)= E_b[\rho_{t+1:T-1} \times G_t|S_t = s, A_t=a]$$
 
-        - Intuition: note that the value function for $q$: $E[G_t|S_t = s, A_t=a]$ is caculating an expection based on all given trajectories, so every $G_t$ is a single realisation, which can be seen as the variable $x$ in the derivation of importance sampling equation. \
-        The importance sampling ratio $\rho_{t+1:T-1}$ is caculated on a trajectory basis to correspond to this trajectory-based charactor of $G_t$ (and is used for multiplication with $G_t$ directly).
+        - Intuition: note that the value function for $q$: $E[G_t|S_t = s, A_t=a]$ is calculating an expectation based on all given trajectories, so every $G_t$ is a single realisation, which can be seen as the variable $x$ in the derivation of importance sampling equation. \
+        The importance sampling ratio $\rho_{t+1:T-1}$ is calculated on a trajectory basis to correspond to this trajectory-based character of $G_t$ (and is used for multiplication with $G_t$ directly).
 
 - **Importance sampling for evaluating the target policy $\pi$ in practice**
 
@@ -309,7 +309,7 @@ Let's recap On / Off-policy learning:
     ```{note}
     - The policy $\pi$ converges to optimal at all encountered states even though actions are selected according to a different soft policy $b$,which may change between or even within episodes.
 
-    - A potential problem is that this method learns only from the tails of episodes, when all of the remaining actions in the episode are greedy. If nongreedy actions are common, then learning will be slow, particularly for states appearing in the early portions of long episodes. Potentially, this could greatly slow learning.
+    - A potential problem is that this method learns only from the tails of episodes, when all of the remaining actions in the episode are greedy. If non-greedy actions are common, then learning will be slow, particularly for states appearing in the early portions of long episodes. Potentially, this could greatly slow learning.
     ```
     
 ## 5.4 Summary
@@ -325,9 +325,9 @@ Currently, Monte Carlo methods for both prediction and control remain unsettled 
 
         1) Monte Carlo methods require no model of the environment’s dynamics. 
 
-        2) Monte Carlo methods can be used with simulation or sample models. For surprisingly many applications it is easy to simulate sample episodes even though it is diffcult to construct the kind of explicit model of transition probabilities. 
+        2) Monte Carlo methods can be used with simulation or sample models. For surprisingly many applications it is easy to simulate sample episodes even though it is difficult to construct the kind of explicit model of transition probabilities. 
 
-        3) It is easy and effcient to use Monte Carlo methods to focus on a small subset of the states. A region of special interest can be accurately evaluated without going to the expense of accurately evaluating the rest of the state set.
+        3) It is easy and efficient to use Monte Carlo methods to focus on a small subset of the states. A region of special interest can be accurately evaluated without going to the expense of accurately evaluating the rest of the state set.
 
         4) MC methods may be less harmed by violations of the Markov property. Because they do not update their value estimates on the basis of the value estimates of successor states, i.e., they do not bootstrap.
 

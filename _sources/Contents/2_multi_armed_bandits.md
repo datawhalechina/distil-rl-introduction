@@ -1,4 +1,4 @@
-# Chapte 2. Multi-armed Bandit
+# Chapter 2. Multi-armed Bandit
 
 In this chapter we study the evaluative aspect of reinforcement learning in a simplified setting, one that does not involve learning to act in more than one situation, i.e., there is only one single state.
 
@@ -6,7 +6,7 @@ In this chapter we study the evaluative aspect of reinforcement learning in a si
 
 - **Setting**: In one single state, you are given $k$ different options, or actions. With each action taken, a random numerical reward chosen from a stationary probability distribution will be given. **The objective is to maximize the expected total reward over some time period.**
 
-    - Time steps: time steps describe the number of times actions being taken.
+    - Time steps: time steps describe the number of times actions are taken.
 
     - Value of an action: mean reward received by taking this action 
 
@@ -41,7 +41,7 @@ In this chapter we study the evaluative aspect of reinforcement learning in a si
         \end{align*}
     $$
 
-- **Action selection methods:** there are two natural ways when selecting actions based on estimates, one maximizes exploitation and the other takes exploration into account based on that:
+- **Action selection methods:** there are two natural ways when selecting actions based on estimates, one maximizes exploitation, and the other takes exploration into account based on that:
 
     - **Greedy action selection:** always exploits current knowledge to maximize immediate reward
     
@@ -61,7 +61,7 @@ In this chapter we study the evaluative aspect of reinforcement learning in a si
         <img src="../_static/img/chapter2/reward_distribution.png" alt="Reward Distribution" style="width:70%;">
         </div>
 
-- **Performance**: The performance of each action selection method is measured by averaging the results from 2000 independent $\textit{runs}$, with each $\textit{run}$ containing 1000 time steps (recall that time steps describe the number of times actions being taken.)
+- **Performance**: The performance of each action selection method is measured by averaging the results from 2000 independent $\textit{runs}$, with each $\textit{run}$ containing 1000 time steps (recall that time steps describe the number of times actions are taken.)
 
     <div style="display: flex; justify-content: center;">
     <img src="../_static/img/chapter2/running_results.png" alt="Results of running" style="width:70%;">
@@ -71,7 +71,7 @@ In this chapter we study the evaluative aspect of reinforcement learning in a si
 
     - The greedy method performed significantly worse in the long run because it often got stuck performing suboptimal actions.
 
-    - The $\epsilon=0.01$ method (less exploration) improved more slowly, but eventually would perform better than the $\epsilon=0.1$ (more exploration) method. This emphasizes the trade-off between exploration and exploitation, i.e., exploration ($\epsilon=0.01$) can improve performance yet worsen result when too much ($\epsilon=0.1$).
+    - The $\epsilon=0.01$ method (less exploration) improved more slowly, but eventually would perform better than the $\epsilon=0.1$ (more exploration) method. This emphasizes the trade-off between exploration and exploitation, i.e., exploration ($\epsilon=0.01$) can improve performance yet worsen results when too much ($\epsilon=0.1$).
 
 
 ```{note}

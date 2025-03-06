@@ -192,7 +192,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapte 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
 </ul>
@@ -463,7 +463,7 @@ document.write(`
 <h1>Chapter 8. On-policy Prediction with Approximation<a class="headerlink" href="#chapter-8-on-policy-prediction-with-approximation" title="Link to this heading">#</a></h1>
 <p>In this chapter, we now focus on estimating the state-value function from on-policy data. The approximate value function will be represented not as a table but <strong>as a parameterized functional form, written as <span class="math notranslate nohighlight">\(\hat{v}(s, w) \approx v_\pi(s)\)</span>, with weight vector <span class="math notranslate nohighlight">\(w \in \mathbb{R}^d\)</span></strong>.</p>
 <p>For example, <span class="math notranslate nohighlight">\(\hat{v}\)</span> might be a linear function in features of the state, with <span class="math notranslate nohighlight">\(w\)</span> being the vector of feature weights. More generally, <span class="math notranslate nohighlight">\(\hat{v}\)</span> might be the function computed by a multi-layer artificial neural network, with <span class="math notranslate nohighlight">\(w\)</span> the vector of connection weights in all the layers.</p>
-<p><strong>Typically, the number of weights (the dimensionality of <span class="math notranslate nohighlight">\(w\)</span>) is much less than the number of states (<span class="math notranslate nohighlight">\(d &lt;&lt; |S|\)</span>)</strong>, and changing one weight changes the estimated value of many states. Consequently, when a single state is updated, the change generalizes from that state to affect the values of many other states. Such generalization makes the learning potentially more powerful but also potentially more diffcult to manage and understand.</p>
+<p><strong>Typically, the number of weights (the dimensionality of <span class="math notranslate nohighlight">\(w\)</span>) is much less than the number of states (<span class="math notranslate nohighlight">\(d &lt;&lt; |S|\)</span>)</strong>, and changing one weight changes the estimated value of many states. Consequently, when a single state is updated, the change generalizes from that state to affect the values of many other states. Such generalization makes the learning potentially more powerful but also potentially more difficult to manage and understand.</p>
 <section id="value-function-approximation">
 <h2>8.1 Value-function Approximation<a class="headerlink" href="#value-function-approximation" title="Link to this heading">#</a></h2>
 <ul>
@@ -473,7 +473,7 @@ document.write(`
 <span class="math notranslate nohighlight">\(s \rightarrow E_\pi[R_{t+1} + \gamma \hat{v}(S_{t+1}, w_t)|S_t = s]\)</span></p></li>
 <li><p>Monte Carlo:
 <span class="math notranslate nohighlight">\(s \rightarrow G_t\)</span></p></li>
-<li><p>Temperal Difference:
+<li><p>Temporal Difference:
 <span class="math notranslate nohighlight">\(s \rightarrow R_{t+1} + \gamma \hat{v}(S_{t+1}, w_t)\)</span></p></li>
 </ul>
 </li>
@@ -500,7 +500,7 @@ document.write(`
 <p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>The best value function for finding a better policy in control is not necessarily the best for minimizing <span class="math notranslate nohighlight">\(\overline{VE}\)</span>. Nevertheless, it is not yet clear what a more useful alternative goal for value prediction might be. For now, we will focus on <span class="math notranslate nohighlight">\(\overline{VE}\)</span>.</p></li>
-<li><p>Often times, for complex function approximators such as Neural Networks, we can not find a global optimum of <span class="math notranslate nohighlight">\(w_\star\)</span>, for which  <span class="math notranslate nohighlight">\(\overline{VE}(w_\star) \le \overline{VE}(w)\)</span> for all <span class="math notranslate nohighlight">\(w\)</span>. Rather, we can only find a local optimum for which  <span class="math notranslate nohighlight">\(\overline{VE}(w_\star) \le \overline{VE}(w)\)</span> for all <span class="math notranslate nohighlight">\(w\)</span> in some neighborhood of <span class="math notranslate nohighlight">\(w_\star\)</span>, but oftern this is enough.</p></li>
+<li><p>Often times, for complex function approximators such as Neural Networks, we can not find a global optimum of <span class="math notranslate nohighlight">\(w_\star\)</span>, for which  <span class="math notranslate nohighlight">\(\overline{VE}(w_\star) \le \overline{VE}(w)\)</span> for all <span class="math notranslate nohighlight">\(w\)</span>. Rather, we can only find a local optimum for which  <span class="math notranslate nohighlight">\(\overline{VE}(w_\star) \le \overline{VE}(w)\)</span> for all <span class="math notranslate nohighlight">\(w\)</span> in some neighborhood of <span class="math notranslate nohighlight">\(w_\star\)</span>, but often this is enough.</p></li>
 </ul>
 </div>
 </li>
@@ -515,7 +515,7 @@ document.write(`
 <li><p>the approximate value function <span class="math notranslate nohighlight">\(v(s,w)\)</span> is a differentiable function of <span class="math notranslate nohighlight">\(w\)</span> for all <span class="math notranslate nohighlight">\(s \in S\)</span>.</p></li>
 </ul>
 </li>
-<li><p><strong>Sotchastic gradient method (SGD)</strong></p>
+<li><p><strong>Stochastic gradient method (SGD)</strong></p>
 <ul>
 <li><p><strong>Setup</strong>: assume that on each step, we observe a new example <span class="math notranslate nohighlight">\(S_t \rightarrow v_\pi(S_t)\)</span> consisting of a (possibly randomly selected) state <span class="math notranslate nohighlight">\(S_t\)</span> and its true value under the policy.</p></li>
 <li><p><strong>SGD method</strong>:</p>
@@ -547,7 +547,7 @@ document.write(`
 </li>
 <li><p><strong>Semi-gradient method</strong>:</p>
 <ul>
-<li><p><strong>Setup</strong>: the training example <span class="math notranslate nohighlight">\(S_t \rightarrow U_t\)</span> with <span class="math notranslate nohighlight">\(U_t \in \mathbb{R}\)</span> is not the true value <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span> but a <strong>boostraping target</strong> using <span class="math notranslate nohighlight">\(\hat{v}\)</span></p></li>
+<li><p><strong>Setup</strong>: the training example <span class="math notranslate nohighlight">\(S_t \rightarrow U_t\)</span> with <span class="math notranslate nohighlight">\(U_t \in \mathbb{R}\)</span> is not the true value <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span> but a <strong>boostrapping target</strong> using <span class="math notranslate nohighlight">\(\hat{v}\)</span></p></li>
 <li><p><strong>Semi-gradient methods</strong>:</p>
 <ul>
 <li><p>update rule</p>
@@ -577,10 +577,10 @@ document.write(`
 </li>
 </ul>
 </li>
-<li><p><strong>Example: State Aggregatioin</strong>:</p>
+<li><p><strong>Example: State Aggregation</strong>:</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(\textit{State Aggregation}\)</span>: a method for generalizing function approximation by grouping states together, each group of states share one estimated value.</p></li>
-<li><p>Using state aggregation for gradent MC (Lecture video):</p>
+<li><p>Using state aggregation for gradient MC (Lecture video):</p>
   <a href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/aJ9j6/state-aggregation-with-monte-carlo">
   <img src="../_static/img/chapter8/state_aggregation_mc.png" alt="Video: State Aggregation for MC" style="width:60%;">
   </a>
@@ -605,7 +605,7 @@ document.write(`
     \]</div>
 <ul class="simple">
 <li><p>In this case the approximate value function is said to be <span class="math notranslate nohighlight">\(\textit{linear in the weights}\)</span>, or simply <span class="math notranslate nohighlight">\(\textit{linear}\)</span>.</p></li>
-<li><p>the feature vector <span class="math notranslate nohighlight">\(\boldsymbol{x}(s) \dot= (x_1(s), x_2(s), ... x_d(s))^{\intercal}\)</span> has the same dimension <span class="math notranslate nohighlight">\(d\)</span> as the weight vector <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>. Each feature <span class="math notranslate nohighlight">\(x_i: S \rightarrow \mathbb{R}\)</span> is a socalled <span class="math notranslate nohighlight">\(\textit{basis function}\)</span> which assigns a value (<span class="math notranslate nohighlight">\(x_i(s)\)</span>) to the state <span class="math notranslate nohighlight">\(s\)</span> (the feature of <span class="math notranslate nohighlight">\(s\)</span>)</p></li>
+<li><p>the feature vector <span class="math notranslate nohighlight">\(\boldsymbol{x}(s) \dot= (x_1(s), x_2(s), ... x_d(s))^{\intercal}\)</span> has the same dimension <span class="math notranslate nohighlight">\(d\)</span> as the weight vector <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>. Each feature <span class="math notranslate nohighlight">\(x_i: S \rightarrow \mathbb{R}\)</span> is a so-called <span class="math notranslate nohighlight">\(\textit{basis function}\)</span> which assigns a value (<span class="math notranslate nohighlight">\(x_i(s)\)</span>) to the state <span class="math notranslate nohighlight">\(s\)</span> (the feature of <span class="math notranslate nohighlight">\(s\)</span>)</p></li>
 </ul>
 </li>
 <li><p><strong>(Semi-)Gradient methods for linear value function</strong></p>
@@ -677,7 +677,7 @@ document.write(`
 <section id="feature-construction-for-linear-methods">
 <h2>8.4 Feature Construction for Linear Methods<a class="headerlink" href="#feature-construction-for-linear-methods" title="Link to this heading">#</a></h2>
 <p>Choosing features appropriate to the task is an important way of adding prior domain knowledge to reinforcement learning systems. Intuitively, the features should correspond to the aspects of the state space along which generalization may be appropriate.</p>
-<p>A limitation of the linear form is that it cannot take into account any interactions between features, such as the presence of feature <span class="math notranslate nohighlight">\(i\)</span> being good only in the absence of feature <span class="math notranslate nohighlight">\(j\)</span>, or to put it in another word, we need features that can take the combinations of different states or state dimensions into consideration.</p>
+<p>A limitation of the linear form is that it cannot take into account any interactions between features, such as the presence of feature <span class="math notranslate nohighlight">\(i\)</span> being good only in the absence of feature <span class="math notranslate nohighlight">\(j\)</span>, or to put it in other words, we need features that can take the combinations of different states or state dimensions into consideration.</p>
 <p>In this last section we study <strong>how to construct such <span class="math notranslate nohighlight">\(x(s)\)</span></strong> for approximating the value function and balancing between generalization and discrimination.</p>
 <section id="coarse-coding">
 <h3>8.4.1 Coarse Coding<a class="headerlink" href="#coarse-coding" title="Link to this heading">#</a></h3>
@@ -686,7 +686,7 @@ document.write(`
 <ul>
 <li><p><strong>Scenario</strong>: assume the natural representation of the state set is a continuous two-dimensional space, one possible kind of representation of features can be <span class="math notranslate nohighlight">\(\textit{circles}\)</span> in state space.</p></li>
 <li><p><strong>Feature construction</strong>: If the state is inside a circle, then the corresponding feature has the value 1 and is said to be present; otherwise the feature is 0 and is said to be absent. (This kind of 1–0-valued feature is called a <span class="math notranslate nohighlight">\(\textit{binary feature}\)</span>.)</p>
-  <img src="../_static/img/chapter8/coarse_coding.png" alt="Demostration for Coarse Coding" style="width:45%;">
+  <img src="../_static/img/chapter8/coarse_coding.png" alt="Demonstration for Coarse Coding" style="width:45%;">
 <p>Corresponding to each circle / feature is a single weight (a component of <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>) that is affected by learning.</p>
 <p>Performing an update to the weights in one state changes the value estimate for all states within the <span class="math notranslate nohighlight">\(\textit{receptive fields}\)</span> (in this case, circles) of the active features. In the above image, update for state <span class="math notranslate nohighlight">\(s\)</span> also changes the value estimate for state <span class="math notranslate nohighlight">\(s\prime\)</span></p>
 </li>
@@ -696,15 +696,15 @@ document.write(`
 <li><p><strong>Generalization and Discrimination</strong></p>
 <ul>
 <li><p>You may choose to watch this <a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/JnNF5/generalization-properties-of-coarse-coding">lecture video</a> instead, since the following content is well covered in it and if you prefer visual&amp;audio contents over texts.</p></li>
-<li><p><strong>Demostration</strong>:</p>
+<li><p><strong>Demonstration</strong>:</p>
 <p>Intuitively, if the circles are small, then the generalization will be over a short distance, as in the below Figure on the left, whereas if they are large, it will be over a large distance, as in the middle. And the shape of the features will also determine the nature of the generalization (on the right side).</p>
   <img src="../_static/img/chapter8/coarse_coding_generalization.png" alt="Generalization for Coarse Coding" style="width:90%;">
-<p>As above, features with large <span class="math notranslate nohighlight">\(\textit{receptive fields}\)</span> give broad generalization, and might seem to fall short with discrimination, but conterintuitively, this is not true. Initial generalization from one point to another is indeed controlled by the size and shape of the <span class="math notranslate nohighlight">\(\textit{receptive fields}\)</span>, but finest discrimination is ultimately  controlled more <strong>by the total number of features</strong>, as shown by the next example.</p>
+<p>As above, features with large <span class="math notranslate nohighlight">\(\textit{receptive fields}\)</span> give broad generalization, and might seem to fall short with discrimination, but counterintuitively, this is not true. Initial generalization from one point to another is indeed controlled by the size and shape of the <span class="math notranslate nohighlight">\(\textit{receptive fields}\)</span>, but finest discrimination is ultimately  controlled more <strong>by the total number of features</strong>, as shown by the next example.</p>
 </li>
 <li><p><strong>Example: Coarseness of Coarse Coding</strong></p>
 <ul>
 <li><p>Setup: Linear function approximation based on coarse coding and Semi-Gradient method was used to learn a one-dimensional square-wave function, the values of this function were used as the targets, <span class="math notranslate nohighlight">\(U_t\)</span>.</p></li>
-<li><p>Results: as below, the width of the features had a strong e↵ect early in learning. However, the final function learned was a↵ected only slightly by the width of the features</p>
+<li><p>Results: as below, the width of the features had a strong effect early in learning. However, the final function learned was affected only slightly by the width of the features</p>
   <img src="../_static/img/chapter8/coarseness.png" alt="Example of Generalization for Coarse Coding" style="width:77%;">
 </li>
 </ul>

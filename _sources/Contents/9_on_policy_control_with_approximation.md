@@ -8,7 +8,7 @@ We now feature the semi-gradient Sarsa algorithm, the natural extension of semi-
 
 - **How to compute action-value function (linear case)**
 
-    - Smilar to the last chapter in the linear case, the approximated action-value function is computed by 
+    - Similar to the last chapter in the linear case, the approximated action-value function is computed by 
 
         $$
         \hat{q}(s, a, \boldsymbol{w_t}) \dot= \boldsymbol{w}^{\intercal} \boldsymbol{x}(s, a)
@@ -85,7 +85,7 @@ We now feature the semi-gradient Sarsa algorithm, the natural extension of semi-
 
 - **${\star}$ Methods for improving exploration under function approximation**
 
-    - This is an apsect that is **not included in Sutton's book** (2018 edition), yet well covered by this [lecture video](https://www.coursera.org/learn/prediction-control-function-approximation/lecture/SCKKe/exploration-under-function-approximation). To put it in a nutshell, the two main methods for exploration improvement (not necessarily work well) are:
+    - This is an aspect that is **not included in Sutton's book** (2018 edition), yet well covered by this [lecture video](https://www.coursera.org/learn/prediction-control-function-approximation/lecture/SCKKe/exploration-under-function-approximation). To put it in a nutshell, the two main methods for exploration improvement (not necessarily work well) are:
 
         - **Optimistic Initial Values**: In tabular settings, initializing values higher than the true ones encourages exploration. This works well in tabular settings but is complex in function approximation (e.g., neural networks), where relationships between inputs and outputs are non-linear. While optimistic initialization can guide exploration, it may lose effectiveness due to generalization in networks or non-localized updates.
 

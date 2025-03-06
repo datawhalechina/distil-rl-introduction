@@ -192,7 +192,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapte 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 4. Dynamic Programming</a></li>
 </ul>
@@ -459,14 +459,14 @@ document.write(`
                    <section class="tex2jax_ignore mathjax_ignore" id="chapter-4-dynamic-programming">
 <h1>Chapter 4. Dynamic Programming<a class="headerlink" href="#chapter-4-dynamic-programming" title="Link to this heading">#</a></h1>
 <p>The term dynamic programming (DP) refers to a collection of algorithms that can be used to compute optimal policies <strong>given a perfect model of the environment</strong> as a Markov decision process (MDP), it therefore requires no interaction with the environment.</p>
-<p>DP algorithms is limited in practice because of their assumption of a perfect model and because of their great computational expense. Yet DP provides an essential foundation for the understanding of the methods presented in the rest of this book. In fact, all of these methods can be viewed as attempts to achieve much the same effect as DP, only with less computation and without assuming a perfect model of the environment.</p>
+<p>DP algorithms are limited in practice because of their assumption of a perfect model and because of their great computational expense. Yet DP provides an essential foundation for the understanding of the methods presented in the rest of this book. In fact, all of these methods can be viewed as attempts to achieve much the same effect as DP, only with less computation and without assuming a perfect model of the environment.</p>
 <p>The key idea of DP, and of reinforcement learning generally, is the use of value functions to organize and structure the search for good policies. As we shall see, DP algorithms are obtained by turning Bellman equations such as these into assignments, that is, <strong>into update rules for improving approximations of the desired value functions.</strong></p>
 <section id="policy-evaluation-prediction-problem">
 <h2>4.1 Policy Evaluation (Prediction problem)<a class="headerlink" href="#policy-evaluation-prediction-problem" title="Link to this heading">#</a></h2>
 <ul>
 <li><p><strong>Policy Evaluation</strong>: to compute the state-value function <span class="math notranslate nohighlight">\(v_{\pi}\)</span> for an arbitrary policy <span class="math notranslate nohighlight">\(\pi\)</span>. (We also refer to this as the <span class="math notranslate nohighlight">\(\textit{prediction problem}\)</span>.)</p>
 <ul>
-<li><p><strong>DP assumes the environment’s dynamics are completely known</strong> (perfect model of the environment), in this case, we could use bellman equation to form a simultaneous linear equation system with <span class="math notranslate nohighlight">\(|S|\)</span> equations and <span class="math notranslate nohighlight">\(|S|\)</span> unknowns.</p>
+<li><p><strong>DP assumes the environment’s dynamics are completely known</strong> (perfect model of the environment), in this case, we could use Bellman equation to form a simultaneous linear equation system with <span class="math notranslate nohighlight">\(|S|\)</span> equations and <span class="math notranslate nohighlight">\(|S|\)</span> unknowns.</p>
 <p>With the initial approximation <span class="math notranslate nohighlight">\(v_0\)</span> chosen arbitrarily (except that the terminal state, if any, must be given value 0):</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -488,7 +488,7 @@ document.write(`
   <img src="../_static/img/chapter4/algo_iter_policy_eval.png" alt="Algorithm: Iterative Policy Evaluation" style="width: 100%;">
   </div>
 </li>
-<li><p>Intuition: <span class="math notranslate nohighlight">\(\Delta\)</span> will be set to 0 at the beginning of each iteration, and is used to record the <strong>maximal changes in all state values</strong> through state space. So when the maximal change in a sweep is smaller than the threshold <span class="math notranslate nohighlight">\(\theta\)</span>, the algorithm stops. We receive a approximate optimal value function <span class="math notranslate nohighlight">\(V \approx v_{\pi_\star}\)</span></p></li>
+<li><p>Intuition: <span class="math notranslate nohighlight">\(\Delta\)</span> will be set to 0 at the beginning of each iteration, and is used to record the <strong>maximal changes in all state values</strong> through state space. So when the maximal change in a sweep is smaller than the threshold <span class="math notranslate nohighlight">\(\theta\)</span>, the algorithm stops. We receive an approximate optimal value function <span class="math notranslate nohighlight">\(V \approx v_{\pi_\star}\)</span></p></li>
 </ul>
 </li>
 <li><p><strong>Gridworld Example:</strong> watch this <a class="reference external" href="https://www.coursera.org/learn/fundamentals-of-reinforcement-learning/lecture/ICAfp/iterative-policy-evaluation">lecture video</a> if you find the illustrations of sweeps during policy evaluation too hard to grasp.</p>
@@ -499,7 +499,7 @@ document.write(`
   </div>
 <ul class="simple">
 <li><p><strong>States</strong>: the nonterminal states are <span class="math notranslate nohighlight">\(S = {1, 2,...,14}\)</span>.</p></li>
-<li><p><strong>Actions</strong>: there are four actions possible in each state, <span class="math notranslate nohighlight">\(A = \{up, down, right, left\}\)</span>, which deterministically cause the corresponding state transitions, except that actions that would take the agent off the grid in fact leave the state unchanged.</p>
+<li><p><strong>Actions</strong>: there are four actions possible in each state, <span class="math notranslate nohighlight">\(A = \{up, down, right, left\}\)</span>, which deterministically causes the corresponding state transitions, except that actions that would take the agent off the grid in fact leave the state unchanged.</p>
 <ul>
 <li><p>For instance, <span class="math notranslate nohighlight">\(p(6, -1|5, right) = 1, p(7, -1|7, right) = 1\)</span>, and <span class="math notranslate nohighlight">\(p(10,r|5, right) = 0\)</span> for all <span class="math notranslate nohighlight">\(r \in R\)</span>.</p></li>
 </ul>
@@ -546,9 +546,9 @@ document.write(`
 <section id="policy-improvement">
 <h2>4.2 Policy Improvement<a class="headerlink" href="#policy-improvement" title="Link to this heading">#</a></h2>
 <ul>
-<li><p><strong>Policy Improvement Theorem</strong>: if <span class="math notranslate nohighlight">\(q_{\pi}(s, \pi'(s)) \ge v_{\pi}(s)\)</span> holds for all <span class="math notranslate nohighlight">\(s \in S\)</span>, then the policy <span class="math notranslate nohighlight">\(\pi'\)</span> must be as good as, or better than, <span class="math notranslate nohighlight">\(\pi\)</span>. In other words, <span class="math notranslate nohighlight">\(v_{\pi'}(s) \ge v_{\pi}(s)\)</span> for all <span class="math notranslate nohighlight">\(s \in S\)</span> also holds.</p>
+<li><p><strong>Policy Improvement Theorem</strong>: If <span class="math notranslate nohighlight">\(q_{\pi}(s, \pi'(s)) \ge v_{\pi}(s)\)</span> holds for all <span class="math notranslate nohighlight">\(s \in S\)</span>, then the policy <span class="math notranslate nohighlight">\(\pi'\)</span> must be as good as, or better than, <span class="math notranslate nohighlight">\(\pi\)</span>. In other words, <span class="math notranslate nohighlight">\(v_{\pi'}(s) \ge v_{\pi}(s)\)</span> for all <span class="math notranslate nohighlight">\(s \in S\)</span> also holds.</p>
 <ul>
-<li><p>the intuition of the inequality <span class="math notranslate nohighlight">\(q_{\pi}(s, \pi'(s)) \ge v_{\pi}(s)\)</span> is that (recall the backup diagram starting with <span class="math notranslate nohighlight">\(v(s)\)</span> shown below) there exists one (or more) explicit action(s) that could bring more return for state <span class="math notranslate nohighlight">\(s\)</span> than simply calculating the expectation (since <span class="math notranslate nohighlight">\(v(s) = \sum_a \pi(a|s)q(s,a)\)</span>)</p>
+<li><p>The intuition of the inequality <span class="math notranslate nohighlight">\(q_{\pi}(s, \pi'(s)) \ge v_{\pi}(s)\)</span> is that (recall the backup diagram starting with <span class="math notranslate nohighlight">\(v(s)\)</span> shown below) there exists one (or more) explicit action(s) that could bring more return for state <span class="math notranslate nohighlight">\(s\)</span> than simply calculating the expectation (since <span class="math notranslate nohighlight">\(v(s) = \sum_a \pi(a|s)q(s,a)\)</span>)</p>
   <div style="display: flex; justify-content: center;">
   <img src="../_static/img/chapter3/backup_diagram_v.png" alt="Backup diagram for v" style="width: 23%;">
   </div>
@@ -577,9 +577,9 @@ document.write(`
             &amp;= \max_a \sum_{s', r} p(s', r|s,a)[r + \gamma v_{\pi'}(s')]
             \end{align*}
             \end{split}\]</div>
-<p>The above last equation is exactly the bellman optimality equation, this means that when the policy can not get any better, <span class="math notranslate nohighlight">\(v_{\pi'}\)</span> is <span class="math notranslate nohighlight">\(v_{\star}\)</span>, therefore, <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\pi'\)</span> are both the optimal policy <span class="math notranslate nohighlight">\(\pi_{\star}\)</span>.</p>
+<p>The above last equation is exactly the Bellman optimality equation, this means that when the policy can not get any better, <span class="math notranslate nohighlight">\(v_{\pi'}\)</span> is <span class="math notranslate nohighlight">\(v_{\star}\)</span>, therefore, <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\pi'\)</span> are both the optimal policy <span class="math notranslate nohighlight">\(\pi_{\star}\)</span>.</p>
 </li>
-<li><p><strong>if a policy is already the greedy policy with respect to its own value function, then this policy is the optimal policy</strong></p></li>
+<li><p><strong>If a policy is already the greedy policy with respect to its own value function, then this policy is the optimal policy</strong></p></li>
 </ul>
 </li>
 </ul>
@@ -613,18 +613,18 @@ document.write(`
   <img src="../_static/img/chapter4/algo_policy_iteration.png" alt="Algorithm: Policy Iteration" style="width: 100%;">
   </div>
 </li>
-<li><p><strong>New Gridworld Example</strong>: again, if you find this all too abstract, watch this <a class="reference external" href="https://www.coursera.org/learn/fundamentals-of-reinforcement-learning/lecture/Xv32P/policy-iteration">lecture video</a> which should give you a more slow and smooth illustration.</p>
+<li><p><strong>New Gridworld Example</strong>: Again, if you find this all too abstract, watch this <a class="reference external" href="https://www.coursera.org/learn/fundamentals-of-reinforcement-learning/lecture/Xv32P/policy-iteration">lecture video</a> which should give you a more slow and smooth illustration.</p>
 <ul>
 <li><p><strong>Description</strong>:</p>
 <ul>
-<li><p>The Gridworld example in <a class="reference internal" href="#policy-evaluation-prediction-problem">section 4.1</a> actually reaches the optimal policy after only one iteration, we now make the example a bit more complex by elimating one terminal grid and adding blue states where rewards have much lower value of <span class="math notranslate nohighlight">\(-10\)</span>.</p>
+<li><p>The Gridworld example in <a class="reference internal" href="#policy-evaluation-prediction-problem">section 4.1</a> actually reaches the optimal policy after only one iteration, we now make the example a bit more complex by eliminating one terminal grid and adding blue states where rewards have much lower value of <span class="math notranslate nohighlight">\(-10\)</span>.</p>
   <div style="display: flex; justify-content: center;">
   <img src="../_static/img/chapter4/example4.3.1.png" alt="New Gridworld" style="width: 380px;">        
   </div>
 </li>
 </ul>
 </li>
-<li><p><strong>Policy iteraton</strong>:</p>
+<li><p><strong>Policy iteration</strong>:</p>
 <ul>
 <li><p>The first iteration:</p>
   <div style="display: flex; justify-content: center; gap: 20px;">
@@ -683,7 +683,7 @@ document.write(`
 <li><p><strong>Value Iteration</strong>:  is the special case of Policy Iteration where policy evaluation stops after just one sweep.</p>
 <ul class="simple">
 <li><p>Drawback of policy iteration: requires iterative computation, each of its iterations involves policy evaluation, which may itself be a protracted iterative computation requiring multiple sweeps through the state set, and convergence only occurs in the limit, which takes a lot of time.</p></li>
-<li><p>Value iteration effectively combines, in each of its sweeps, one sweep of policy evaluation and one sweep of policy improvement</p></li>
+<li><p>Value iteration effectively combines, in each of its sweeps, one sweep of policy evaluation and one sweep of policy improvement.</p></li>
 </ul>
 </li>
 <li><p><strong>Update rule</strong>:</p>
@@ -695,7 +695,7 @@ document.write(`
     \end{align*}
     \end{split}\]</div>
 <ul class="simple">
-<li><p>Note that the above equation is obtained simply by turning Bellman Optimality Equation into an updating rule.</p></li>
+<li><p>Note that the above equation is obtained simply by turning the Bellman Optimality Equation into an updating rule.</p></li>
 </ul>
 </li>
 <li><p><strong>Algorithm for Value Iteration</strong>:</p>
@@ -710,17 +710,17 @@ document.write(`
 <ul>
 <li><p><span class="math notranslate nohighlight">\(\star\)</span> <strong>Two types of DP</strong>:</p>
 <ul class="simple">
-<li><p>Synchronous DP: update all states systematically in a certain order (takes very long for large state space)</p></li>
-<li><p>Asynchronous DP: update states without order (can be faster, but also problematic when only a small set of states being updated constantly)</p></li>
+<li><p>Synchronous DP: update all states systematically in a certain order (takes a very long for large state space)</p></li>
+<li><p>Asynchronous DP: update states without order (can be faster, but also problematic when only a small set of states is being updated constantly)</p></li>
 </ul>
 </li>
-<li><p><strong>Generalized policy iteration (GPI)</strong>: refers to the general idea of letting policy-evaluation and policyimprovement processes interact, independent of the granularity and other details of the two processes.</p>
+<li><p><strong>Generalized policy iteration (GPI)</strong>: refers to the general idea of letting policy-evaluation and policy improvement processes interact, independent of the granularity and other details of the two processes.</p>
 <ul>
 <li><p>Almost all reinforcement learning methods are well described as GPI. That is, all have identifiable policies and value functions, with the policy always being improved with respect to the value function and the value function always being driven toward the value function for the policy:</p>
   <div style="display: flex; justify-content: center;">
   <img src="../_static/img/chapter4/gpi2.png" alt="Generalized policy iteration" style="width: 50%;;">
   </div>
-<p>Both processes stabilize only when a policy has been found that is greedy with respect to its own evaluation function (when <span class="math notranslate nohighlight">\(\pi\)</span> itself is the greedy policy of <span class="math notranslate nohighlight">\(v_{\pi}\)</span>). This implies that the Bellman optimality equation for state-value function holds, and thus that the policy and the value function are optimal.</p>
+<p>Both processes stabilize only when a policy has been found that is greedy with respect to its own evaluation function (when <span class="math notranslate nohighlight">\(\pi\)</span> itself is the greedy policy of <span class="math notranslate nohighlight">\(v_{\pi}\)</span>). This implies that the Bellman optimality equation for state-value functions holds, and thus that the policy and the value function are optimal.</p>
 </li>
 </ul>
 </li>
@@ -728,8 +728,8 @@ document.write(`
 </section>
 <section id="summary">
 <h2>4.6 Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
-<p>Classical DP methods operate in sweeps through the state set, performing an <span class="math notranslate nohighlight">\(\textit{expected update}\)</span> operation on each state. The update of states based on estimates of the values of successor states. That is, estimates are updated on the basis of other estimates. We call this general idea <span class="math notranslate nohighlight">\(\textit{bootstrapping}\)</span> (a very fundamental concept in many RL algorithms, and we will introduce it in depth in <a class="reference internal" href="6_temporal_difference_learning.html"><span class="std std-doc">Chapter 6</span></a>) and requires a perfect model of the environment.</p>
-<p>In the next chapter we explore Monte Carlo method - a reinforcement learning method that do not require a model and do not bootstrap. But for now, a quick summary:</p>
+<p>Classical DP methods operate in sweeps through the state set, performing an <span class="math notranslate nohighlight">\(\textit{expected update}\)</span> operation on each state. The update of states is based on estimates of the values of successor states. That is, estimates are updated on the basis of other estimates. We call this general idea <span class="math notranslate nohighlight">\(\textit{bootstrapping}\)</span> (a very fundamental concept in many RL algorithms, and we will introduce it in depth in <a class="reference internal" href="6_temporal_difference_learning.html"><span class="std std-doc">Chapter 6</span></a>) and requires a perfect model of the environment.</p>
+<p>In the next chapter we explore Monte Carlo method - a reinforcement learning method that does not require a model and do not bootstrap. But for now, a quick summary:</p>
 <ul>
 <li><p><strong>Mindmap of where we are now</strong>:</p>
   <img src="../_static/img/chapter4/chapter4_mindmap.png" alt="Mindmap" style="width:100%;">

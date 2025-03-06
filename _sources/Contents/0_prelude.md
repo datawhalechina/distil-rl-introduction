@@ -4,9 +4,9 @@
 
 As someone who's been learning reinforcement learning (RL) myself, I've been on the hunt for a while to find material that hits just the right spot. There are plenty of great resources out there, but most of them either dive straight into advanced algorithms or fail to connect the dots between different concepts in a way that makes sense for beginners.  
 
-*Reinforcement Learning: An Introduction* by Richard Sutton (I'll just refer it as the RL Intro book from now on) is regarded the bible of reinforcement learning. It's an incredible resource, no doubt about it, but reading it cover-to-cover takes a ton of effort. And honestly, most learners - whether they're researchers or practitioners - don't need every single detail in the book to grasp the core ideas, understand classical algorithms, and start applying or even developing new ones.  
+*Reinforcement Learning: An Introduction* by Richard Sutton (I'll just refer to it as the RL Intro book from now on) is regarded as the bible of reinforcement learning. It's an incredible resource, no doubt about it, but reading it cover-to-cover takes a ton of effort. And honestly, most learners - whether they're researchers or practitioners - don't need every single detail in the book to grasp the core ideas, understand classical algorithms, and start applying or even developing new ones.  
 
-That's exactly why I created this tutorial. After spending some time organizing my learning notes while working through the RL Intro book, I started thinking that maybe there is **a faster, more efficient way to absorb the key knowledge** from this book without having to read every word. That is how this project was born - a streamlined "knowledge vault" of reinforcement learning based on the RL Intro book.  
+That's exactly why I created this tutorial. After spending some time organizing my learning notes while working through the RL Intro book, I started thinking that maybe there is a faster, more efficient way to absorb the key knowledge from this book without having to read every word. That is how this project was born - a streamlined "knowledge vault" of reinforcement learning based on the RL Intro book.  
 
 Out of all the chapters in the book, I have **handpicked the most essential ones to help you build a solid understanding**. I used the structure of [this Coursera specialization](https://www.coursera.org/specializations/reinforcement-learning), taught by members of Sutton’s research group, as a guide. This knowledge vault blends the best parts of the RL Intro book and the online course, switching between the two formats to give you the easiest path to learning based on my own experience.  
 
@@ -57,11 +57,11 @@ To help fellow reinforcement learning (RL) enthusiasts learn more effectively, I
 
 - [A similar online RL book written by Professor Tim Miller](https://gibberblot.github.io/rl-notes/index.html)
 
-- [OpenAI spinning up](https://spinningup.openai.com/en/latest/index.html) (More suitable for learners who had experience with Deel Learning to some level)
+- [OpenAI spinning up](https://spinningup.openai.com/en/latest/index.html) (More suitable for learners who have experience with Deel Learning to some level)
 
 - [Huggingface Deep RL course](https://huggingface.co/learn/deep-rl-course/unit0/introduction) (You can actually earn a certificate here)
 
-- [David Silver's RL course at UCL](https://www.youtube.com/playlist?list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ) (My personla favorite)
+- [David Silver's RL course at UCL](https://www.youtube.com/playlist?list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ) (My personal favorite)
 
 - Some cheet-sheet-like RL study notes:
 
@@ -73,11 +73,10 @@ To help fellow reinforcement learning (RL) enthusiasts learn more effectively, I
 
 - [Github awesome-deep-rl](https://github.com/kengz/awesome-deep-rl)
 
-Lastly, the learning curve in RL can feel incredibly steep at the beginning due to its inherently complex nature. Ask further on reddit, search for other courses on some learning plattform like Coursera, you'll always find what is best for you. 
+Lastly, the learning curve in RL can feel incredibly steep at the beginning due to its inherently complex nature. Ask further on reddit, search for other courses on some learning **platform** like Coursera, you'll always find what is best for you. 
 
 ## Acknowledgements and Urges
 
 My deep appreciation to [Marvin Schweizer](https://github.com/mschweizer) for providing valuable feedback on this project!
 
 The project could definitely use more polish and I'd love to hear from you. Feel free to open issues on GitHub to share your thoughts- your input will go a long way in making this resource better for everyone.
-

@@ -192,7 +192,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapte 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
 </ul>
@@ -462,7 +462,7 @@ document.write(`
 <ul>
 <li><p><strong>How to compute action-value function (linear case)</strong></p>
 <ul>
-<li><p>Smilar to the last chapter in the linear case, the approximated action-value function is computed by</p>
+<li><p>Similar to the last chapter in the linear case, the approximated action-value function is computed by</p>
 <div class="math notranslate nohighlight">
 \[
         \hat{q}(s, a, \boldsymbol{w_t}) \dot= \boldsymbol{w}^{\intercal} \boldsymbol{x}(s, a)
@@ -541,7 +541,7 @@ document.write(`
 </li>
 <li><p><strong><span class="math notranslate nohighlight">\({\star}\)</span> Methods for improving exploration under function approximation</strong></p>
 <ul class="simple">
-<li><p>This is an apsect that is <strong>not included in Sutton’s book</strong> (2018 edition), yet well covered by this <a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/SCKKe/exploration-under-function-approximation">lecture video</a>. To put it in a nutshell, the two main methods for exploration improvement (not necessarily work well) are:</p>
+<li><p>This is an aspect that is <strong>not included in Sutton’s book</strong> (2018 edition), yet well covered by this <a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/SCKKe/exploration-under-function-approximation">lecture video</a>. To put it in a nutshell, the two main methods for exploration improvement (not necessarily work well) are:</p>
 <ul>
 <li><p><strong>Optimistic Initial Values</strong>: In tabular settings, initializing values higher than the true ones encourages exploration. This works well in tabular settings but is complex in function approximation (e.g., neural networks), where relationships between inputs and outputs are non-linear. While optimistic initialization can guide exploration, it may lose effectiveness due to generalization in networks or non-localized updates.</p></li>
 <li><p><strong>Epsilon Greedy</strong>: This method, which uses randomness to explore actions, is applicable with any function approximation and easy to implement. However, it doesn’t provide the systematic exploration seen with optimistic initialization.</p></li>

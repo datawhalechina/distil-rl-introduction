@@ -1,12 +1,12 @@
 # Chapter 3. Finite Markov Decision Processes
 
-MDPs are a  formalization of sequential decision making, where actions influence both immediate rewards, and subsequent states, and thereby the future rewards. So it must consider the trade-off between the immediate reward and delayed reward. 
+MDPs are a formalization of sequential decision making, where actions influence both immediate rewards, and subsequent states, and thereby the future rewards. So they must consider the trade-off between the immediate reward and the delayed reward. 
 
-Recall that in bandit problems we estimated the value $q_{\star}(a)$ of each action $a$, in MDPs we would need to estimate the value $q_{\star}(s, a)$ of each action $a$ in each state $s$, or we estimate the value $v_{\star}(s)$ of each state given optimal action selection. Meaning of these notations will be explained later in this chapter. 
+Recall that in bandit problems we estimated the value $q_{\star}(a)$ of each action $a$, in MDPs, we would need to estimate the value $q_{\star}(s, a)$ of each action $a$ in each state $s$, or we estimate the value $v_{\star}(s)$ of each state given optimal action selection. The meaning of these notations will be explained later in this chapter. 
 
 ## 3.1. Agent-Environment Interface
 
-- **Illustration of a MDP**: MDPs are meant to be a straightforward framing of the problem of learning from interaction between a learner and the environment to achieve a goal, illustrated as follows:
+- **Illustration of an MDP**: MDPs are meant to be a straightforward framing of the problem of learning from interactions between a learner and the environment to achieve a goal, illustrated as follows:
 
     <div style="display: flex; justify-content: center;">
     <img src="../_static/img/chapter3/agent_env_interaction.png" alt="Agent Environment Interaction" style="width: 70%;">
@@ -16,20 +16,20 @@ Recall that in bandit problems we estimated the value $q_{\star}(a)$ of each act
 
         - $\textit{Agent}$: the learner and decision maker
 
-        - $\textit{Environment}$: the thing the agent interacts with, comprising everything outside the agent.
+        - $\textit{Environment}$: the entity the agent interacts with, comprising everything outside the agent.
 
-        - Interaction process: at time step $t$, the agent receives some representation of the environment's state $S_t \in S$, selects on that basis an action $A_t \in A(s)$, as a consequence it then receives a numerical reward $R_{t+1} \in R \subset \mathbb{R}$, and finds itself in a new environment state $S_{t+1} \in S$.
+        - Interaction process: at time step $t$, the agent receives a representation of the environment's state $S_t \in S$, selects, on that basis, an action $A_t \in A(s)$, as a consequence, it then receives a numerical reward $R_{t+1} \in R \subset \mathbb{R}$, and finds itself in a new environment state $S_{t+1} \in S$.
 
         - $\textit{Trajectory}$: The sequence led by the interaction process: $s_0, a_0, r_1, s_1, a_1, r_2, ... , s_t, a_t, r_{t+1}$ (sometimes when we talk about MDPs, we refer to this kind of sequences directly).
 
-- **Dynamics of MDP**: in a $\textit{finite MDP}$ - the sets of $S, A, R$ all have finite elements, so $S_t, R_t$ have well defined discrete probability distributions that are dependent only on the preceding state and action ($\textit{Markov property}$) - the dynamics of a finite MDP can be represented in this form as follows:
+- **Dynamics of MDP**: in a $\textit{finite MDP}$ - the sets of $S, A, R$ all have finite elements, so $S_t, R_t$ have well-defined discrete probability distributions that are dependent only on the preceding state and action ($\textit{Markov property}$) - the dynamics of a finite MDP can be represented in this form as follows:
 
     $$
         p(s', r | s, a) \dot= Pr(S_{t+1}=s', R_{t+1}=r | A_t=a, S_t=s) \\
         \text{with} \sum_{s' \in S} \sum_{ r\in R} p(s', r | s, a) = 1, \text{for all} \ s \in S, a \in A(s)
     $$
 
-- **Useful derivations**: with the dynamics of a MDP known, one can compute anything one might want to know about the envrionment:
+- **Useful derivations**: with the dynamics of a MDP known, one can compute anything one might want to know about the environment:
 
     - State-transition probability:
 
@@ -58,7 +58,7 @@ Recall that in bandit problems we estimated the value $q_{\star}(a)$ of each act
 
     Note that the reward signal is your way of communicating to the agent of what you want it to achieve, NOT how you want it achieved, i.e., reward signal doesn't take the process into account.
 
-- **Reward hypothesis**: The idea of maximizing the cumulative reward to allow the agent to show desirablt behaviour is based on the $\textit{reward hypothesis}$: that all of what we mean by goals and purposes can be well thought of as the maximization of the expected value of the cumulative sum of the reward.
+- **Reward hypothesis**: The idea of maximizing the cumulative reward to allow the agent to show desirable behaviour is based on the $\textit{reward hypothesis}$: that all of what we mean by goals and purposes can be well thought of as the maximization of the expected value of the cumulative sum of the reward.
 
 ### 3.2.2 Returns and Episodes
 
@@ -80,7 +80,7 @@ Recall that in bandit problems we estimated the value $q_{\star}(a)$ of each act
         \end{align*}
         $$
 
-- **Details on the two type of tasks**:
+- **Details on the two types of tasks**:
 
     - $\textit{Episodic tasks}$: episodes end in a special state called the $\textit{terminal state}$, followed by a reset to a standard starting state or to a sample from a standard distribution of starting states. Note that
     
@@ -92,7 +92,7 @@ Recall that in bandit problems we estimated the value $q_{\star}(a)$ of each act
 
     - $\textit{Continuing tasks}$: in contrast, continuing tasks are those tasks in which the agent–environment interaction does not break naturally into identifiable episodes, but goes on continually without limit. Note that in continuous cases,
 
-        - $\gamma \in (0,1)$ is called the $\textit{discout rate}$, and is used to represent the agent's preference between immediate and future reward. The more $\gamma$ approaches 1, the more "farsighted" the agent becomes.
+        - $\gamma \in (0,1)$ is called the $\textit{discount rate}$, and is used to represent the agent's preference between immediate and future reward. The more $\gamma$ approaches 1, the more "farsighted" the agent becomes.
 
         - though $G_t$ is a sum of an infinite number of terms, it is still finite if the reward is nonzero and constant and $\gamma \in (0,1)$.
 
@@ -116,7 +116,7 @@ Recall that in bandit problems we estimated the value $q_{\star}(a)$ of each act
 
         - Description: This task could be treated as episodic, where the natural episodes are the repeated attempts to balance the pole. 
         
-        - Reward: The reward in this case could be $+1$ for every time step on which failure did not occur
+        - Reward: The reward in this case could be $+1$ for every time step during which failure did not occur
         
         - Return: Return at each time would be the number of steps until failure.
 
@@ -130,7 +130,7 @@ Recall that in bandit problems we estimated the value $q_{\star}(a)$ of each act
 
 ### 3.2.3 Unified Notation for Episodic and Continuing Tasks
 
-In practice, it turns out that when we discuss episodic tasks we almost never have to distinguish between different episodes. The two types of tasks can be unified by considering episode termination to be the entering of a special $\textit{absorbing state}$ that transitions only to itself and that generates only rewards of zero.
+In practice, it turns out that when we discuss episodic tasks we almost never have to distinguish between different episodes. The two types of tasks can be unified by considering episode termination as the entering of a special $\textit{absorbing state}$ that transitions only to itself and that generates only rewards of zero.
 
 <div style="display: flex; justify-content: center;">
 <img src="../_static/img/chapter3/absorbing_state.png" alt="Absorbing State" style="width: 60%;">

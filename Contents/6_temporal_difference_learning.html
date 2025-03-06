@@ -192,7 +192,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapte 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
 </ul>
@@ -476,13 +476,13 @@ document.write(`
 	\end{split}\]</div>
 <ul>
 <li><p><strong>Monte Carlo methods</strong> use an estimate of equation (1) as a target:</p>
-<p><span class="math notranslate nohighlight">\(V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))\)</span> with <span class="math notranslate nohighlight">\(G_t\)</span> as the single realisation from each episode .</p>
+<p><span class="math notranslate nohighlight">\(V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))\)</span> with <span class="math notranslate nohighlight">\(G_t\)</span> as the single realization from each episode .</p>
 </li>
-<li><p><strong>Dynamic Programming methods</strong> use an estiamte of equation (3) as a target:</p>
+<li><p><strong>Dynamic Programming methods</strong> use an estimate of equation (3) as a target:</p>
 <p><span class="math notranslate nohighlight">\(V(s) = \sum_a \pi(a|s) \sum_{s', r} p(s',r|s,a) [r + \gamma V(s')]\)</span></p>
 </li>
 <li><p><strong>Temporal Difference methods</strong> also uses an estimate of equation (3), yet requires no model of the environment’s dynamics. It combines the above two in the following way:</p>
-<p><span class="math notranslate nohighlight">\(V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))\)</span> with <span class="math notranslate nohighlight">\(R_{t+1} + \gamma V(S_{t+1})\)</span> as the single realisation of <span class="math notranslate nohighlight">\(R_{t+1} + \gamma v_{\pi}(S_{t+1})\)</span> each time.</p>
+<p><span class="math notranslate nohighlight">\(V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))\)</span> with <span class="math notranslate nohighlight">\(R_{t+1} + \gamma V(S_{t+1})\)</span> as the single realization of <span class="math notranslate nohighlight">\(R_{t+1} + \gamma v_{\pi}(S_{t+1})\)</span> each time.</p>
 <ul class="simple">
 <li><p>The target for the TD update is <span class="math notranslate nohighlight">\(R_{t+1} + \gamma V(S_{t+1})\)</span>, this TD method is called <strong>TD(0) or one-step TD</strong>, which is a special case of the TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) or n-step TD (not included in this tutorial)</p></li>
 <li><p>TD combines the sampling of MC and the bootstrapping of DP:</p>
@@ -516,7 +516,7 @@ document.write(`
 </li>
 <li><p><strong>Advantages of TD prediction</strong>:</p>
 <ul>
-<li><p>Over dynamic programming: TD methods do not need a model of the environment. Over Monte Carlo: TD methods are naturally implemented in an online, fully incremental fashion, i.e., they do not require to wait until the end of an episode.</p></li>
+<li><p>Over dynamic programming: TD methods do not need a model of the environment. Over Monte Carlo: TD methods are naturally implemented in an online, fully incremental fashion, i.e., they do not require waiting until the end of an episode.</p></li>
 <li><p>For any fixed policy <span class="math notranslate nohighlight">\(\pi\)</span>, TD(0) has been proved to converge to <span class="math notranslate nohighlight">\(v_\pi\)</span>. For details, refer to the book chapter 6.2, we skip the proof in this tutorial.</p></li>
 <li><p>In practice, TD methods have usually been found to  converge faster than constant-<span class="math notranslate nohighlight">\(\alpha\)</span> MC methods on stochastic tasks. A demonstrative example is given in the following video:</p>
   <a href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/CEzFc/comparing-td-and-monte-carlo">
@@ -532,7 +532,7 @@ document.write(`
 <section id="sarsa-on-policy-td-control">
 <h3>6.2.1 Sarsa: On-policy TD Control<a class="headerlink" href="#sarsa-on-policy-td-control" title="Link to this heading">#</a></h3>
 <ul>
-<li><p><strong>Backgound for Sarsa</strong>:</p>
+<li><p><strong>Background for Sarsa</strong>:</p>
 <ul>
 <li><p>Since TD methods deal with tasks where there is no model of environment available, it is natural to estimate <span class="math notranslate nohighlight">\(Q_\pi(s,a)\)</span> instead of <span class="math notranslate nohighlight">\(V_\pi(s)\)</span>. Similar to <a class="reference internal" href="#td-prediction">section 6.1</a>, the <strong>update rule for Sarsa</strong> is:</p>
 <div class="math notranslate nohighlight">
@@ -550,9 +550,9 @@ document.write(`
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><strong>There is no need to initialize a policy <span class="math notranslate nohighlight">\(\pi\)</span> in the beginning</strong>, the action can be derived directly from a given policy wth <span class="math notranslate nohighlight">\(Q(s,a), \text{ for all } s \in S, a \in A(s)\)</span> available.</p></li>
+<li><p><strong>There is no need to initialize a policy <span class="math notranslate nohighlight">\(\pi\)</span> in the beginning</strong>, the action can be derived directly from a given policy with <span class="math notranslate nohighlight">\(Q(s,a), \text{ for all } s \in S, a \in A(s)\)</span> available.</p></li>
 <li><p>While deriving the next action, make sure to use a soft-policy to ensure exploration.</p></li>
-<li><p>Notice that after transit to the state <span class="math notranslate nohighlight">\(S'\)</span>, you still need to take another action <span class="math notranslate nohighlight">\(A'\)</span> to be able to update <span class="math notranslate nohighlight">\(Q(S,A)\)</span>.</p></li>
+<li><p>Notice that after transition to the state <span class="math notranslate nohighlight">\(S'\)</span>, you still need to take another action <span class="math notranslate nohighlight">\(A'\)</span> to be able to update <span class="math notranslate nohighlight">\(Q(S,A)\)</span>.</p></li>
 <li><p>Sarsa converges with probability 1 to an optimal policy and action-value function as long as all state–action pairs are visited an infinite number of times and the policy converges in the limit to the greedy policy (which can be arranged, for example, with <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policies by setting <span class="math notranslate nohighlight">\(\epsilon = 1/t\)</span>).</p></li>
 </ul>
 </div>
@@ -563,7 +563,7 @@ document.write(`
   </a>
 <ul class="simple">
 <li><p>Notice that the first few episodes take a couple thousand steps to complete. The curve gradually gets steeper indicating that episodes are completed more quickly.</p></li>
-<li><p>Notice the episode completion rate stops increasing. This means the agents policy hovers around the optimal policy and won’t be exactly optimal, because of exploration.</p></li>
+<li><p>Notice the episode completion rate stops increasing. This means the agent’s policy hovers around the optimal policy and won’t be exactly optimal, because of exploration.</p></li>
 </ul>
 </li>
 </ul>
@@ -571,7 +571,7 @@ document.write(`
 <section id="q-learning-off-policy-td-control">
 <h3>6.2.2 Q-learning: Off-policy TD Control<a class="headerlink" href="#q-learning-off-policy-td-control" title="Link to this heading">#</a></h3>
 <ul>
-<li><p><strong>Backgound for Q-learning</strong>:</p>
+<li><p><strong>Background for Q-learning</strong>:</p>
 <ul>
 <li><p>The update rule for Q-learning is:</p>
 <div class="math notranslate nohighlight">
@@ -587,8 +587,8 @@ document.write(`
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><strong>Different from Sarsa, at target state <span class="math notranslate nohighlight">\(S'\)</span>, Q-learning choose the greedy action that maximizes <span class="math notranslate nohighlight">\(Q(S', a)\)</span> directly</strong>, but not according to a policy derived from <span class="math notranslate nohighlight">\(Q\)</span> (although, the derived policy from <span class="math notranslate nohighlight">\(Q\)</span> can also be the greedy policy, if so, the update rules of Sarsa and Q-learning are identical).</p></li>
-<li><p><strong>Q-learning is off-policy, but why?</strong> Consider the derived policy from current <span class="math notranslate nohighlight">\(Q\)</span> as the <span class="math notranslate nohighlight">\(\textit{behaviour policy}\)</span>, which can be e.g., <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy. but the <span class="math notranslate nohighlight">\(\textit{target policy}\)</span> for Q-learning is actually the greedy policy according to the <span class="math notranslate nohighlight">\(max\)</span> term in the update rule from above (actions are chosen according to <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy, updates are made according to the greedy policy). Readers of interest about why exactly Q-learning is off-policy can further refer to this <a class="reference external" href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/1OikH/how-is-q-learning-off-policy">lecture video.</a></p></li>
+<li><p><strong>Different from Sarsa, at target state <span class="math notranslate nohighlight">\(S'\)</span>, Q-learning chooses the greedy action that maximizes <span class="math notranslate nohighlight">\(Q(S', a)\)</span> directly</strong>, but not according to a policy derived from <span class="math notranslate nohighlight">\(Q\)</span> (although, the derived policy from <span class="math notranslate nohighlight">\(Q\)</span> can also be the greedy policy, if so, the update rules of Sarsa and Q-learning are identical).</p></li>
+<li><p><strong>Q-learning is off-policy, but why?</strong> Consider the derived policy from current <span class="math notranslate nohighlight">\(Q\)</span> as the <span class="math notranslate nohighlight">\(\textit{behavior policy}\)</span>, which can be e.g., <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy. but the <span class="math notranslate nohighlight">\(\textit{target policy}\)</span> for Q-learning is actually the greedy policy according to the <span class="math notranslate nohighlight">\(max\)</span> term in the update rule from above (actions are chosen according to <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy, updates are made according to the greedy policy). Readers of interest about why exactly Q-learning is off-policy can further refer to this <a class="reference external" href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/1OikH/how-is-q-learning-off-policy">lecture video.</a></p></li>
 </ul>
 </div>
 </li>
@@ -598,7 +598,7 @@ document.write(`
   </a>
 <ul class="simple">
 <li><p>In the beginning, the two algorithms learn at a similar pace. Towards the end, Q-Learning seems to learn a better final policy.</p></li>
-<li><p>When we descrease the step-size <span class="math notranslate nohighlight">\(\alpha\)</span>, Sarsa learns the same final policy as Q-Learning, but more slowly. This experiment highlights the impact of parameter choices in reinforcement learning. <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\epsilon\)</span>, initial values, and the length of the experiment can all influence the final result.</p></li>
+<li><p>When we decrease the step-size <span class="math notranslate nohighlight">\(\alpha\)</span>, Sarsa learns the same final policy as Q-Learning, but more slowly. This experiment highlights the impact of parameter choices in reinforcement learning. <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\epsilon\)</span>, initial values, and the length of the experiment can all influence the final result.</p></li>
 </ul>
 </li>
 <li><p><strong>Example of Cliff Walking - Another comparison between Sarsa and Q-learning</strong></p>
@@ -625,7 +625,7 @@ document.write(`
 <section id="expected-sarsa">
 <h3>6.2.3 Expected Sarsa<a class="headerlink" href="#expected-sarsa" title="Link to this heading">#</a></h3>
 <ul>
-<li><p><strong>Backgound for expected Sarsa</strong>:</p>
+<li><p><strong>Background for expected Sarsa</strong>:</p>
 <ul class="simple">
 <li><p>update rule:</p></li>
 </ul>
@@ -668,7 +668,7 @@ document.write(`
 <p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>The algorithm is just like Q-learning except that instead of using the maximum over next state-action pairs it uses the expected value, taking into account how likely each action is under the current policy.</p></li>
-<li><p>The fun part about Expected Sarsa is that <strong>it can be both on- and off-policy</strong>. The above algorithm is a on-policy setting, but in general expected sarsa might use a policy different from the target policy <span class="math notranslate nohighlight">\(\pi\)</span> to generate behavior, in which case it becomes an off-policy algorithm.</p>
+<li><p>The fun part about Expected Sarsa is that <strong>it can be both on- and off-policy</strong>. The above algorithm is an on-policy setting, but in general expected sarsa might use a policy different from the target policy <span class="math notranslate nohighlight">\(\pi\)</span> to generate behavior, in which case it becomes an off-policy algorithm.</p>
 <ul>
 <li><p>For example, suppose <span class="math notranslate nohighlight">\(\pi\)</span> is the greedy policy while behavior is more exploratory; then Expected Sarsa is then exactly Q-learning.</p></li>
 <li><p>In the above sense Expected Sarsa subsumes and generalizes Q-learning while reliably improving over Sarsa. <strong>Except for the small additional computational cost, Expected Sarsa may completely dominate both of the other more-well-known TD control algorithms.</strong></p></li>

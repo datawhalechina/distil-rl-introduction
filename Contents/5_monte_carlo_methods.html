@@ -192,7 +192,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapte 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
 </ul>
@@ -468,7 +468,7 @@ document.write(`
                 <article class="bd-article">
                    <section class="tex2jax_ignore mathjax_ignore" id="chapter-5-monte-carlo-methods">
 <h1>Chapter 5. Monte Carlo Methods<a class="headerlink" href="#chapter-5-monte-carlo-methods" title="Link to this heading">#</a></h1>
-<p>Monte Carlo methods are ways of solving the reinforcement learning problem based on <strong>experience only</strong>, i.e., averaging sample returns. To ensure that well-defined returns are available, here we define Monte Carlo methods only for <strong>episodic tasks</strong>.</p>
+<p>Monte Carlo methods a way of solving the reinforcement learning problem based on <strong>experience only</strong>, i.e., averaging sample returns. To ensure that well-defined returns are available, here we define Monte Carlo methods only for <strong>episodic tasks</strong>.</p>
 <p>Only on the completion of an episode are value estimates and policies changed. Monte Carlo methods can thus be incremental in an <strong>episode-by-episode</strong> sense, but not in a step-by-step (online) sense.</p>
 <p>We adapt the idea of general policy iteration (GPI) and learn value functions from sample returns with the MDP. The value functions and corresponding policies still interact to attain optimality in essentially the same way (GPI).</p>
 <p>One final note about the notation: <strong>throughout this chapter, we assume an episode always starts at time step <span class="math notranslate nohighlight">\(0\)</span> and ends at time step <span class="math notranslate nohighlight">\(T\)</span>, i.e., <span class="math notranslate nohighlight">\(S_T\)</span> is the terminal state.</strong></p>
@@ -495,7 +495,7 @@ document.write(`
   </div>
 </li>
 <li><p>Intuition: the realizations of return <span class="math notranslate nohighlight">\(G_t\)</span> for each state is calculated backwards from <span class="math notranslate nohighlight">\(S_{T-1}\)</span> to <span class="math notranslate nohighlight">\(S_0\)</span>, by the law of large number, the average of <span class="math notranslate nohighlight">\(G_t\)</span> for each state will be the value of that state: <span class="math notranslate nohighlight">\(v(S_t) = E_{\pi}[G_t|S_t]\)</span></p></li>
-<li><p>Visualization of return calculation (<span class="math notranslate nohighlight">\(T=5\)</span>, intergers on arrows are the rewards):</p>
+<li><p>Visualization of return calculation (<span class="math notranslate nohighlight">\(T=5\)</span>, integers on arrows are the rewards):</p>
   <div style="display: flex; justify-content: center;">
   <img src="../_static/img/chapter5/computing_gt.png" alt="Backward calculation of returns" style="width: 350px;">
   </div>
@@ -518,7 +518,7 @@ document.write(`
 </ul>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
-<p>Turn this algo below into a book-similar image</p>
+<p>Turn this algo below into a book-style image</p>
 </div>
 <ul class="simple">
 <li><p><strong>First-visit MC prediction, for estimating <span class="math notranslate nohighlight">\(Q \approx q_{\pi}\)</span></strong></p>
@@ -567,7 +567,7 @@ document.write(`
 <li><p><strong>Assumption (1)</strong> of <span class="math notranslate nohighlight">\(\textit{exploring starts}\)</span>: episodes start in a state-action pair, and every pair has a nonzero probability of being selected as the start. (So every state-action pair will be visited an infinite number of times in the limit of an infinite number of episodes.)</p></li>
 </ul>
 </li>
-<li><p><strong>Problem of estimating <span class="math notranslate nohighlight">\(\hat{q}_{\pi}(S_t, A_t)\)</span></strong>: by default, we used the law of large number and rely on the following assumption:</p>
+<li><p><strong>Problem of estimating <span class="math notranslate nohighlight">\(\hat{q}_{\pi}(S_t, A_t)\)</span></strong>: by default, we used the law of large numbers and rely on the following assumption:</p>
 <ul>
 <li><p><strong>Assumption (2)</strong> of infinite number of episodes: policy evaluation can be done with infinite number of episodes (complete policy evaluation).</p></li>
 </ul>
@@ -579,7 +579,7 @@ document.write(`
 <ul>
 <li><p>How to <strong>remove Assumption (2)</strong>:</p>
 <ul class="simple">
-<li><p>To avoid infinite number of episodes nominally required for policy evaluation, we could <strong>give up trying to complete policy evaluation</strong> before returning to policy improvement. Value iteration can be seen as an extrem example of this idea.</p></li>
+<li><p>To avoid infinite number of episodes nominally required for policy evaluation, we could <strong>give up trying to complete policy evaluation</strong> before returning to policy improvement. Value iteration can be seen as an extreme example of this idea.</p></li>
 <li><p>For Monte Carlo policy iteration it is natural to alternate between evaluation and improvement on an <strong>episode-by-episode</strong> basis. After each episode, the observed returns are used for policy evaluation, and then the policy is improved at all the states visited in the episode.</p></li>
 </ul>
 </li>
@@ -589,7 +589,7 @@ document.write(`
   </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The essential technique of above algorithm is that after each update of <span class="math notranslate nohighlight">\(Q(S_t,A_t)\)</span>, the improvement (greedification) will be made directly, which removes the second assumption.</p>
+<p>The essential technique of the above algorithm is that after each update of <span class="math notranslate nohighlight">\(Q(S_t,A_t)\)</span>, the improvement (greedification) will be made directly, which removes the second assumption.</p>
 </div>
 </li>
 </ul>
@@ -599,13 +599,13 @@ document.write(`
 <ul>
 <li><p><strong>On &amp; Off-policy methods</strong>:</p>
 <ul class="simple">
-<li><p>On policy methods: attempt to evaluate or improve the policy that is used to make decisions. (e.g., MC with ES, dynamic programming etc.)</p></li>
-<li><p>Off policy methods: evaluate or improve a policy different from that used to generate the data.</p></li>
+<li><p>On-policy methods: attempt to evaluate or improve the policy that is used to make decisions. (e.g., MC with ES, dynamic programming etc.)</p></li>
+<li><p>Off-policy methods: evaluate or improve a policy different from that used to generate the data.</p></li>
 </ul>
 </li>
 <li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-soft policies</strong>:</p>
 <ul class="simple">
-<li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy</strong>: as introduced in Chapter 2 <a class="reference internal" href="2_multi_armed_bandits.html#action-value-methods"><span class="std std-ref">section 2.2</span></a> all non-greedy action are given the minimal probability of selection <span class="math notranslate nohighlight">\(\frac{\epsilon}{|A(s)|}\)</span> (<strong>uniform distribution</strong>), the greedy action has the probability of <span class="math notranslate nohighlight">\(1 - \epsilon + \frac{\epsilon}{|A(s)|}\)</span>.</p>
+<li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy</strong>: as introduced in Chapter 2 <a class="reference internal" href="2_multi_armed_bandits.html#action-value-methods"><span class="std std-ref">section 2.2</span></a> all non-greedy actions are given the minimal probability of selection <span class="math notranslate nohighlight">\(\frac{\epsilon}{|A(s)|}\)</span> (<strong>uniform distribution</strong>), the greedy action has the probability of <span class="math notranslate nohighlight">\(1 - \epsilon + \frac{\epsilon}{|A(s)|}\)</span>.</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy is a type of <span class="math notranslate nohighlight">\(\epsilon\)</span>-soft policies. Among <span class="math notranslate nohighlight">\(\epsilon\)</span>-soft policies, <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policies are in some sense those that are closest to greedy.</p></li>
 </ul>
@@ -620,7 +620,7 @@ document.write(`
   <img src="../_static/img/chapter5/algo_mc_control.png" alt="Algorithm: On-policy Monte Carlo control" style="width: 100%;">
   </div>
 </li>
-<li><p>Intuition: If we remove the assumption of exploring starts, we cannot simply improve the policy by making it greedy with respect to the current value function, because that would prevent further exploration of nongreedy actions. So on the basis of Monte Carlo ES (Exploring Starts) in <a class="reference internal" href="#monte-carlo-control-removing-assumption-2">section 5.2.1</a>, this algorithm removes the assumptions of exploring start by:</p>
+<li><p>Intuition: If we remove the assumption of exploring starts, we cannot simply improve the policy by making it greedy with respect to the current value function, because that would prevent further exploration of non-greedy actions. So on the basis of Monte Carlo ES (Exploring Starts) in <a class="reference internal" href="#monte-carlo-control-removing-assumption-2">section 5.2.1</a>, this algorithm removes the assumptions of exploring start by:</p>
 <ul class="simple">
 <li><p>defining the initial policy to be <span class="math notranslate nohighlight">\(\epsilon\)</span>-soft and,</p></li>
 <li><p>updating the old policy to be <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy during policy improvement.</p></li>
@@ -648,7 +648,7 @@ document.write(`
 <li><p><strong>Off-policy learning</strong>: the learning is from data generated by <span class="math notranslate nohighlight">\(\textit{behavior policy}\)</span> <span class="math notranslate nohighlight">\(b\)</span> and is “off” the <span class="math notranslate nohighlight">\(\textit{target policy}\)</span> <span class="math notranslate nohighlight">\(\pi\)</span>. Off-policy methods require additional concepts and notation, and because the data is due to a different policy, <strong>off-policy methods are often of greater variance and are slower to converge.</strong> <br />
 <strong>On the other hand, off-policy methods are more powerful and general.</strong> They include on-policy methods as the special case in which the target and behavior policies are the same.</p>
 <ul>
-<li><p>In order to use episodes from <span class="math notranslate nohighlight">\(b\)</span> to estimate values for <span class="math notranslate nohighlight">\(\pi\)</span>, we proceede based on the <strong>assumption of coverage</strong>: wherever <span class="math notranslate nohighlight">\(\pi(a|s) \ge 0\)</span>, <span class="math notranslate nohighlight">\(b(a|s) \ge 0\)</span> must also hold. This means, behavior policy <span class="math notranslate nohighlight">\(b\)</span> must be stohastic in states where it is not identical to the target policy <span class="math notranslate nohighlight">\(\pi\)</span>.</p></li>
+<li><p>In order to use episodes from <span class="math notranslate nohighlight">\(b\)</span> to estimate values for <span class="math notranslate nohighlight">\(\pi\)</span>, we proceed based on the <strong>assumption of coverage</strong>: wherever <span class="math notranslate nohighlight">\(\pi(a|s) \ge 0\)</span>, <span class="math notranslate nohighlight">\(b(a|s) \ge 0\)</span> must also hold. This means, behavior policy <span class="math notranslate nohighlight">\(b\)</span> must be stochastic in states where it is not identical to the target policy <span class="math notranslate nohighlight">\(\pi\)</span>.</p></li>
 </ul>
 </li>
 </ul>
@@ -709,8 +709,8 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[q_{\pi}(s,a)= E_b[\rho_{t+1:T-1} \times G_t|S_t = s, A_t=a]\]</div>
 <ul class="simple">
-<li><p>Intuition: note that the value function for <span class="math notranslate nohighlight">\(q\)</span>: <span class="math notranslate nohighlight">\(E[G_t|S_t = s, A_t=a]\)</span> is caculating an expection based on all given trajectories, so every <span class="math notranslate nohighlight">\(G_t\)</span> is a single realisation, which can be seen as the variable <span class="math notranslate nohighlight">\(x\)</span> in the derivation of importance sampling equation. <br />
-The importance sampling ratio <span class="math notranslate nohighlight">\(\rho_{t+1:T-1}\)</span> is caculated on a trajectory basis to correspond to this trajectory-based charactor of <span class="math notranslate nohighlight">\(G_t\)</span> (and is used for multiplication with <span class="math notranslate nohighlight">\(G_t\)</span> directly).</p></li>
+<li><p>Intuition: note that the value function for <span class="math notranslate nohighlight">\(q\)</span>: <span class="math notranslate nohighlight">\(E[G_t|S_t = s, A_t=a]\)</span> is calculating an expectation based on all given trajectories, so every <span class="math notranslate nohighlight">\(G_t\)</span> is a single realisation, which can be seen as the variable <span class="math notranslate nohighlight">\(x\)</span> in the derivation of importance sampling equation. <br />
+The importance sampling ratio <span class="math notranslate nohighlight">\(\rho_{t+1:T-1}\)</span> is calculated on a trajectory basis to correspond to this trajectory-based character of <span class="math notranslate nohighlight">\(G_t\)</span> (and is used for multiplication with <span class="math notranslate nohighlight">\(G_t\)</span> directly).</p></li>
 </ul>
 </li>
 </ol>
@@ -817,7 +817,7 @@ The importance sampling ratio <span class="math notranslate nohighlight">\(\rho_
 <p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>The policy <span class="math notranslate nohighlight">\(\pi\)</span> converges to optimal at all encountered states even though actions are selected according to a different soft policy <span class="math notranslate nohighlight">\(b\)</span>,which may change between or even within episodes.</p></li>
-<li><p>A potential problem is that this method learns only from the tails of episodes, when all of the remaining actions in the episode are greedy. If nongreedy actions are common, then learning will be slow, particularly for states appearing in the early portions of long episodes. Potentially, this could greatly slow learning.</p></li>
+<li><p>A potential problem is that this method learns only from the tails of episodes, when all of the remaining actions in the episode are greedy. If non-greedy actions are common, then learning will be slow, particularly for states appearing in the early portions of long episodes. Potentially, this could greatly slow learning.</p></li>
 </ul>
 </div>
 </li>
@@ -836,8 +836,8 @@ The importance sampling ratio <span class="math notranslate nohighlight">\(\rho_
 <li><p>Advantages of MC over DP methods:</p>
 <ol class="arabic simple">
 <li><p>Monte Carlo methods require no model of the environment’s dynamics.</p></li>
-<li><p>Monte Carlo methods can be used with simulation or sample models. For surprisingly many applications it is easy to simulate sample episodes even though it is diffcult to construct the kind of explicit model of transition probabilities.</p></li>
-<li><p>It is easy and effcient to use Monte Carlo methods to focus on a small subset of the states. A region of special interest can be accurately evaluated without going to the expense of accurately evaluating the rest of the state set.</p></li>
+<li><p>Monte Carlo methods can be used with simulation or sample models. For surprisingly many applications it is easy to simulate sample episodes even though it is difficult to construct the kind of explicit model of transition probabilities.</p></li>
+<li><p>It is easy and efficient to use Monte Carlo methods to focus on a small subset of the states. A region of special interest can be accurately evaluated without going to the expense of accurately evaluating the rest of the state set.</p></li>
 <li><p>MC methods may be less harmed by violations of the Markov property. Because they do not update their value estimates on the basis of the value estimates of successor states, i.e., they do not bootstrap.</p></li>
 </ol>
 </li>

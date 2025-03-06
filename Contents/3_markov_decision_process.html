@@ -66,7 +66,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Chapter 4. Dynamic Programming" href="4_dynamic_programming.html" />
-    <link rel="prev" title="Chapte 2. Multi-armed Bandit" href="2_multi_armed_bandits.html" /> 
+    <link rel="prev" title="Chapter 2. Multi-armed Bandit" href="2_multi_armed_bandits.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>   
   </head>
@@ -192,7 +192,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapte 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 3. Finite Markov Decision Processes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
 </ul>
@@ -465,12 +465,12 @@ document.write(`
                 <article class="bd-article">
                    <section class="tex2jax_ignore mathjax_ignore" id="chapter-3-finite-markov-decision-processes">
 <h1>Chapter 3. Finite Markov Decision Processes<a class="headerlink" href="#chapter-3-finite-markov-decision-processes" title="Link to this heading">#</a></h1>
-<p>MDPs are a  formalization of sequential decision making, where actions influence both immediate rewards, and subsequent states, and thereby the future rewards. So it must consider the trade-off between the immediate reward and delayed reward.</p>
-<p>Recall that in bandit problems we estimated the value <span class="math notranslate nohighlight">\(q_{\star}(a)\)</span> of each action <span class="math notranslate nohighlight">\(a\)</span>, in MDPs we would need to estimate the value <span class="math notranslate nohighlight">\(q_{\star}(s, a)\)</span> of each action <span class="math notranslate nohighlight">\(a\)</span> in each state <span class="math notranslate nohighlight">\(s\)</span>, or we estimate the value <span class="math notranslate nohighlight">\(v_{\star}(s)\)</span> of each state given optimal action selection. Meaning of these notations will be explained later in this chapter.</p>
+<p>MDPs are a formalization of sequential decision making, where actions influence both immediate rewards, and subsequent states, and thereby the future rewards. So they must consider the trade-off between the immediate reward and the delayed reward.</p>
+<p>Recall that in bandit problems we estimated the value <span class="math notranslate nohighlight">\(q_{\star}(a)\)</span> of each action <span class="math notranslate nohighlight">\(a\)</span>, in MDPs, we would need to estimate the value <span class="math notranslate nohighlight">\(q_{\star}(s, a)\)</span> of each action <span class="math notranslate nohighlight">\(a\)</span> in each state <span class="math notranslate nohighlight">\(s\)</span>, or we estimate the value <span class="math notranslate nohighlight">\(v_{\star}(s)\)</span> of each state given optimal action selection. The meaning of these notations will be explained later in this chapter.</p>
 <section id="agent-environment-interface">
 <h2>3.1. Agent-Environment Interface<a class="headerlink" href="#agent-environment-interface" title="Link to this heading">#</a></h2>
 <ul>
-<li><p><strong>Illustration of a MDP</strong>: MDPs are meant to be a straightforward framing of the problem of learning from interaction between a learner and the environment to achieve a goal, illustrated as follows:</p>
+<li><p><strong>Illustration of an MDP</strong>: MDPs are meant to be a straightforward framing of the problem of learning from interactions between a learner and the environment to achieve a goal, illustrated as follows:</p>
   <div style="display: flex; justify-content: center;">
   <img src="../_static/img/chapter3/agent_env_interaction.png" alt="Agent Environment Interaction" style="width: 70%;">
   </div>
@@ -478,21 +478,21 @@ document.write(`
 <li><p>Explanations:</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(\textit{Agent}\)</span>: the learner and decision maker</p></li>
-<li><p><span class="math notranslate nohighlight">\(\textit{Environment}\)</span>: the thing the agent interacts with, comprising everything outside the agent.</p></li>
-<li><p>Interaction process: at time step <span class="math notranslate nohighlight">\(t\)</span>, the agent receives some representation of the environment’s state <span class="math notranslate nohighlight">\(S_t \in S\)</span>, selects on that basis an action <span class="math notranslate nohighlight">\(A_t \in A(s)\)</span>, as a consequence it then receives a numerical reward <span class="math notranslate nohighlight">\(R_{t+1} \in R \subset \mathbb{R}\)</span>, and finds itself in a new environment state <span class="math notranslate nohighlight">\(S_{t+1} \in S\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\textit{Environment}\)</span>: the entity the agent interacts with, comprising everything outside the agent.</p></li>
+<li><p>Interaction process: at time step <span class="math notranslate nohighlight">\(t\)</span>, the agent receives a representation of the environment’s state <span class="math notranslate nohighlight">\(S_t \in S\)</span>, selects, on that basis, an action <span class="math notranslate nohighlight">\(A_t \in A(s)\)</span>, as a consequence, it then receives a numerical reward <span class="math notranslate nohighlight">\(R_{t+1} \in R \subset \mathbb{R}\)</span>, and finds itself in a new environment state <span class="math notranslate nohighlight">\(S_{t+1} \in S\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\textit{Trajectory}\)</span>: The sequence led by the interaction process: <span class="math notranslate nohighlight">\(s_0, a_0, r_1, s_1, a_1, r_2, ... , s_t, a_t, r_{t+1}\)</span> (sometimes when we talk about MDPs, we refer to this kind of sequences directly).</p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><strong>Dynamics of MDP</strong>: in a <span class="math notranslate nohighlight">\(\textit{finite MDP}\)</span> - the sets of <span class="math notranslate nohighlight">\(S, A, R\)</span> all have finite elements, so <span class="math notranslate nohighlight">\(S_t, R_t\)</span> have well defined discrete probability distributions that are dependent only on the preceding state and action (<span class="math notranslate nohighlight">\(\textit{Markov property}\)</span>) - the dynamics of a finite MDP can be represented in this form as follows:</p>
+<li><p><strong>Dynamics of MDP</strong>: in a <span class="math notranslate nohighlight">\(\textit{finite MDP}\)</span> - the sets of <span class="math notranslate nohighlight">\(S, A, R\)</span> all have finite elements, so <span class="math notranslate nohighlight">\(S_t, R_t\)</span> have well-defined discrete probability distributions that are dependent only on the preceding state and action (<span class="math notranslate nohighlight">\(\textit{Markov property}\)</span>) - the dynamics of a finite MDP can be represented in this form as follows:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
         p(s', r | s, a) \dot= Pr(S_{t+1}=s', R_{t+1}=r | A_t=a, S_t=s) \\
         \text{with} \sum_{s' \in S} \sum_{ r\in R} p(s', r | s, a) = 1, \text{for all} \ s \in S, a \in A(s)
     \end{split}\]</div>
 </li>
-<li><p><strong>Useful derivations</strong>: with the dynamics of a MDP known, one can compute anything one might want to know about the envrionment:</p>
+<li><p><strong>Useful derivations</strong>: with the dynamics of a MDP known, one can compute anything one might want to know about the environment:</p>
 <ul>
 <li><p>State-transition probability:</p>
 <div class="math notranslate nohighlight">
@@ -524,7 +524,7 @@ document.write(`
 <li><p><strong>Definition of reward</strong>: In reinforcement learning, the purpose or goal of the agent is formalized in terms of a special scalar signal, called the <span class="math notranslate nohighlight">\(\textit{reward} \ (R_t \in R)\)</span>, passing from the environment to the agent.</p>
 <p>Note that the reward signal is your way of communicating to the agent of what you want it to achieve, NOT how you want it achieved, i.e., reward signal doesn’t take the process into account.</p>
 </li>
-<li><p><strong>Reward hypothesis</strong>: The idea of maximizing the cumulative reward to allow the agent to show desirablt behaviour is based on the <span class="math notranslate nohighlight">\(\textit{reward hypothesis}\)</span>: that all of what we mean by goals and purposes can be well thought of as the maximization of the expected value of the cumulative sum of the reward.</p></li>
+<li><p><strong>Reward hypothesis</strong>: The idea of maximizing the cumulative reward to allow the agent to show desirable behaviour is based on the <span class="math notranslate nohighlight">\(\textit{reward hypothesis}\)</span>: that all of what we mean by goals and purposes can be well thought of as the maximization of the expected value of the cumulative sum of the reward.</p></li>
 </ul>
 </section>
 <section id="returns-and-episodes">
@@ -550,7 +550,7 @@ document.write(`
 </li>
 </ul>
 </li>
-<li><p><strong>Details on the two type of tasks</strong>:</p>
+<li><p><strong>Details on the two types of tasks</strong>:</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(\textit{Episodic tasks}\)</span>: episodes end in a special state called the <span class="math notranslate nohighlight">\(\textit{terminal state}\)</span>, followed by a reset to a standard starting state or to a sample from a standard distribution of starting states. Note that</p>
 <ul class="simple">
@@ -561,7 +561,7 @@ document.write(`
 </li>
 <li><p><span class="math notranslate nohighlight">\(\textit{Continuing tasks}\)</span>: in contrast, continuing tasks are those tasks in which the agent–environment interaction does not break naturally into identifiable episodes, but goes on continually without limit. Note that in continuous cases,</p>
 <ul>
-<li><p><span class="math notranslate nohighlight">\(\gamma \in (0,1)\)</span> is called the <span class="math notranslate nohighlight">\(\textit{discout rate}\)</span>, and is used to represent the agent’s preference between immediate and future reward. The more <span class="math notranslate nohighlight">\(\gamma\)</span> approaches 1, the more “farsighted” the agent becomes.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma \in (0,1)\)</span> is called the <span class="math notranslate nohighlight">\(\textit{discount rate}\)</span>, and is used to represent the agent’s preference between immediate and future reward. The more <span class="math notranslate nohighlight">\(\gamma\)</span> approaches 1, the more “farsighted” the agent becomes.</p></li>
 <li><p>though <span class="math notranslate nohighlight">\(G_t\)</span> is a sum of an infinite number of terms, it is still finite if the reward is nonzero and constant and <span class="math notranslate nohighlight">\(\gamma \in (0,1)\)</span>.</p></li>
 <li><p>special case for continuing tasks: if reward signal is +1 all the time, then:</p>
 <div class="math notranslate nohighlight">
@@ -583,7 +583,7 @@ document.write(`
 <li><p><strong>Episodic perspective</strong>:</p>
 <ul>
 <li><p>Description: This task could be treated as episodic, where the natural episodes are the repeated attempts to balance the pole.</p></li>
-<li><p>Reward: The reward in this case could be <span class="math notranslate nohighlight">\(+1\)</span> for every time step on which failure did not occur</p></li>
+<li><p>Reward: The reward in this case could be <span class="math notranslate nohighlight">\(+1\)</span> for every time step during which failure did not occur</p></li>
 <li><p>Return: Return at each time would be the number of steps until failure.</p></li>
 </ul>
 </li>
@@ -600,7 +600,7 @@ document.write(`
 </section>
 <section id="unified-notation-for-episodic-and-continuing-tasks">
 <h3>3.2.3 Unified Notation for Episodic and Continuing Tasks<a class="headerlink" href="#unified-notation-for-episodic-and-continuing-tasks" title="Link to this heading">#</a></h3>
-<p>In practice, it turns out that when we discuss episodic tasks we almost never have to distinguish between different episodes. The two types of tasks can be unified by considering episode termination to be the entering of a special <span class="math notranslate nohighlight">\(\textit{absorbing state}\)</span> that transitions only to itself and that generates only rewards of zero.</p>
+<p>In practice, it turns out that when we discuss episodic tasks we almost never have to distinguish between different episodes. The two types of tasks can be unified by considering episode termination as the entering of a special <span class="math notranslate nohighlight">\(\textit{absorbing state}\)</span> that transitions only to itself and that generates only rewards of zero.</p>
 <div style="display: flex; justify-content: center;">
 <img src="../_static/img/chapter3/absorbing_state.png" alt="Absorbing State" style="width: 60%;">
 </div>
@@ -845,7 +845,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Chapte 2. Multi-armed Bandit</p>
+        <p class="prev-next-title">Chapter 2. Multi-armed Bandit</p>
       </div>
     </a>
     <a class="right-next"

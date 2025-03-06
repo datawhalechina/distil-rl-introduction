@@ -65,7 +65,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Contents/1_intro';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Chapte 2. Multi-armed Bandit" href="2_multi_armed_bandits.html" />
+    <link rel="next" title="Chapter 2. Multi-armed Bandit" href="2_multi_armed_bandits.html" />
     <link rel="prev" title="Chapter 0. Prelude" href="0_prelude.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>   
@@ -192,7 +192,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapte 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
 </ul>
@@ -457,7 +457,7 @@ document.write(`
 <h1>Chapter 1. Introduction to RL<a class="headerlink" href="#chapter-1-introduction-to-rl" title="Link to this heading">#</a></h1>
 <p>Learning through interaction with our environment is fundamental to acquiring knowledge, from infancy to adulthood. Whether playing as a child or learning complex skills like driving, we continuously absorb information about cause and effect through our actions and their consequences. This idea underpins most theories of learning and intelligence.</p>
 <p>This book takes a computational approach to learning from interaction, focusing not on human or animal learning directly but on idealized learning scenarios. We will explore how machines can effectively solve learning problems of scientific interest. The approach we explore, called <strong>reinforcement learning</strong>, is much more focused on goal-directed learning from interaction than are other approaches to machine learning.</p>
-<p>This chapter introduces RL with its definition, serveral examples, and the key elements in RL. This chapter is mostly descriptive, so you won’t see many diagrams or formulas. We assume that readers who are determined to set foot on this journey have more or less witnessed what RL is capable of, so let’s skip the motivation and dive into the world of RL!</p>
+<p>This chapter introduces RL with its definition, several examples, and the key elements in RL. This chapter is mostly descriptive, so you won’t see many diagrams or formulas. We assume that readers who are determined to set foot on this journey have more or less witnessed what RL is capable of, so let’s skip the motivation and dive into the world of RL!</p>
 <section id="reinforcement-learning-rl">
 <h2>1.1 Reinforcement Learning (RL)<a class="headerlink" href="#reinforcement-learning-rl" title="Link to this heading">#</a></h2>
 <ul>
@@ -469,11 +469,11 @@ document.write(`
 </ul>
 </li>
 <li><p><strong>Formalization</strong>: the problem of reinforcement learning is formalized using ideas from dynamical systems theory, specifically, as the optimal control of incompletely-known <span class="math notranslate nohighlight">\(\textit{Markov decision processes}\)</span> (introduced in <a class="reference internal" href="3_markov_decision_process.html"><span class="std std-doc">chapter 3</span></a>).</p>
-<p>To put it in a nutshell, a learning agent senses the <span class="math notranslate nohighlight">\(\textit{state}\)</span> of its <span class="math notranslate nohighlight">\(\textit{environment}\)</span> to some extent and takes <span class="math notranslate nohighlight">\(\textit{actions}\)</span> that affect the state. At the mean time, the agent has a <span class="math notranslate nohighlight">\(\textit{goal}\)</span> or goals relating to the state of the environment to achieve, and is reflected by a <span class="math notranslate nohighlight">\(\textit{reward}\)</span> it receives from the environment at each interaction. Any method that is well suited to solving such problems - leading the agent to achieve the goal(s), we consider to be a reinforcement learning method.</p>
+<p>To put it in a nutshell, a learning agent senses the <span class="math notranslate nohighlight">\(\textit{state}\)</span> of its <span class="math notranslate nohighlight">\(\textit{environment}\)</span> to some extent and takes <span class="math notranslate nohighlight">\(\textit{actions}\)</span> that affect the state. At the same time, the agent has a <span class="math notranslate nohighlight">\(\textit{goal}\)</span> or goals relating to the state of the environment to achieve, and is reflected by a <span class="math notranslate nohighlight">\(\textit{reward}\)</span> it receives from the environment at each interaction. Any method that is well suited to solving such problems - leading the agent to achieve the goal(s), we consider to be a reinforcement learning method.</p>
 </li>
 <li><p><strong>Uniqueness</strong>:</p>
 <ul class="simple">
-<li><p><strong>Trade-off between exploration and exploitation</strong>: unlike other kinds of learning, in RL, the agent has to exploit what it has already experienced in order to obtain reward, but it also has to explore in order to make better action selections in the future. This is further explain in chapter 2 <a class="reference internal" href="2_multi_armed_bandits.html#a-k-armed-bandit-problem"><span class="std std-ref">section 2.1</span></a></p></li>
+<li><p><strong>Trade-off between exploration and exploitation</strong>: unlike other kinds of learning, in RL, the agent has to exploit what it has already experienced in order to obtain reward, but it also has to explore in order to make better action selections in the future. This is further explained in chapter 2 <a class="reference internal" href="2_multi_armed_bandits.html#a-k-armed-bandit-problem"><span class="std std-ref">section 2.1</span></a></p></li>
 <li><p><strong>Goal-directed learning</strong>: RL explicitly considers the whole problem of a goal-directed agent interacting with an uncertain environment. It starts with a complete, interactive, goal-seeking agent who learns purely based on the reward signal it receives. This learning paradigm is simple yet requires much effort in designing the reward signal and is sensitive to <a class="reference external" href="https://lilianweng.github.io/posts/2024-11-28-reward-hacking/">reward hacking</a>.</p></li>
 </ul>
 </li>
@@ -481,16 +481,16 @@ document.write(`
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>By a complete, interactive, goal-seeking agent we do not always mean something like a complete organism or robot. These are clearly examples, but a complete, interactive, goal-seeking agent can also be a component of a larger behaving system</p>
-<p>A simple example is an agent that monitors the charge level of robot’s battery and sends commands to the robot’s control architecture. This agent’s environment is the rest of the robot together with the robot’s environment.</p>
+<p>A simple example is an agent that monitors the charge level of a robot’s battery and sends commands to the robot’s control architecture. This agent’s environment is the rest of the robot together with the robot’s environment.</p>
 </div>
 <ul class="simple">
 <li><p><strong>Examples of RL problem</strong></p>
 <ul>
 <li><p>Example 1: A gazelle calf struggles to its feet minutes after being born. Half an hour later it is running at 20 miles per hour</p></li>
-<li><p>Exapmle 2: A mobile robot decides whether it should enter a new room in search of more trash to collect or start trying to find its way back to its battery recharging station. It makes its decision based on the current charge level of its battery and how quickly and easily it has been able to find the recharger in the past.</p></li>
-<li><p>Patterns: in common:</p>
+<li><p>Example 2: A mobile robot decides whether it should enter a new room in search of more trash to collect or start trying to find its way back to its battery recharging station. It makes its decision based on the current charge level of its battery and how quickly and easily it has been able to find the recharger in the past.</p></li>
+<li><p>Patterns in common:</p>
 <ul>
-<li><p>Both exapmles involve interaction between an active decision-making agent and its environment, within which the agent seeks to achieve a goal despite uncertainty about its environment.</p></li>
+<li><p>Both examples involve interaction between an active decision-making agent and its environment, within which the agent seeks to achieve a goal despite uncertainty about its environment.</p></li>
 <li><p>The effects of actions cannot be fully predicted; thus the agent must monitor its environment frequently and react appropriately.</p></li>
 <li><p>The agent can use its experience to improve its performance over time.</p></li>
 </ul>
@@ -503,7 +503,7 @@ document.write(`
 <h2>1.2 Elements of RL<a class="headerlink" href="#elements-of-rl" title="Link to this heading">#</a></h2>
 <ul>
 <li><p><strong>Policy <span class="math notranslate nohighlight">\(\pi\)</span></strong>: defines the learning agent’s way of behaving at a given time. Roughly speaking, a policy is a mapping from perceived states of the environment to actions to be taken when in those states.</p>
-<p>The policy is the core of a reinforcement learning agent in the sense that it alone is su cient to determine behavior. In general, policies may be stochastic, specifying probabilities for each action. The concept of policy will be explained more formally in Chapter 3 <a class="reference internal" href="3_markov_decision_process.html#policies-and-value-functions"><span class="std std-ref">section 3.3</span></a></p>
+<p>The policy is the core of a reinforcement learning agent in the sense that it alone is suffcient to determine behavior. In general, policies may be stochastic, specifying probabilities for each action. The concept of policy will be explained more formally in Chapter 3 <a class="reference internal" href="3_markov_decision_process.html#policies-and-value-functions"><span class="std std-ref">section 3.3</span></a></p>
 </li>
 <li><p><strong>Reward signal <span class="math notranslate nohighlight">\(R_t\)</span></strong>: defines the goal of a reinforcement learning problem. On each time step, the environment sends to the reinforcement learning agent <strong>a single number</strong> called the reward. The agent’s sole <strong>objective is to maximize the total reward</strong> it receives over the long run.</p>
 <p>In general, reward signals may be stochastic functions of the state of the environment and the actions taken. The concept will be formally introduced in chapter 3 <a class="reference internal" href="3_markov_decision_process.html#goals-and-rewards"><span class="std std-ref">section 3.2.1</span></a>.</p>
@@ -512,7 +512,7 @@ document.write(`
 <ul>
 <li><p><strong>Value and reward</strong>:</p>
 <p>To make a human analogy, rewards are somewhat like pleasure (if high) and pain (if low), whereas values correspond to a more refined and farsighted judgment of how pleased or displeased we are that our environment is in a particular state.</p>
-<p>Rewards are in a sense primary, whereas values, as predictions of rewards, are secondary. Without rewards there could be no values, nevertheless, it is values with which we are most concerned when making and evaluating decisions. In fact, the most important component of almost all reinforcement learning algorithms we consider is a method for effciently estimating values.</p>
+<p>Rewards are in a sense primary, whereas values, as predictions of rewards, are secondary. Without rewards there could be no values; nevertheless, it is values with which we are most concerned when making and evaluating decisions. In fact, the most important component of almost all reinforcement learning algorithms we consider is a method for efficiently estimating values.</p>
 </li>
 <li><p><strong>Types of value functions</strong>: There are two types of value functions: state-value function <span class="math notranslate nohighlight">\(v(s)\)</span> and action-value function <span class="math notranslate nohighlight">\(q(s,a)\)</span>, we will introduce them later in <a class="reference internal" href="3_markov_decision_process.html#bellman-equations-optional-lecture-video"><span class="std std-ref">section 3.3.1</span></a>.</p></li>
 </ul>
@@ -579,7 +579,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Chapte 2. Multi-armed Bandit</p>
+        <p class="prev-next-title">Chapter 2. Multi-armed Bandit</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

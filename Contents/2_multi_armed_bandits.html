@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Chapte 2. Multi-armed Bandit &#8212; DistilRLIntro 0.1 documentation</title>
+    <title>Chapter 2. Multi-armed Bandit &#8212; DistilRLIntro 0.1 documentation</title>
   
   
   
@@ -192,7 +192,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapte 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 2. Multi-armed Bandit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
 </ul>
@@ -430,7 +430,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Chapte 2. Multi-armed Bandit</h1>
+    <h1>Chapter 2. Multi-armed Bandit</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -464,15 +464,15 @@ document.write(`
                 
 <div id="searchbox"></div>
                 <article class="bd-article">
-                   <section class="tex2jax_ignore mathjax_ignore" id="chapte-2-multi-armed-bandit">
-<h1>Chapte 2. Multi-armed Bandit<a class="headerlink" href="#chapte-2-multi-armed-bandit" title="Link to this heading">#</a></h1>
+                   <section class="tex2jax_ignore mathjax_ignore" id="chapter-2-multi-armed-bandit">
+<h1>Chapter 2. Multi-armed Bandit<a class="headerlink" href="#chapter-2-multi-armed-bandit" title="Link to this heading">#</a></h1>
 <p>In this chapter we study the evaluative aspect of reinforcement learning in a simplified setting, one that does not involve learning to act in more than one situation, i.e., there is only one single state.</p>
 <section id="a-k-armed-bandit-problem">
 <h2>2.1 A k-armed Bandit Problem<a class="headerlink" href="#a-k-armed-bandit-problem" title="Link to this heading">#</a></h2>
 <ul>
 <li><p><strong>Setting</strong>: In one single state, you are given <span class="math notranslate nohighlight">\(k\)</span> different options, or actions. With each action taken, a random numerical reward chosen from a stationary probability distribution will be given. <strong>The objective is to maximize the expected total reward over some time period.</strong></p>
 <ul>
-<li><p>Time steps: time steps describe the number of times actions being taken.</p></li>
+<li><p>Time steps: time steps describe the number of times actions are taken.</p></li>
 <li><p>Value of an action: mean reward received by taking this action</p>
 <div class="math notranslate nohighlight">
 \[
@@ -506,7 +506,7 @@ document.write(`
         \end{align*}
     \end{split}\]</div>
 </li>
-<li><p><strong>Action selection methods:</strong> there are two natural ways when selecting actions based on estimates, one maximizes exploitation and the other takes exploration into account based on that:</p>
+<li><p><strong>Action selection methods:</strong> there are two natural ways when selecting actions based on estimates, one maximizes exploitation, and the other takes exploration into account based on that:</p>
 <ul class="simple">
 <li><p><strong>Greedy action selection:</strong> always exploits current knowledge to maximize immediate reward</p></li>
 </ul>
@@ -533,14 +533,14 @@ document.write(`
 </li>
 </ul>
 </li>
-<li><p><strong>Performance</strong>: The performance of each action selection method is measured by averaging the results from 2000 independent <span class="math notranslate nohighlight">\(\textit{runs}\)</span>, with each <span class="math notranslate nohighlight">\(\textit{run}\)</span> containing 1000 time steps (recall that time steps describe the number of times actions being taken.)</p>
+<li><p><strong>Performance</strong>: The performance of each action selection method is measured by averaging the results from 2000 independent <span class="math notranslate nohighlight">\(\textit{runs}\)</span>, with each <span class="math notranslate nohighlight">\(\textit{run}\)</span> containing 1000 time steps (recall that time steps describe the number of times actions are taken.)</p>
   <div style="display: flex; justify-content: center;">
   <img src="../_static/img/chapter2/running_results.png" alt="Results of running" style="width:70%;">
   </div>
 <p>With greater <span class="math notranslate nohighlight">\(\epsilon\)</span> value indicating more exploration and all selection methods used sample averages as their action-value estimates, conclusions from the above figure are:</p>
 <ul class="simple">
 <li><p>The greedy method performed significantly worse in the long run because it often got stuck performing suboptimal actions.</p></li>
-<li><p>The <span class="math notranslate nohighlight">\(\epsilon=0.01\)</span> method (less exploration) improved more slowly, but eventually would perform better than the <span class="math notranslate nohighlight">\(\epsilon=0.1\)</span> (more exploration) method. This emphasizes the trade-off between exploration and exploitation, i.e., exploration (<span class="math notranslate nohighlight">\(\epsilon=0.01\)</span>) can improve performance yet worsen result when too much (<span class="math notranslate nohighlight">\(\epsilon=0.1\)</span>).</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(\epsilon=0.01\)</span> method (less exploration) improved more slowly, but eventually would perform better than the <span class="math notranslate nohighlight">\(\epsilon=0.1\)</span> (more exploration) method. This emphasizes the trade-off between exploration and exploitation, i.e., exploration (<span class="math notranslate nohighlight">\(\epsilon=0.01\)</span>) can improve performance yet worsen results when too much (<span class="math notranslate nohighlight">\(\epsilon=0.1\)</span>).</p></li>
 </ul>
 </li>
 </ul>
