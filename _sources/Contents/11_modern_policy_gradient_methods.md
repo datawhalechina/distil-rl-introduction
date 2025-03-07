@@ -44,7 +44,7 @@ $$
 
 ### 11.1.3 Estimation of Advantage
 
-- **By definitioin**: $A(s_t, a_t)$ can be estimated by simply subtracting state value from action value as by definition:
+- **By definition**: $A(s_t, a_t)$ can be estimated by simply subtracting state value from action value as by definition:
 
     $$
     \begin{align*}
@@ -53,9 +53,9 @@ $$
     \end{align*}
     $$
 
-    Note that the first estimation is less often seen in practice since it requires learning of two critic models, and therefore ofter replaced by the second representation. 
+    Note that the first estimation is less often seen in practice since it requires learning of two critic models, and therefore often replaced by the second representation. 
 
-- **By TD error**: TD error can be a pratical approximate estimation for advantage. Recall that in Chapter 3 [section 3.3](../Contents/3_markov_decision_process.md#33-policies-and-value-functions), we have given that 
+- **By TD error**: TD error can be a practical approximate estimation for advantage. Recall that in Chapter 3 [section 3.3](../Contents/3_markov_decision_process.md#33-policies-and-value-functions), we have given that 
 
     $$q(s,a) \dot= \sum_{s', r}p(s', r|s, a) [r + \gamma v_{\pi}(s')]$$
 
@@ -65,7 +65,7 @@ $$
 
     $$\hat{A}(s_t, a_t) \ = \ r_{t+1} + \gamma v(s_{t+1}) - v(s_{t})$$
 
-- **Genralized Advantage Estimation (GAE)**: 
+- **Generalized Advantage Estimation (GAE)**: 
 
     We have mentioned above that advantage can be estimated by $G_t - v(s_t)$ since the return at time step $t$ is an estimate for the respective action-value. We now consider a different perspective for estimating the return. In $n$-step TD method (which is not included in this tutorial), return is defined as 
 
@@ -101,9 +101,9 @@ $$
     To find the exact process of how GAE is represented by $(2)$, we refer interested readers to the [original paper](https://arxiv.org/pdf/1506.02438). Equation $(3)$ implements GAE in truncated form that gives a weighted sum of TD errors, where the future TD errors are discounted and smoothed by the $\lambda$-parameter. In practice, GAE at each time step is often computed using equation $(4)$ in a backward manner.
 
     ```{note}
-    - Intuition on $n$-step return $G_{t:t+n}$: when $n=1$, it results in the 1-step return $R_{t+1} + \gamma v(s_{t+1})$, which is exactly the update target in TD methods (high bias, low variance). As $n$ goes to infinity, it recovers the original Monte Carlo return (unbiased, high variance). Therefore, $n$ acts as as trade-off between bias and variance for the value estimator. 
+    - Intuition on $n$-step return $G_{t:t+n}$: when $n=1$, it results in the 1-step return $R_{t+1} + \gamma v(s_{t+1})$, which is exactly the update target in TD methods (high bias, low variance). As $n$ goes to infinity, it recovers the original Monte Carlo return (unbiased, high variance). Therefore, $n$ acts as a trade-off between bias and variance for the value estimator. 
 
-    - Intuition on $\lambda$ return: simliar to the $n$-step return, $\lambda=0$ reduces to the single-step return (1-step TD target), and $\lambda=1$ recovers the Monte Carlo return.
+    - Intuition on $\lambda$ return: similiar to the $n$-step return, $\lambda=0$ reduces to the single-step return (1-step TD target), and $\lambda=1$ recovers the Monte Carlo return.
 
     - Intuition on GAE: still, when $\lambda=0$, GAE reduces to 1-step TD, and $\lambda=1$ recovers the Monte Carlo estimation.
     ```
@@ -152,7 +152,7 @@ A3C is an actor-critic algorithm that uses multiple workers (parallel actors) to
 
 - **Entropy Bonus**
 
-    Adding the entropy of the policy $\pi$ to the objective function has be shown to be able to improve exploration by discouraging premature convergence to suboptimal deterministic policies.
+    Adding the entropy of the policy $\pi$ to the objective function has been shown to be able to improve exploration by discouraging premature convergence to suboptimal deterministic policies.
 
     With the entropy bonus / regularization added, the gradient of the full objective function with respect to the policy parameters takes the form:
 
@@ -167,11 +167,11 @@ A3C is an actor-critic algorithm that uses multiple workers (parallel actors) to
 
 - **Advantages**
 
-    - Multi-thread computation: For the firs time of all RL algorithm, A3C moves computation to a single machine with multiple CPU threads, instead of using separate machines and multiple GPUs, and also achieves better performance than its precursors.
+    - Multi-thread computation: For the first time of all RL algorithm, A3C moves computation to a single machine with multiple CPU threads, instead of using separate machines and multiple GPUs, and also achieves better performance than its precursors.
 
     - Training speed: The reduction in training time is roughly linear in the number of parallel actor-learners
 
-    - Stablized training: One can explicitly use different exploration policies in each actor-learner to maximize the diversity. The overall changes being made to the parameters by multiple actor-learners applying online updates in parallel are likely to be less correlated in time than a single agent applying online updates. The training process can thereby be stabilized.
+    - Stabilized training: One can explicitly use different exploration policies in each actor-learner to maximize the diversity. The overall changes being made to the parameters by multiple actor-learners applying online updates in parallel are likely to be less correlated in time than a single agent applying online updates. The training process can thereby be stabilized.
 
 - **Disadvantages**:
 
@@ -186,15 +186,15 @@ A3C is an actor-critic algorithm that uses multiple workers (parallel actors) to
 
 A2C is a simplified variant of A3C, and there is no official publication that formally introduces the method. Here, we provide a brief overview of the core concepts underlying A2C and direct interested readers to the relevant sections of this tutorial for more detailed technical descriptions.
 
-In A3C, each worker operates with its own copy of the environment and updates the shared global parameters independently, which introduces asynchronicity. However, reaseachers from OpenAI found that there is no evidence showing that this asynchrony provides any performance benefit. In the opposite, waiting for each actor to finish its segment of experience before performing an update, and averaging over all of the actors can simplify debugging and make the use of GPUs more effective.
+In A3C, each worker operates with its own copy of the environment and updates the shared global parameters independently, which introduces asynchronicity. However, reseachers from OpenAI found that there is no evidence showing that this asynchrony provides any performance benefit. In the opposite, waiting for each actor to finish its segment of experience before performing an update, and averaging over all of the actors can simplify debugging and make the use of GPUs more effective.
 
-With the asynchronous setting eliminated, the reulted method is naturally called Advantage Actor-Critic (A2C). Let's now dive deeper into its core ideas. 
+With the asynchronous setting eliminated, the resulting method is naturally called Advantage Actor-Critic (A2C). Let's now dive deeper into its core ideas. 
 
 ### 11.3.2 Core ideas of A2C
 
 - **Gradient Update**
 
-    Except for the asynchrony, gradient update takes the exactly same form as A3C. To resolve the potential inconsistency of gradient update in A3C, a coordinator in A2C waits for all the parallel actors to finish their work before updating the global parameters. Then in the next iteration parallel actors starts from the same policy. The synchronized gradient update keeps the training more cohesive and potentially to make convergence faster.
+    Except for the asynchrony, gradient update takes exactly the same form as A3C. To resolve the potential inconsistency of gradient update in A3C, a coordinator in A2C waits for all the parallel actors to finish their work before updating the global parameters. Then in the next iteration parallel actors start from the same policy. The synchronized gradient update keeps the training more cohesive and potentially to make convergence faster.
 
     <div style="display: flex; justify-content: center;">
     <img src="../_static/img/chapter11/comp_a2c_a3c.png" alt="Comparison between A2C and A3C" style="width: 80%;;">
@@ -210,7 +210,7 @@ With the asynchronous setting eliminated, the reulted method is naturally called
     <img src="../_static/img/chapter11/algo_a2c.png" alt="Algorithm: A2C" style="width: 90%;;">
     </div>
 
-    Note that those $E$ episodes presented above would be run in parallel by multiple actors in practival implementation.
+    Note that those $E$ episodes presented above would be run in parallel by multiple actors in practical implementation.
 
 ### 11.3.3 Properties of A2C
 
@@ -218,7 +218,7 @@ With the asynchronous setting eliminated, the reulted method is naturally called
 
     - This A2C implementation is more cost-effective than A3C when using single-GPU machines, and is faster than a CPU-only A3C implementation when using larger policies.
 
-    - One advantage of this method is that it can more effectively use of GPUs, which perform best with large batch sizes. 
+    - One advantage of this method is that it can use GPUs more effectively, which perform best with large batch sizes. 
 
 - **Disadvantages**
 
@@ -272,15 +272,15 @@ $$
 
 where $r_t(\theta)$ denotes the probability ratio $\frac{\pi_\theta(a_t | s_t)}{\pi_{\theta_{\text{old}}}(a_t | s_t)}$ ($r(\theta_{\text{old}}) = 1$). And $CPI$ refers to conservative policy iteration. Instead of using KL-divergence, PPO modifies this objective and constrain the policy changes that move $r_t(\theta)$ too much away from 1, by introducing the $\textit{Clipped Surrogate Objective}$. To be precise, there are three different components in PPO's optimization objective:
 
-- **Clipped Surrogate Objective**: penalizes changes to the policy that move $r_t(θ)$ away from 1 by clipping $r_t(θ)$ into a given rage:
+- **Clipped Surrogate Objective**: penalizes changes to the policy that move $r_t(θ)$ away from 1 by clipping $r_t(θ)$ into a given range:
 
     $$
     L^{CLIP}(\theta) \ \dot= \ \hat{\mathbb{E}}_t \left[ \min \left( r_t(\theta) \hat{A}_t, \, \text{clip}(r_t(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_t \right) \right],
     $$
 
-    where epsilon is a hyperparameter for controling the clipping range.
+    where epsilon is a hyperparameter for controlling the clipping range.
 
-- **Value Function Loss**: deonted by $L_t^{VF}(\theta)$, the value function loss is a squared-error loss represented as follows:
+- **Value Function Loss**: denoted by $L_t^{VF}(\theta)$, the value function loss is a squared-error loss represented as follows:
 
     $$
     L_t^{VF}(\theta) \dot= (V_\theta(s_t) - V_t^{targ})^2
@@ -303,7 +303,7 @@ where $r_t(\theta)$ denotes the probability ratio $\frac{\pi_\theta(a_t | s_t)}{
     L_t^{CLIP+VF+S}(\theta) = \hat{\mathbb{E}}_t \left[ L_t^{CLIP}(\theta) - c_1 L_t^{VF}(\theta) + c_2 S[\pi_\theta](s_t) \right],
     $$
 
-    where $c_1$, $c_2$ are **positive** coefficients. Note that $L_t^{VF}(\theta)$ is a negative term, such that the sqaured-error loss is minimized when the overall objective is maximized.
+    where $c_1$, $c_2$ are **positive** coefficients. Note that $L_t^{VF}(\theta)$ is a negative term, such that the squared-error loss is minimized when the overall objective is maximized.
 
 ### 11.4.3 PPO algorithm
 
@@ -359,7 +359,7 @@ where $r_t(\theta)$ denotes the probability ratio $\frac{\pi_\theta(a_t | s_t)}{
 
     - Implementation Simplicity: Compared to more complex methods like TRPO, PPO is relatively simple to implement while still achieving competitive performance across a range of tasks.
 
-- **Disdvantages**:
+- **Disadvantages**:
 
     - Hyperparameter Sensitivity: PPO requires careful tuning of its hyperparameters (like the clipping parameter and learning rate) to achieve optimal performance. Which requires experiments and understanding of the specific problem setting.
 
@@ -415,7 +415,7 @@ Notations in context of LLM training:
     Also note that, instead of adding KL penalty in the reward, GRPO regularizes by directly adding the KL divergence between the trained policy and the reference policy to the maximization objective, avoiding complicating the calculation of $A_{i,t}$.
 
     ```{note}
-    Note that GRPO estimate the KL divergence with an unbiased estimator different from the KL estimation described at the beginning of this section. 
+    Note that GRPO estimates the KL divergence with an unbiased estimator different from the KL estimation described at the beginning of this section. 
     ```
 
 - **Estimation of Advantage**
