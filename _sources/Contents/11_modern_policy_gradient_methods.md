@@ -23,7 +23,7 @@ $$
     - $A(s_t, a_t) = 0$: the action is neither better nor worse than the expected value.
 
 ```{note}
-Advantage function $A(s_t, a_t)$ is often written as $A_t$ for simplicity
+Advantage function $A(s_t, a_t)$ is often written as $A_t$ for simplicity，but please pay attention to separate the action $A_t$ and the advantage $A(s_t, a_t)$. In following sections, we use $A(s_t, a_t)$ to represent the advantage where the separation of these two is necessary.
 ```
 
 ### 11.1.2 Justification of Existence
@@ -33,7 +33,7 @@ The gradient estimate in Policy Gradient methods is often noisy, as we have seen
 Advantage reduces the variance of the gradient estimates and leads to more stable updates by simply replacing the return term in gradient estimate as follows:
 
 $$
-\theta_{t+1} \doteq \theta_t + \alpha \ A_t \frac{\nabla \pi(A_t|S_t, \theta)}{\pi(A_t|S_t, \theta)}
+\theta_{t+1} \doteq \theta_t + \alpha \ A(s_t, a_t) \frac{\nabla \pi(A_t|S_t, \theta)}{\pi(A_t|S_t, \theta)}
 $$
 
 ```{note}

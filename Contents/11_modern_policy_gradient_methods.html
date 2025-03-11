@@ -509,7 +509,7 @@ A(s_t, a_t) \ \dot= \ q(s_t, a_t) - v(s_t)
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Advantage function <span class="math notranslate nohighlight">\(A(s_t, a_t)\)</span> is often written as <span class="math notranslate nohighlight">\(A_t\)</span> for simplicity</p>
+<p>Advantage function <span class="math notranslate nohighlight">\(A(s_t, a_t)\)</span> is often written as <span class="math notranslate nohighlight">\(A_t\)</span> for simplicity，but please pay attention to separate the action <span class="math notranslate nohighlight">\(A_t\)</span> and the advantage <span class="math notranslate nohighlight">\(A(s_t, a_t)\)</span>. In following sections, we use <span class="math notranslate nohighlight">\(A(s_t, a_t)\)</span> to represent the advantage where the separation of these two is necessary.</p>
 </div>
 </section>
 <section id="justification-of-existence">
@@ -518,7 +518,7 @@ A(s_t, a_t) \ \dot= \ q(s_t, a_t) - v(s_t)
 <p>Advantage reduces the variance of the gradient estimates and leads to more stable updates by simply replacing the return term in gradient estimate as follows:</p>
 <div class="math notranslate nohighlight">
 \[
-\theta_{t+1} \doteq \theta_t + \alpha \ A_t \frac{\nabla \pi(A_t|S_t, \theta)}{\pi(A_t|S_t, \theta)}
+\theta_{t+1} \doteq \theta_t + \alpha \ A(s_t, a_t) \frac{\nabla \pi(A_t|S_t, \theta)}{\pi(A_t|S_t, \theta)}
 \]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
