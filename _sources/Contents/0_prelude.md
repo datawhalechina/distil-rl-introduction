@@ -77,6 +77,8 @@ Lastly, the learning curve in RL can feel incredibly steep at the beginning due 
 
 ## Acknowledgements and Urges
 
-My deep appreciation to [Marvin Schweizer](https://github.com/mschweizer) for providing valuable feedback on this project!
+Information about me (the author) can be found either through [my github profile](https://github.com/Dong237) or [LinkedIn](https://www.linkedin.com/in/youxiang-dong-6986bb211/).
+
+I'd like to express my deep appreciation to [Marvin Schweizer](https://github.com/mschweizer) for providing valuable feedback on this project!
 
 The project could definitely use more polish and I'd love to hear from you. Feel free to open issues on GitHub to share your thoughts- your input will go a long way in making this resource better for everyone.
