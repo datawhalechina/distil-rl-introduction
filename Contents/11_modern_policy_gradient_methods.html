@@ -808,7 +808,7 @@ L^{CPI}(\theta) = \hat{\mathbb{E}}_t \left[ r_t(\theta) \hat{A}_t \right],
 \[
         \hat{g}_{actor} = \frac{1}{NT}\sum_{n=0}^{N} \sum_{t=0}^{T} [\min ( r_t(\theta) \hat{A}_t, \ \text{clip}(r_t(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_t) + S[\pi_\theta](s_0)]
         \]</div>
-<p>While #gGradient (descent) estimator for value function is:</p>
+<p>While gradient (descent) estimator for value function is:</p>
 <div class="math notranslate nohighlight">
 \[
         \hat{g}_{critic} = \frac{1}{NT}\sum_{n=0}^{N} \sum_{t=0}^{T}L_t^{VF}(\theta),

@@ -342,7 +342,7 @@ where $r_t(\theta)$ denotes the probability ratio $\frac{\pi_\theta(a_t | s_t)}{
         \hat{g}_{actor} = \frac{1}{NT}\sum_{n=0}^{N} \sum_{t=0}^{T} [\min ( r_t(\theta) \hat{A}_t, \ \text{clip}(r_t(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_t) + S[\pi_\theta](s_0)]
         $$
 
-        While #gGradient (descent) estimator for value function is:
+        While gradient (descent) estimator for value function is:
 
         $$
         \hat{g}_{critic} = \frac{1}{NT}\sum_{n=0}^{N} \sum_{t=0}^{T}L_t^{VF}(\theta),
