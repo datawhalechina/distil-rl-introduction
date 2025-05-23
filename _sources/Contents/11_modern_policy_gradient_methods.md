@@ -439,8 +439,6 @@ Notations in context of LLM training:
 
 - **Reward Model Retraining**: In iterative GRPO, the authors generate new training sets for the reward model based on the sampling results from the policy model and continually train the old reward model using a **replay mechanism** that incorporates 10% of historical data. Then, they set the reference model as the policy model, and continually train the policy model with the new reward model.
 
-- **Token Generation as Time Step**: In context of LLM training, this algorithm is performed on the token level.
-
 ### 11.5.3 Properties of GRPO
 
 - **Advantages**  

@@ -901,7 +901,6 @@ r_t = r_\phi(s_t, a_t) - \beta log \frac{\pi_\theta(a_t\vert s_t)}{\pi_{ref}(a_t
 <p>The above algorithm [reference to GRPO] uses an iterative approach, except for the usual computations of all components required, there are two main things to be noted:</p>
 </li>
 <li><p><strong>Reward Model Retraining</strong>: In iterative GRPO, the authors generate new training sets for the reward model based on the sampling results from the policy model and continually train the old reward model using a <strong>replay mechanism</strong> that incorporates 10% of historical data. Then, they set the reference model as the policy model, and continually train the policy model with the new reward model.</p></li>
-<li><p><strong>Token Generation as Time Step</strong>: In context of LLM training, this algorithm is performed on the token level.</p></li>
 </ul>
 </section>
 <section id="properties-of-grpo">
