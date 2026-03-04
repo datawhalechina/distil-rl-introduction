@@ -1,0 +1,959 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 5 章 蒙特卡洛方法 &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/5_蒙特卡洛方法';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/5_蒙特卡洛方法.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/5_蒙特卡洛方法.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/5_蒙特卡洛方法.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/5_蒙特卡洛方法.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第 5 章 蒙特卡洛方法</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-prediction-evaluation">5.1 蒙特卡洛预测（Monte Carlo Prediction / Evaluation）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-prediction-for-state-value-function">5.1.1 状态值函数的蒙特卡洛预测（Monte Carlo Prediction for State Value Function）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-prediction-for-action-value-function">5.1.2 蒙特卡洛方法预测动作价值函数（Monte Carlo Prediction for Action Value Function）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-control">5.2 蒙特卡洛控制（Monte Carlo Control）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-control-removing-assumption-2">5.2.1 蒙特卡洛控制：去除假设 (2)（Monte Carlo Control: Removing Assumption 2）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-control-removing-both-assumptions">5.2.2 蒙特卡洛控制移除两个假设（Monte Carlo Control: Removing Both Assumptions）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#off-policy-monte-carlo-methods">5.3 异策略蒙特卡洛方法（Off-policy Monte Carlo Methods）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#off-policy-monte-carlo-prediction-via-importance-sampling">5.3.1 基于重要性采样的异策略蒙特卡洛预测（Off-policy Monte Carlo Prediction via Importance Sampling）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#off-policy-monte-carlo-control">5.3.2 异策略蒙特卡洛控制（Off-policy Monte Carlo Control）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.4 总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>第 5 章 蒙特卡洛方法<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>蒙特卡洛方法（Monte Carlo Methods）是一种<strong>仅基于经验</strong>（即对样本回报取平均）来解决强化学习问题的方法。为确保回报定义明确，本章仅将蒙特卡洛方法应用于<strong>回合制任务（episodic tasks）</strong>。</p>
+<p>只有在一个回合完整结束后，才会更新价值估计和策略。因此，蒙特卡洛方法可以在<strong>每个回合的基础上</strong>进行，但不能按**每一步（在线/online）**进行。</p>
+<p>我们采用广义策略迭代（Generalized Policy Iteration，GPI）的思想，在马尔可夫决策过程（Markov Decision Process，MDP）中通过样本回报 (Return) 学习价值函数。价值函数和相应的策略仍以基本相同的方式相互作用，以实现最优解。</p>
+<p>最后说明一点：<strong>在本章中，我们假设每个回合总是从时间步 <span class="math notranslate nohighlight">\(0\)</span> 开始，到时间步 <span class="math notranslate nohighlight">\(T\)</span> 结束，即 <span class="math notranslate nohighlight">\(S_T\)</span> 是终止状态。</strong></p>
+<section id="monte-carlo-prediction-evaluation">
+<h2>5.1 蒙特卡洛预测（Monte Carlo Prediction / Evaluation）<a class="headerlink" href="#monte-carlo-prediction-evaluation" title="Link to this heading">#</a></h2>
+<p>蒙特卡洛方法（Monte Carlo，MC）基础：</p>
+<ul class="simple">
+<li><p><strong>定义对状态 <span class="math notranslate nohighlight">\(s\)</span> 的访问（visit）</strong>：在一个回合中状态 <span class="math notranslate nohighlight">\(s\)</span> 的一次出现。显然，<span class="math notranslate nohighlight">\(s\)</span> 在同一个回合中可能被访问多次。</p></li>
+<li><p><strong>评估方法</strong>：</p>
+<ul>
+<li><p><strong>首次访问蒙特卡洛方法（first-visit MC method）</strong>：通过对状态 <span class="math notranslate nohighlight">\(s\)</span> 首次访问后获得的回报取平均，来估计 <span class="math notranslate nohighlight">\(v_\pi(s)\)</span>。</p></li>
+<li><p><strong>每次访问蒙特卡洛方法（every-visit MC method）</strong>：对所有访问状态 <span class="math notranslate nohighlight">\(s\)</span> 后的回报取平均。</p></li>
+</ul>
+</li>
+</ul>
+<section id="monte-carlo-prediction-for-state-value-function">
+<h3>5.1.1 状态值函数的蒙特卡洛预测（Monte Carlo Prediction for State Value Function）<a class="headerlink" href="#monte-carlo-prediction-for-state-value-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>首次访问蒙特卡洛预测，用于估计 <span class="math notranslate nohighlight">\(V \approx v_\pi\)</span></strong></p>
+<ul>
+<li><p>算法：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter5/algo_first_visit_value.png" alt="算法：首次访问值函数" style="width: 100%;">
+</div>
+</li>
+<li><p>直观理解：每个状态的回报 <span class="math notranslate nohighlight">\(G_t\)</span> 是从 <span class="math notranslate nohighlight">\(S_{T-1}\)</span> 倒推至 <span class="math notranslate nohighlight">\(S_0\)</span> 计算而得。根据大数定律（law of large numbers），对某一状态的 <span class="math notranslate nohighlight">\(G_t\)</span> 求平均即为该状态的价值：<span class="math notranslate nohighlight">\(v(S_t) = E_{\pi}[G_t|S_t]\)</span>。</p></li>
+<li><p>回报计算示意图（<span class="math notranslate nohighlight">\(T=5\)</span>，箭头上的整数为奖励）：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter5/computing_gt.png" alt="回报的反向计算" style="width: 350px;">
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>关于蒙特卡洛方法的一个重要事实是：对每个状态的估计是<strong>相互独立</strong>的。与动态规划（DP）不同，一个状态的估计不会依赖于其他状态的估计。换句话说，蒙特卡洛方法<strong>不使用自举（bootstrap）</strong>，这是我们在上一章定义过的。</p></li>
+<li><p>对于蒙特卡洛方法，估计某个单一状态的价值所需的计算开销与状态总数无关。因此，在只关心某一个或一部分状态价值时，蒙特卡洛方法尤其具有吸引力。</p></li>
+</ul>
+</div>
+</section>
+<section id="monte-carlo-prediction-for-action-value-function">
+<h3>5.1.2 蒙特卡洛方法预测动作价值函数（Monte Carlo Prediction for Action Value Function）<a class="headerlink" href="#monte-carlo-prediction-for-action-value-function" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>动机</strong>：状态值函数 <span class="math notranslate nohighlight">\(v_\pi\)</span> 仅在已知环境模型的情况下可用。由于蒙特卡洛方法假设<strong>无环境模型（model-free）</strong>，我们在这种情况下的主要目标之一就是估计最优动作价值函数 <span class="math notranslate nohighlight">\(q_\star\)</span>。</p></li>
+<li><p><strong>首次访问蒙特卡洛预测，用于估计 <span class="math notranslate nohighlight">\(Q \approx q_\pi\)</span></strong></p></li>
+<li><p>算法：</p>
+<ul>
+<li><p>输入：待评估的策略 <span class="math notranslate nohighlight">\(\pi\)</span></p></li>
+<li><p>初始化：</p>
+<ul>
+<li><p>对所有 <span class="math notranslate nohighlight">\(s \in S, a \in A(s)\)</span>，任意初始化 <span class="math notranslate nohighlight">\(Q(s, a) \in \mathbb{R}\)</span></p></li>
+<li><p>对所有 <span class="math notranslate nohighlight">\(s \in S, a \in A(s)\)</span>，令 <span class="math notranslate nohighlight">\(Return(s, a) \leftarrow\)</span> 空列表</p></li>
+</ul>
+</li>
+<li><p>不断重复（对每一回合）：</p>
+<ul>
+<li><p>生成一个回合：<span class="math notranslate nohighlight">\(\pi: S_0, A_0, R_1, S_1, A_1, ..., S_{T-1}, A_{T-1}, R_T, S_T\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(G_T \leftarrow 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{for } t \text{ in } \{T-1, T-2, ..., 0\}\)</span>:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(G_{t} \leftarrow \gamma G_{t+1} + R_{t+1}\)</span></p></li>
+<li><p>将 <span class="math notranslate nohighlight">\(G_{t}\)</span> 添加到 <span class="math notranslate nohighlight">\(Returns(S_t, A_t)\)</span> 中</p></li>
+<li><p><span class="math notranslate nohighlight">\(q(S_t, A_t) \leftarrow average(Returns(S_t, A_t))\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>直观理解：与<a class="reference internal" href="#511-mc-prediction-for-state-value-function"><span class="xref myst">第 5.1.1 节</span></a>相同，记住 <span class="math notranslate nohighlight">\(q(s,a) = E_\pi[G_t | S_t, A_t]\)</span></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>蒙特卡洛回报 <span class="math notranslate nohighlight">\(G_t\)</span> 提供了对期望回报的<strong>无偏样本</strong>，但由于环境动态和策略的随机性，每个奖励 <span class="math notranslate nohighlight">\(R_t\)</span> 都是随机变量，其累加可能导致期望回报的估计具有<strong>高方差</strong>。</p>
+<p>许多现代强化学习方法（或至少是回报估计方法）正是为缓解这一问题而提出，其中一些将在<a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html"><span class="std std-doc">第 11 章</span></a>中介绍。</p>
+</div>
+</section>
+</section>
+<section id="monte-carlo-control">
+<h2>5.2 蒙特卡洛控制（Monte Carlo Control）<a class="headerlink" href="#monte-carlo-control" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="#51-monte-carlo-prediction-evaluation"><span class="xref myst">第 5.1 节</span></a>中我们依赖的一般问题与两个基本假设：</p>
+<ul class="simple">
+<li><p><strong>持续探索问题</strong>：在估计 <span class="math notranslate nohighlight">\(q_\pi\)</span> 时，许多状态-动作对可能永远不会被访问。例如，当使用确定性策略（deterministic policy）时，一个状态下的多个动作可能永远不会被选择。</p></li>
+<li><p><strong>假设 (1)：探索性开始（exploring starts）</strong>：每一回合从某个状态-动作对开始，且所有状态-动作对都有非零概率作为起点。（这保证在无限回合中，每个状态-动作对都将被访问无穷次。）</p></li>
+<li><p><strong>估计 <span class="math notranslate nohighlight">\(\hat{q}_\pi(S_t, A_t)\)</span> 的问题</strong>：我们默认使用大数定律并依赖于如下假设：</p></li>
+<li><p><strong>假设 (2)：无限回合</strong>：策略评估是在无限次回合下进行的（完整策略评估）。</p></li>
+</ul>
+<p>显然，这两个假设在实际中很难成立，因此我们将逐步介绍移除它们的方法。</p>
+<section id="monte-carlo-control-removing-assumption-2">
+<h3>5.2.1 蒙特卡洛控制：去除假设 (2)（Monte Carlo Control: Removing Assumption 2）<a class="headerlink" href="#monte-carlo-control-removing-assumption-2" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>如何去除假设 (2)</strong>：</p>
+<ul class="simple">
+<li><p>为避免执行名义上需要的无限回合下的策略评估，我们可以<strong>放弃完整评估后再改进</strong>的做法。值迭代（value iteration）就是这种思想的极端例子。</p></li>
+<li><p>对于蒙特卡洛策略迭代，自然的做法是<strong>每回合交替执行评估和改进</strong>。每个回合结束后，使用观测到的回报进行策略评估，然后对回合中访问过的所有状态进行策略改进。</p></li>
+</ul>
+</li>
+<li><p>蒙特卡洛探索性开始（Monte Carlo ES）算法，用于估计 <span class="math notranslate nohighlight">\(\pi \approx \pi_\star\)</span></p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter5/algo_mc_es.png" alt="算法：蒙特卡洛探索性起始" style="width: 100%;">
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>上述算法的核心技巧在于：每次更新 <span class="math notranslate nohighlight">\(Q(S_t,A_t)\)</span> 后立即进行策略改进（贪婪化），从而移除了对”无限回合”的依赖（假设 2）。</p>
+</div>
+</section>
+<section id="monte-carlo-control-removing-both-assumptions">
+<h3>5.2.2 蒙特卡洛控制移除两个假设（Monte Carlo Control: Removing Both Assumptions）<a class="headerlink" href="#monte-carlo-control-removing-both-assumptions" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>同策略（On-policy）与异策略（Off-policy）方法</strong>：</p>
+<ul class="simple">
+<li><p><strong>同策略方法（On-policy Methods）</strong>：评估或改进当前用于决策的策略（如蒙特卡洛探索性开始、动态规划等）。</p></li>
+<li><p><strong>异策略方法（Off-policy Methods）</strong>：评估或改进的策略不同于数据生成的策略。</p></li>
+</ul>
+</li>
+<li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-软策略（<span class="math notranslate nohighlight">\(\epsilon\)</span>-soft policies）</strong>：</p>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪策略（<span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy）</strong>：如第 2 章 <a class="reference internal" href="../Contents/2_multi_armed_bandits.html#action-value-methods"><span class="std std-ref">2.2 节</span></a> 介绍，非贪婪动作以均匀分布的方式被赋予 <span class="math notranslate nohighlight">\(\frac{\epsilon}{|A(s)|}\)</span> 的最小选择概率，贪婪动作的概率为 <span class="math notranslate nohighlight">\(1 - \epsilon + \frac{\epsilon}{|A(s)|}\)</span>。</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪策略属于 <span class="math notranslate nohighlight">\(\epsilon\)</span>-软策略的一种。在所有 <span class="math notranslate nohighlight">\(\epsilon\)</span>-软策略中，<span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪策略是最贪婪的。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-软策略</strong>：对任意状态 <span class="math notranslate nohighlight">\(s\)</span>，所有动作 <span class="math notranslate nohighlight">\(a\)</span> 的选择概率 <span class="math notranslate nohighlight">\(\pi(a|s)&gt;\frac{\epsilon}{|A(s)|}\)</span>，即每个动作都有非零概率被选中，但<strong>不一定均匀</strong>。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>基于 <span class="math notranslate nohighlight">\(\epsilon\)</span>-软策略的同策略首次访问蒙特卡洛控制，用于估计 <span class="math notranslate nohighlight">\(\pi \approx \pi_\star\)</span></strong></p>
+<ul>
+<li><p>算法：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter5/algo_mc_control.png" alt="算法：On-policy 蒙特卡洛控制" style="width: 100%;">
+</div>
+- 直观理解：如果去除了探索性开始假设，就不能简单地使策略对当前价值函数贪婪化，否则非贪婪动作将无法再被探索。因此在[5.2.1 节](#521-monte-carlo-control-removing-assumption-2)基础上，本算法通过以下方式移除了探索性开始的假设：
+<ul class="simple">
+<li><p>初始策略设为 <span class="math notranslate nohighlight">\(\epsilon\)</span>-软策略；</p></li>
+<li><p>在策略改进时，将旧策略更新为 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪策略。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- 本算法也移除了第二个假设（无限回合），因为每次更新 $Q(S_t, A_t)$ 后立即执行 $\epsilon$-贪婪化。
+
+- 策略改进定理保证：对 $q_\pi$ 的 $\epsilon$-贪婪策略总优于任意 $\epsilon$-软策略。
+
+- 需要注意的是，该方法最终只能得到 $\epsilon$-软策略中的最优策略，即一个仍保留探索行为的近似最优策略，而非真正的最优策略。
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="off-policy-monte-carlo-methods">
+<h2>5.3 异策略蒙特卡洛方法（Off-policy Monte Carlo Methods）<a class="headerlink" href="#off-policy-monte-carlo-methods" title="Link to this heading">#</a></h2>
+<p>所有学习型控制方法都面临一个两难问题：它们既要学习基于后续最优行为的动作价值，又必须采取非最优行为来探索所有动作（以找到最优动作）。如何在遵循探索性策略的同时学习最优策略呢？一种更直接的方法是使用两种策略。</p>
+<p>让我们回顾同策略/异策略学习：</p>
+<ul class="simple">
+<li><p><strong>同策略学习（On-policy Learning）</strong>：学习智能体当前所遵循的<strong>目标策略（target policy）</strong> <span class="math notranslate nohighlight">\(\pi\)</span> 的价值函数或策略函数。这意味着智能体使用正在改进的策略与环境进行交互。<strong>同策略方法通常更简单，优先被考虑。</strong></p></li>
+<li><p><strong>异策略学习（Off-policy Learning）</strong>：学习来源于<strong>行为策略（behavior policy）</strong> <span class="math notranslate nohighlight">\(b\)</span> 的数据，但目标是估计与 <span class="math notranslate nohighlight">\(b\)</span> 不同的<strong>目标策略（target policy）</strong> <span class="math notranslate nohighlight">\(\pi\)</span> 的价值或策略函数。异策略方法需要额外的概念和符号。由于数据来源与目标不同，<strong>异策略方法通常具有更高的方差且收敛速度较慢。</strong>
+**另一方面，异策略方法更强大且更通用。**当目标策略与行为策略相同时，异策略方法包含了同策略方法作为特例。</p>
+<ul>
+<li><p>为了使用 <span class="math notranslate nohighlight">\(b\)</span> 生成的回合来估计 <span class="math notranslate nohighlight">\(\pi\)</span> 的价值，我们基于一个<strong>覆盖假设（Coverage Assumption）</strong>：只要 <span class="math notranslate nohighlight">\(\pi(a|s) \ge 0\)</span>，就必须有 <span class="math notranslate nohighlight">\(b(a|s) \ge 0\)</span>。这意味着，在目标策略 <span class="math notranslate nohighlight">\(\pi\)</span> 不为零概率的状态中，行为策略 <span class="math notranslate nohighlight">\(b\)</span> 必须能够以非零概率选择相同的动作。</p></li>
+</ul>
+</li>
+</ul>
+<section id="off-policy-monte-carlo-prediction-via-importance-sampling">
+<h3>5.3.1 基于重要性采样的异策略蒙特卡洛预测（Off-policy Monte Carlo Prediction via Importance Sampling）<a class="headerlink" href="#off-policy-monte-carlo-prediction-via-importance-sampling" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>重要性采样（Importance Sampling）的实现</strong>：如果你觉得文本推导难以理解，这里有一个 <a class="reference external" href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/XPxPd/importance-sampling">讲解视频</a> 可供参考。</p>
+<ul>
+<li><p>给定来自 <span class="math notranslate nohighlight">\(X \sim b\)</span> 的现有样本，我们希望估计<span class="math notranslate nohighlight">\(E_{\pi}[X]\)</span>（来自不同分布）</p></li>
+<li><p>推导：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$$
+\begin{align*}
+E_{\pi}[X] &amp;= \sum_{x \in X} x \pi(x) \\
+&amp;= \sum_{x \in X} x \pi(x) \frac{b(x)}{b(x)} \\
+&amp;= \sum_{x \in X} x b(x) \frac{\pi(x)}{b(x)} \\
+&amp;= \sum_{x \in X} x b(x) \rho(x)  \quad (\rho(x) \text{ denotes } \frac{\pi(x)}{b(x)}) \\
+&amp;= E_{b}[X \rho(X)] \\
+&amp;\approx \frac{1}{n} \sum_{i=1}^n x_i \rho(x_i)
+\end{align*}
+$$
+</pre></div>
+</div>
+</li>
+<li><p>比值 <span class="math notranslate nohighlight">\(\rho(x)=\frac{\pi(x)}{b(x)}\)</span> 被称为<strong>重要性采样比率（importance sampling ratio）</strong>。</p></li>
+</ul>
+</li>
+<li><p><strong>理论上用于评估目标策略 <span class="math notranslate nohighlight">\(\pi\)</span> 的重要性采样</strong>：</p>
+<ol class="arabic">
+<li><p>对于<strong>一个给定状态-动作轨迹</strong>，计算重要性采样比率：</p>
+<ul>
+<li><p>给定一个轨迹 <span class="math notranslate nohighlight">\(S_{t+1}, A_{t+1}, S_{t+2}..., A_{T-1}, S_T\)</span> ，从 <span class="math notranslate nohighlight">\(S_t, A_t\)</span> 开始，该轨迹的概率为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+       \begin{align*}
+       Pr (&amp;S_{t+1}, A_{t+1} ,..., S_{T-1}, A_{T-1}, S_T | S_t, A_t) \\
+       &amp;= p(S_{t+1}|A_t, S_t)\pi(A_{t+1}|S_{t+1}) ... p(S_{T-1}|A_{T-2}, S_{T-2})\pi(A_{T-1}|S_{T-1})p(S_T|A_{T-1},S_{T-1}) \\
+       &amp;= \Pi_{k=t+1}^{k={T-1}} p(S_k|A_{k-1}, S_{k-1})\pi(A_k|S_k) \times p(S_T|A_{T-1},S_{T-1})
+       \end{align*}
+       \end{split}\]</div>
+<p>因此，<strong>重要性采样比率</strong>为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+       \begin{align*}
+         \rho_{t+1: T-1} &amp;= \frac{\Pi_{k=t+1}^{k={T-1}} p(S_k|A_{k-1}, S_{k-1})\pi(A_k|S_k) \times p(S_T|A_{T-1},S_{T-1})}{\Pi_{k=t+1}^{k={T-1}} p(S_k|A_{k-1}, S_{k-1})b(A_k|S_k) \times p(S_T|A_{T-1},S_{T-1})} \\
+         &amp;= \frac{\Pi_{k={t+1}}^{k={T-1}} \pi(A_k|S_k)}{\Pi_{k={t+1}}^{k={T-1}} b(A_k|S_k)}
+         \end{align*}
+       \end{split}\]</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\rho_{t: T-1}\)</span> 的下标对应于轨迹中的动作序列，即 {<span class="math notranslate nohighlight">\(A_{t+1}, ..., A_{T-1}\)</span>}，然后轨迹在终止状态 <span class="math notranslate nohighlight">\(S_T\)</span> 结束。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho_{t+1: T-1}\)</span> 只依赖于两个策略，<strong>不依赖于环境动态</strong>，因此重要性采样可用于无模型强化学习问题。</p></li>
+</ul>
+</div>
+</li>
+<li><p>给定 <span class="math notranslate nohighlight">\(q_b(s,a) = E_b[G_t|S_t = s, A_t = a]\)</span>，估计 <span class="math notranslate nohighlight">\(q_\pi(s,a)\)</span> 为：</p>
+<div class="math notranslate nohighlight">
+\[
+     q_\pi(s,a)= E_b[\rho_{t+1:T-1} \times G_t|S_t = s, A_t=a]
+     \]</div>
+<ul class="simple">
+<li><p>直观理解：注意动作价值函数 <span class="math notranslate nohighlight">\(q\)</span> 的定义 <span class="math notranslate nohighlight">\(E[G_t|S_t = s, A_t=a]\)</span> 是对所有轨迹的期望，而每个 <span class="math notranslate nohighlight">\(G_t\)</span> 是一个具体实现，它可视为重要性采样方程推导中的变量 <span class="math notranslate nohighlight">\(x\)</span>。重要性采样比率 <span class="math notranslate nohighlight">\(\rho_{t+1:T-1}\)</span> 是按轨迹计算，用于与该轨迹的 <span class="math notranslate nohighlight">\(G_t\)</span> 一一对应，并直接与 <span class="math notranslate nohighlight">\(G_t\)</span> 相乘。</p></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>实践中用于评估目标策略 <span class="math notranslate nohighlight">\(\pi\)</span> 的重要性采样</strong></p>
+<ul>
+<li><p><strong>说明</strong>：</p>
+<ul>
+<li><p><strong>关于时间步</strong>：时间步的编号会跨回合递增。例如，如果第一回合在 <span class="math notranslate nohighlight">\(t=100\)</span> 结束，那么下一回合从 <span class="math notranslate nohighlight">\(t = 101\)</span> 开始。</p></li>
+<li><p><strong>关于记号</strong>：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(J(s,a)\)</span>：<strong>访问状态-动作对 <span class="math notranslate nohighlight">\((s,a)\)</span> 的时间步集合</strong>（对于 every-visit 方法；若为 first-visit 方法，则只包括首次访问的时间步）</p></li>
+<li><p><span class="math notranslate nohighlight">\(T(t)\)</span>：<strong>从时间步 <span class="math notranslate nohighlight">\(t\)</span> 开始的第一个终止状态的时间步</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(\{G_t\}_{t \in J(s,a)}\)</span>：所有回合中与 <span class="math notranslate nohighlight">\((s,a)\)</span> 相关的回报集合</p></li>
+<li><p><span class="math notranslate nohighlight">\(\{\rho_{t+1:T(t)-1}\}_{t \in J(s,a)}\)</span>：对应轨迹的<strong>重要性采样比率</strong></p></li>
+</ul>
+</li>
+<li><p><strong>方法</strong>：</p>
+<ul>
+<li><p>用于评估目标策略的普通重要性采样（Ordinary importance sampling）：</p>
+<div class="math notranslate nohighlight">
+\[
+        Q(s,a) \dot= \frac{\sum_{t \in J(s)} \ \rho_{t+1:T(t)-1} \times G_t}{|J(s,a)|}
+        \]</div>
+</li>
+<li><p>用于评估目标策略的加权重要性采样（Weighted importance sampling）：</p>
+<div class="math notranslate nohighlight">
+\[
+        Q(s,a) \dot= \frac{\sum_{t \in J(s)} \ \rho_{t+1:T(t)-1} \times G_t}{\sum_{t \in J(s)} \ \rho_{t+1:T(t)-1}}
+        \]</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><p><strong>对于首次访问方法</strong>：</p>
+<p>考虑在观察到 <span class="math notranslate nohighlight">\((s,a)\)</span> 的某个回报 <span class="math notranslate nohighlight">\(G_t\)</span> 后估计它们的首次访问方法，在加权平均估计中，该估计等于观察到的回报 <span class="math notranslate nohighlight">\(G_t\)</span>，不受比率影响，此时其估计为 <span class="math notranslate nohighlight">\(q_b(s,a)\)</span> 而非 <span class="math notranslate nohighlight">\(q_\pi(s,a)\)</span>。而普通方法的估计始终是 <span class="math notranslate nohighlight">\(q_\pi(s,a)\)</span>，但其波动可能很大，取决于 <span class="math notranslate nohighlight">\(\rho_{t+1:T(t)-1}\)</span> 的值。</p>
+<p>总而言之，普通重要性采样（ordinary importance sampling）是无偏的，而加权重要性采样（weighted importance sampling）则有偏（尽管其偏差在渐近上会收敛为零）。另一方面，普通重要性采样的方差通常是无界的，因为比值的方差可能无界；而在加权估计器中，任何单个回报所占的最大权重为 1。事实上，在假设回报有界的情况下，即使这些比值本身的方差无穷大，加权重要性采样估计器的方差也会收敛到 0。</p>
+<p><strong>在实际应用中，加权估计器通常具有显著更低的方差，因此被强烈推荐使用。</strong> 然而，我们不会完全放弃普通重要性采样，因为在后面讨论使用函数逼近的近似方法时，它更容易推广。</p>
+</li>
+<li><p><strong>对于每次访问方法</strong>：</p>
+<p>普通和加权重要性采样的每次访问方法（every‑visit methods）都是有偏的，不过其偏差同样会随着样本数量的增加而渐近趋于零。<strong>在实际应用中，每次访问方法往往更受青睐，因为它们无需记录每个状态是否已访问，而且更容易扩展到近似方法。</strong></p>
+</li>
+</ul>
+</div>
+<ul>
+<li><p><strong>用于更新 <span class="math notranslate nohighlight">\(Q(s,a)\)</span> 的增量实现</strong>：</p>
+<ul>
+<li><p><strong>对于同策略方法</strong>：</p>
+<p><span class="math notranslate nohighlight">\(Q(s,a)\)</span> 是通过简单平均回报估计的，增量实现与第 2 章 <a class="reference internal" href="../Contents/2_multi_armed_bandits.html#stationary-problems"><span class="std std-ref">2.4.1 节</span></a> 一致：</p>
+<div class="math notranslate nohighlight">
+\[
+    新估计值 \leftarrow 旧估计值 + 步长*[目标值 - 旧估计值]
+    \]</div>
+</li>
+<li><p><strong>对于异策略方法</strong>：</p>
+<ul>
+<li><p>普通重要性采样：同样是通过 <span class="math notranslate nohighlight">\(J(s,a)\)</span> 中回报的平均值估计，增量公式与上面所示的同策略方法相同。</p></li>
+<li><p>加权重要性采样：这里，我们必须使用一种略有不同的增量算法，对收益进行加权平均。</p>
+<ul>
+<li><p>假设 <span class="math notranslate nohighlight">\(\{G_t\}_{t \in J(s,a)}\)</span> 已包含 <span class="math notranslate nohighlight">\(n-1\)</span> 个值，记为 <span class="math notranslate nohighlight">\(G_1, G_2, ..., G_{n-1}\)</span>，其中 <span class="math notranslate nohighlight">\(G_i\)</span> 对应权重为 <span class="math notranslate nohighlight">\(W_i = \rho_{i+1:T(i)-1}\)</span> 且 <span class="math notranslate nohighlight">\(W_i \in \{\rho_{t+1:T(t)-1}\}_{t \in J(s,a)}\)</span></p></li>
+<li><p>第 <span class="math notranslate nohighlight">\(n\)</span> 次对 <span class="math notranslate nohighlight">\(Q(s,a)\)</span> 的加权估计为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+        \begin{align*}
+        Q_n(s,a) &amp;\dot= \frac{\sum_{k=1}^{k=n-1}W_k G_k}{\sum_{k=1}^{k=n-1}W_k} \\
+        &amp;\dot= Q_{n-1}(s,a) + \alpha \times [G_n - Q_{n-1}(s,a)]
+        \end{align*}
+        \end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\alpha = \frac{W_n}{C_n}\)</span>，<span class="math notranslate nohighlight">\(C_n \dot= C_{n-1} + W_n = \sum_{i=1}^{i=n} W_i\)</span>，<span class="math notranslate nohighlight">\(C_0 \dot= 0\)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>用于估计 <span class="math notranslate nohighlight">\(Q \approx q_\pi\)</span> 的异策略蒙特卡洛预测（策略评估）算法</strong></p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter5/algo_off_policy_mc_prediction_action.png" alt="Algorithm: Off-policy Monte Carlo Prediction for Action Value" style="width: 100%;">
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><span class="math notranslate nohighlight">\(W_{t+1} = \rho_{t+1:T(i)-1}\)</span></p>
+</div>
+</li>
+</ul>
+</section>
+<section id="off-policy-monte-carlo-control">
+<h3>5.3.2 异策略蒙特卡洛控制（Off-policy Monte Carlo Control）<a class="headerlink" href="#off-policy-monte-carlo-control" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>经验法则</strong>：在控制问题中，目标策略通常是根据当前估计的动作价值函数所得到的确定性贪婪策略。随着行为策略保持随机且更具探索性（例如 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪策略），该策略会逐渐收敛为确定性的最优策略。</p></li>
+<li><p><strong>异策略蒙特卡洛控制算法，用于估计 <span class="math notranslate nohighlight">\(\pi \approx \pi_\star\)</span></strong></p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter5/algo_off_policy_mc_control.png" alt="Algorithm: Off-policy Monte Carlo Control" style="width: 100%;">
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>即便动作是按另一软策略 <span class="math notranslate nohighlight">\(b\)</span> 选取的（可能在不同或同一回合内变化），策略 <span class="math notranslate nohighlight">\(\pi\)</span> 在所有遇到的状态上仍会收敛到最优。</p></li>
+<li><p>该方法的一个潜在问题是它只从回合尾部学习，此时余下的动作全是贪婪的。若非贪婪动作较多，学习将变慢，尤其是对于出现在长回合早期的状态；这可能极大拖慢学习速度。</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="id2">
+<h2>5.4 总结<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>目前，蒙特卡洛方法在预测和控制方面仍然存在一些未解的问题，是一个持续进行研究的领域。</p>
+<ul>
+<li><p><strong>思维导图：我们现在的位置</strong></p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter5/chapter5_mindmap.png" alt="Mindmap" style="width:100%;">
+</li>
+<li><p><strong>关键要点</strong></p>
+<ul class="simple">
+<li><p>蒙特卡洛方法相对于动态规划方法的优点：</p>
+<ol class="arabic simple">
+<li><p>蒙特卡洛方法不需要环境模型。</p></li>
+<li><p>蒙特卡洛方法可以与仿真或从概率分布中抽样结合使用。对于许多应用，即使构建转换概率的明确模型较为困难，仍然可以轻松地模拟样本回合。</p></li>
+<li><p>蒙特卡洛方法可以轻松高效地专注于一小部分状态。特定区域可以被精确评估，而无需为评估其余状态集付出代价。</p></li>
+<li><p>蒙特卡洛方法可能更不容易受到马尔可夫性假设违背的影响。因为它们不会基于后继状态的价值估计来更新自己的价值估计，即它们不会进行自举（bootstrap）。</p></li>
+</ol>
+</li>
+<li><p>保持足够的探索性：</p>
+<ul>
+<li><p>对于同策略方法：使用探索性开始假设（假设1）或将 <span class="math notranslate nohighlight">\(\pi\)</span> 初始化为 <span class="math notranslate nohighlight">\(\epsilon\)</span> -软策略。</p></li>
+<li><p>对于异策略方法：我们从由不同的行为策略生成的数据中学习目标策略的价值函数，这满足覆盖假设。同时，我们需要使用重要性采样将行为策略的期望回报转换为目标策略的期望回报。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>额外的课程视频（可选）</strong>: <a class="reference external" href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/mZvQp/emma-brunskill-batch-reinforcement-learning">Emma Brunskill: 批量强化学习</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-prediction-evaluation">5.1 蒙特卡洛预测（Monte Carlo Prediction / Evaluation）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-prediction-for-state-value-function">5.1.1 状态值函数的蒙特卡洛预测（Monte Carlo Prediction for State Value Function）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-prediction-for-action-value-function">5.1.2 蒙特卡洛方法预测动作价值函数（Monte Carlo Prediction for Action Value Function）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-control">5.2 蒙特卡洛控制（Monte Carlo Control）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-control-removing-assumption-2">5.2.1 蒙特卡洛控制：去除假设 (2)（Monte Carlo Control: Removing Assumption 2）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-control-removing-both-assumptions">5.2.2 蒙特卡洛控制移除两个假设（Monte Carlo Control: Removing Both Assumptions）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#off-policy-monte-carlo-methods">5.3 异策略蒙特卡洛方法（Off-policy Monte Carlo Methods）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#off-policy-monte-carlo-prediction-via-importance-sampling">5.3.1 基于重要性采样的异策略蒙特卡洛预测（Off-policy Monte Carlo Prediction via Importance Sampling）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#off-policy-monte-carlo-control">5.3.2 异策略蒙特卡洛控制（Off-policy Monte Carlo Control）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.4 总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

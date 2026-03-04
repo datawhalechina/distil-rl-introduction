@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第1章. 强化学习简介 &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/1_强化学习简介';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/1_强化学习简介.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/1_强化学习简介.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/1_强化学习简介.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/1_强化学习简介.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第1章. 强化学习简介</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rl">1.1 强化学习（RL）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.2 强化学习的要素</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.3 总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>第1章. 强化学习简介<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>通过与环境的交互来学习是获取知识的基础，从婴儿期到成年期都是如此。无论是儿童时期的玩耍还是学习复杂技能如驾驶，我们都在通过行动及其后果不断吸收关于因果关系的信息。这个想法支撑着大多数学习和智能理论。</p>
+<p>本书采用计算方法来研究这种交互学习，重点不是直接研究人类或动物的学习过程，而是分析理想化的学习场景。我们将探索机器如何高效地解决具有科学价值的学习问题。我们探讨的方法称为<strong>强化学习</strong>，与其他机器学习方法相比，它更专注于通过交互进行目标导向的学习。</p>
+<p>本章将通过定义、实例和强化学习中的关键要素来介绍这一领域。本章主要是描述性内容，所以您不会看到太多图表或公式。我们假设决心踏上这段学习之旅的读者，或多或少已经了解强化学习的能力，因此让我们略过介绍性内容，直接进入强化学习的世界！</p>
+<section id="rl">
+<h2>1.1 强化学习（RL）<a class="headerlink" href="#rl" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>定义</strong>：强化学习是<strong>学习”该采取什么行动”</strong>——如何将情境映射到动作——以最大化数值化的奖励信号。学习者不会被告知要采取哪些具体动作，而是必须<strong>通过尝试来发现哪些动作能带来最多的奖励</strong>。</p>
+<p>强化学习同时是一个问题、一类能有效解决该问题的方法，以及研究这个问题及其解决方法的学术领域。它具有两个基本特征：</p>
+<ul class="simple">
+<li><p>试错搜索：学习者通过不断尝试和从失败中学习。</p></li>
+<li><p>延迟奖励：动作不仅会影响即时奖励，还可能影响后续状态，进而影响所有后续获得的奖励。</p></li>
+</ul>
+</li>
+<li><p><strong>形式化</strong>：强化学习问题可以用动力系统理论(dynamical systems theory)的思想进行形式化，具体来说，它可被视为不完全已知的<span class="math notranslate nohighlight">\(\textit{马尔可夫决策过程 (Markov decision processes)}\)</span>的最优控制问题（将在<a class="reference internal" href="../Contents/3_markov_decision_process.html"><span class="std std-doc">第3章</span></a>中详细介绍）。</p>
+<p>简单来说，智能体能够在一定程度上感知其<span class="math notranslate nohighlight">\(\textit{环境 (Environment)}\)</span>的<span class="math notranslate nohighlight">\(\textit{状态 (State)}\)</span>，并采取会影响状态的<span class="math notranslate nohighlight">\(\textit{动作 (Action)}\)</span>。同时，智能体有一个或多个与环境状态相关的<span class="math notranslate nohighlight">\(\textit{目标 (Goal)}\)</span>需要实现，这一目标通过它在每次交互中从环境接收的<span class="math notranslate nohighlight">\(\textit{奖励 (Reward)}\)</span>来体现。任何适合解决此类问题——引导智能体实现目标——的方法，我们都可视为强化学习方法。</p>
+</li>
+<li><p><strong>独特性</strong>：</p>
+<ul class="simple">
+<li><p><strong>探索与利用的权衡</strong>：与其他类型的学习不同，在强化学习中，智能体必须利用已有的经验来获取奖励，同时也必须进行探索，以便在未来做出更优的动作选择。这一点将在第2章<a class="reference internal" href="../Contents/2_multi_armed_bandits.html#a-k-armed-bandit-problem"><span class="std std-ref">第2.1节</span></a>中进一步解释。</p></li>
+<li><p><strong>目标导向学习</strong>：强化学习明确考虑了目标导向智能体与不确定环境交互的完整问题。它从一个完整的、交互式的、追求目标的智能体出发，该智能体纯粹基于接收到的奖励信号进行学习。这种学习范式看似简单，但在设计奖励信号方面需要投入大量精力，并且容易受到<a class="reference external" href="https://lilianweng.github.io/posts/2024-11-28-reward-hacking/">奖励黑客攻击 (reward hacking)</a>的影响。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>我们所说的完整的、交互式的、追求目标的智能体，并不总是指完整的有机体或机器人这样的实体。这些当然是典型例子，但完整的、交互式的、追求目标的智能体也可以是更大行为系统中的一个组件。</p>
+<p>一个简单的例子是：一个监控机器人电池电量并向机器人控制架构发送命令的智能体。这个智能体的环境包括机器人的其他部分以及机器人所处的外部环境。</p>
+</div>
+<ul class="simple">
+<li><p><strong>强化学习问题示例</strong></p>
+<ul>
+<li><p>示例1：小羚羊在出生几分钟后就努力站起来。半小时后，它就能以每小时20英里的速度奔跑。</p></li>
+<li><p>示例2：移动机器人需要决定是进入新房间寻找更多可收集的垃圾，还是开始尝试返回电池充电站。它的决策基于当前电池电量以及过去找到充电站的速度和难易程度。</p></li>
+<li><p>共同模式：</p>
+<ul>
+<li><p>两个例子都涉及主动决策的智能体与其环境之间的交互，智能体需要在对环境存在不确定性的情况下实现目标。</p></li>
+<li><p>动作的效果无法完全预测；因此智能体必须频繁监控环境并做出适当反应。</p></li>
+<li><p>智能体能够利用经验，随着时间的推移改进其表现。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>1.2 强化学习的要素<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>策略(Policy) <span class="math notranslate nohighlight">\(\pi\)</span></strong>：定义学习智能体在特定时刻的行为方式。简单来说，策略是从感知到的环境状态到在该状态下应采取的动作的映射。</p>
+<p>策略是强化学习智能体的核心，因为仅凭策略就足以确定其行为。一般而言，策略可以是随机的，为每个可能的动作分配概率。策略的概念将在第3章<a class="reference internal" href="../Contents/3_markov_decision_process.html#policies-and-value-functions"><span class="std std-ref">第3.3节</span></a>中更正式地解释。</p>
+</li>
+<li><p><strong>奖励信号 (Reward signal) <span class="math notranslate nohighlight">\(R_t\)</span></strong>：定义强化学习问题的目标。在每个时间步，环境会向强化学习智能体发送<strong>一个数字</strong>，称为奖励。智能体的唯一<strong>目标是最大化其长期获得的总奖励</strong>。</p>
+<p>一般来说，奖励信号可以是环境状态和所采取动作的随机函数。这一概念将在第3章<a class="reference internal" href="../Contents/3_markov_decision_process.html#goals-and-rewards"><span class="std std-ref">第3.2.1节</span></a>中正式介绍。</p>
+</li>
+<li><p><strong>价值函数</strong>：定义了长期来看什么是有利的。简单来说，某个状态的价值是<strong>智能体从该状态开始，预期在未来能够累积的奖励总和</strong>。奖励是即时的，而价值则更具前瞻性。一个状态可能总是产生较低的即时奖励，但如果它之后经常跟随能产生高奖励的状态，那么它仍可能具有很高的价值。</p>
+<ul>
+<li><p><strong>价值与奖励的关系</strong>：</p>
+<p>用人类的感受类比，奖励有点像快乐（值高时）和痛苦（值低时），而价值则相当于我们对环境处于特定状态时的满足或不满程度的更精细、更具前瞻性的判断。</p>
+<p>在某种意义上，奖励是首要的，而作为奖励预测的价值是次要的。没有奖励就不可能有价值；然而，在做出和评估决策时，我们最关注的是价值。事实上，我们所讨论的几乎所有强化学习算法中，最重要的组成部分就是有效估计价值的方法。</p>
+</li>
+<li><p><strong>价值函数的类型</strong>：存在两种主要的价值函数：状态价值函数<span class="math notranslate nohighlight">\(v(s)\)</span>和动作价值函数<span class="math notranslate nohighlight">\(q(s,a)\)</span>，我们将在后面的<a class="reference internal" href="../Contents/3_markov_decision_process.html#bellman-equations-optional-lecture-video"><span class="std std-ref">第3.3.1节</span></a>中详细介绍它们。</p></li>
+</ul>
+</li>
+<li><p><strong>环境模型（可选）</strong>：我们所说的环境模型，指的是智能体可以用来预测环境如何对其动作做出反应的任何机制。给定一个状态和一个动作，模型可以预测出结果状态和下一个奖励。</p>
+<p>模型主要用于<span class="math notranslate nohighlight">\(\textit{规划}\)</span>，即通过在实际经历之前考虑可能的未来情况来决定行动方案的过程。在<a class="reference internal" href="../Contents/7_planning_learning_acting.html"><span class="std std-doc">第7章</span></a>中，我们将探讨<span class="math notranslate nohighlight">\(\textit{基于模型}\)</span>的强化学习系统，这些系统同时通过试错学习，并且会学习环境模型并利用该模型进行规划。</p>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h2>1.3 总结<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>在本章中，我们介绍了强化学习（RL）这一试错学习过程，其中智能体与不确定环境交互，目标是最大化累积奖励。智能体在学习过程中需要平衡探索和利用，并且纯粹通过环境提供的奖励信号进行学习。</p>
+<p>强化学习的关键要素包括：策略<span class="math notranslate nohighlight">\(\pi\)</span>（将状态映射到动作）、奖励信号<span class="math notranslate nohighlight">\(R_t\)</span>（定义学习目标）、价值函数（估计长期奖励）以及可选的环境模型。</p>
+<p>从本章开始，我们将在接下来的两章中介绍强化学习的基本概念，并在第4章至第10章展示不同的强化学习算法。下面是您将在这段学习之旅中接触到的所有算法的思维导图：</p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter1/overview.png" alt="本教程中介绍的所有算法概览" style="width:100%;">
+<p>最后，为了”强化”您的学习，我特别添加了<a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html"><span class="std std-doc">第11章</span></a>，介绍深度学习时代（以及大型语言模型）中最具影响力的几个算法，这些内容在Sutton的原著中并未包含。所以，请保持兴奋，准备好开始这段学习之旅！</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rl">1.1 强化学习（RL）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.2 强化学习的要素</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.3 总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

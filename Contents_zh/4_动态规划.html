@@ -1,0 +1,905 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第4章. 动态规划 &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/4_动态规划';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/4_动态规划.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/4_动态规划.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/4_动态规划.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/4_动态规划.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第4章. 动态规划</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-evaluation-prediction-problem">4.1 策略评估（Policy Evaluation，预测问题/Prediction Problem）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-improvement">4.2 策略改进（Policy Improvement）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-iteration-control">4.3 策略迭代（Policy Iteration，控制/Control）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#value-iteration">4.4 值迭代（Value Iteration）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-policy-iteration-gpi">4.5 广义策略迭代（Generalized Policy Iteration，GPI）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.6 总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>第4章. 动态规划<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>术语”动态规划”（Dynamic Programming, DP）指的是一类算法，这些算法可以在<strong>给定环境的完美模型</strong>（以马尔可夫决策过程（MDP）的形式）的情况下，用于计算最优策略，因此它不需要与环境进行交互。</p>
+<p>动态规划算法在实际应用中存在局限性，因为它们假设存在完美模型，并且计算成本很高。然而，动态规划为理解本书其余部分介绍的方法提供了重要基础。事实上，所有这些方法都可以看作是试图实现与动态规划大致相同的效果，只是计算量更少，并且不假设存在环境的完美模型。</p>
+<p>动态规划以及强化学习的关键思想是使用价值函数来组织和构建对良好策略的搜索。正如我们将看到的，动态规划算法是通过将贝尔曼方程（如下面这些方程）转化为赋值语句得到的，也就是说，<strong>转化为用于改进所需价值函数近似值的更新规则</strong>。</p>
+<section id="policy-evaluation-prediction-problem">
+<h2>4.1 策略评估（Policy Evaluation，预测问题/Prediction Problem）<a class="headerlink" href="#policy-evaluation-prediction-problem" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>策略评估</strong>：计算任意策略 <span class="math notranslate nohighlight">\(\pi\)</span> 的状态价值函数 <span class="math notranslate nohighlight">\(v_\pi\)</span>。（我们也将此称为<strong>预测问题（Prediction Problem）</strong>。）</p>
+<ul>
+<li><p><strong>动态规划假设环境的动态特性是完全已知的</strong>（环境的完美模型），在这种情况下，我们可以使用贝尔曼方程形成一个包含 <span class="math notranslate nohighlight">\(|S|\)</span> 个方程和 <span class="math notranslate nohighlight">\(|S|\)</span> 个未知数的联立线性方程组。
+初始近似值 <span class="math notranslate nohighlight">\(v_0\)</span> 可以任意选择（除非存在终止状态，终止状态的值必须设为 0）：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align*}
+    v_{k + 1}(s) &amp;= E_{\pi}[R_{t + 1} + \gamma v_{k}(S_{t + 1}) | S_t = s] \\
+    &amp;= \sum_a \pi(a|s) \sum_{s', r}p(s', r|s, a) [r + \gamma v_{k}(s')] \text{ 对于所有 } s \in S
+    \end{align*}
+    \end{split}\]</div>
+</li>
+<li><p>上述算法称为<strong>迭代策略评估（Iterative Policy Evaluation）</strong>。字母 <span class="math notranslate nohighlight">\(k\)</span> 表示迭代次数。</p></li>
+<li><p>动态规划算法中的所有更新都称为<strong>期望更新（Expected Update）</strong>，因为它们基于对所有可能的下一个状态的期望，而不是基于一个采样的下一个状态。</p></li>
+<li><p>在一次迭代中对所有状态进行的更新称为对状态空间的<strong>一次扫描（Sweep）</strong>。</p></li>
+</ul>
+</li>
+<li><p><strong>用于估计 <span class="math notranslate nohighlight">\(V \approx v_\pi\)</span> 的迭代策略评估算法</strong></p>
+<ul>
+<li><p>算法：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/algo_iter_policy_eval.png" alt="算法：迭代策略评估" style="width: 100%;">
+</div>
+</li>
+<li><p>直观理解：<span class="math notranslate nohighlight">\(\Delta\)</span> 在每次迭代开始时会被设为 0，用于记录状态空间中<strong>所有状态值的最大变化</strong>。因此，当一次扫描中的最大变化小于阈值 <span class="math notranslate nohighlight">\(\theta\)</span> 时，算法停止。我们得到一个近似的最优价值函数 <span class="math notranslate nohighlight">\(V \approx v_{\pi_\star}\)</span>。</p></li>
+</ul>
+</li>
+<li><p><strong>网格世界示例</strong>：如果你觉得策略评估过程中扫描的图示难以理解，可以观看这个<a class="reference external" href="https://www.coursera.org/learn/fundamentals-of-reinforcement-learning/lecture/ICAfp/iterative-policy-evaluation">课程视频</a>。</p>
+<ul>
+<li><p><strong>描述</strong>：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.1.1.png" alt="网格世界" style="width: 70%;">
+</div>
+<ul class="simple">
+<li><p><strong>状态</strong>：非终止状态为 <span class="math notranslate nohighlight">\(S = \{1, 2, ..., 14\}\)</span>。</p></li>
+<li><p><strong>动作</strong>：每个状态有四种可能的动作，<span class="math notranslate nohighlight">\(A = \{上, 下, 右, 左\}\)</span>，这些动作会确定性地导致相应的状态转移，除非动作会使智能体移出网格，在这种情况下，状态保持不变。</p>
+<ul>
+<li><p>例如，<span class="math notranslate nohighlight">\(p(6, -1|5, 右) = 1\)</span>，<span class="math notranslate nohighlight">\(p(7, -1|7, 右) = 1\)</span>，并且对于所有 <span class="math notranslate nohighlight">\(r \in R\)</span>，<span class="math notranslate nohighlight">\(p(10, r|5, 右) = 0\)</span>。</p></li>
+</ul>
+</li>
+<li><p><strong>奖励</strong>：这是一个无折扣的回合制任务。在到达终止状态之前，所有转移的奖励都是 <span class="math notranslate nohighlight">\(-1\)</span>。因此，期望奖励函数为 <span class="math notranslate nohighlight">\(r(s, a, s') = -1\)</span>，对于所有状态 <span class="math notranslate nohighlight">\(s, s'\)</span> 和动作 <span class="math notranslate nohighlight">\(a\)</span>。</p></li>
+<li><p><strong>策略</strong>：等概率随机策略（equiprobable random policy，所有动作的概率均为 0.25）。</p></li>
+</ul>
+</li>
+<li><p><strong>策略评估</strong>：</p>
+<ul>
+<li><p>第一次扫描：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.1.2.png" alt="步骤 1.1" style="width: 75%;">      
+</div>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.1.3.png" alt="步骤 1.2" style="width: 75%;">      
+</div>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.1.4.png" alt="步骤 1.3" style="width: 75%;">      
+</div>
+</li>
+<li><p>第二次扫描：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.1.5.png" alt="步骤 2" style="width: 75%;">      
+</div>
+</li>
+<li><p>第三次扫描：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.1.6.png" alt="步骤 3" style="width: 75%;">      
+</div>
+</li>
+<li><p>…</p></li>
+<li><p>最后一次扫描：<span class="math notranslate nohighlight">\(\Delta = 0\)</span> 且最终小于 <span class="math notranslate nohighlight">\(\theta\)</span>，<span class="math notranslate nohighlight">\(V\)</span> 和 <span class="math notranslate nohighlight">\(V'\)</span> 均为 <span class="math notranslate nohighlight">\(V_\pi\)</span></p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.1.7.png" alt="最终步骤" style="width: 75%">      
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="policy-improvement">
+<h2>4.2 策略改进（Policy Improvement）<a class="headerlink" href="#policy-improvement" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>策略改进定理（Policy Improvement Theorem）</strong>：如果对于所有 <span class="math notranslate nohighlight">\(s \in S\)</span>，都有 <span class="math notranslate nohighlight">\(q_\pi(s, \pi'(s)) \ge v_\pi(s)\)</span> 成立，那么策略 <span class="math notranslate nohighlight">\(\pi'\)</span> 一定与 <span class="math notranslate nohighlight">\(\pi\)</span> 一样好，或者比 <span class="math notranslate nohighlight">\(\pi\)</span> 更好。换句话说，对于所有 <span class="math notranslate nohighlight">\(s \in S\)</span>，<span class="math notranslate nohighlight">\(v_{\pi'}(s) \ge v_\pi(s)\)</span> 也成立。</p>
+<ul>
+<li><p>不等式 <span class="math notranslate nohighlight">\(q_\pi(s, \pi'(s)) \ge v_\pi(s)\)</span> 的直观理解是（回想下面从 <span class="math notranslate nohighlight">\(v(s)\)</span> 开始的备份图），存在一个（或多个）明确的动作，对于状态 <span class="math notranslate nohighlight">\(s\)</span> 来说，这些动作能带来比简单计算期望更多的回报（因为 <span class="math notranslate nohighlight">\(v(s) = \sum_a \pi(a|s)q(s, a)\)</span>）。</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter3/backup_diagram_v.png" alt="v 的备份图" style="width: 23%;">
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>策略改进</strong>：通过相对于原始策略的价值函数使其变得贪婪，从而创建一个比原始策略更优的新策略的过程。</p>
+<ul>
+<li><p><strong>贪婪化（Greedification）</strong>：用 <span class="math notranslate nohighlight">\(\pi'\)</span> 表示贪婪化后的策略：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align*}
+    \pi'(s) &amp;= \arg\max_a q_\pi(s, a) \\
+    &amp;= \arg\max_a E_{\pi}[R_{t + 1} + \gamma v_\pi(S_{t + 1}) | S_t = s] \\
+    &amp;= \arg\max_a \sum_{s', r} p(s', r|s, a)[r + \gamma v_\pi(s')]
+    \end{align*}
+    \end{split}\]</div>
+</li>
+<li><p><strong>策略改进将导致一个严格更优的策略</strong>，除非原始策略已经是最优策略：</p>
+<ul>
+<li><p>假设新策略与旧策略一样好，但不比旧策略更好（最终策略不能再改进），即 <span class="math notranslate nohighlight">\(v_{\pi'} = v_\pi\)</span>，那么：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+      \begin{align*}
+      v_{\pi'} &amp;= \max_a \sum_{s', r} p(s', r|s, a)[r + \gamma v_\pi(s')] \\
+      &amp;= \max_a \sum_{s', r} p(s', r|s, a)[r + \gamma v_{\pi'}(s')]
+      \end{align*}
+      \end{split}\]</div>
+<p>上述最后一个方程正是贝尔曼最优方程，这意味着当策略不能再改进时，<span class="math notranslate nohighlight">\(v_{\pi'}\)</span> 就是 <span class="math notranslate nohighlight">\(v_\star\)</span>，因此，<span class="math notranslate nohighlight">\(\pi\)</span> 和 <span class="math notranslate nohighlight">\(\pi'\)</span> 都是最优策略 <span class="math notranslate nohighlight">\(\pi_\star\)</span>。</p>
+</li>
+<li><p><strong>如果一个策略相对于其自身的价值函数已经是贪婪策略，那么这个策略就是最优策略</strong>。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><a class="reference internal" href="#41-policy-evaluation-prediction-problem"><span class="xref myst">4.1 节</span></a> 中的网格世界示例（续，课程视频可选）</strong></p>
+<ul class="simple">
+<li><p>在得到初始随机策略 <span class="math notranslate nohighlight">\(\pi\)</span> 的价值函数 <span class="math notranslate nohighlight">\(v_\pi\)</span> 后，我们进行贪婪化以得到新策略 <span class="math notranslate nohighlight">\(\pi'\)</span>（用白色箭头表示），根据策略改进的性质，<span class="math notranslate nohighlight">\(\pi'\)</span> 严格优于 <span class="math notranslate nohighlight">\(\pi\)</span>。</p></li>
+</ul>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.2.png" alt="Policy Improvement" style="width: 75%">
+<ul class="simple">
+<li><p>通过这样做，我们现在已经成功地改进了我们的原始策略（进行了一次迭代）。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="policy-iteration-control">
+<h2>4.3 策略迭代（Policy Iteration，控制/Control）<a class="headerlink" href="#policy-iteration-control" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>策略迭代</strong>：迭代地执行策略评估和策略改进以找到最优策略的过程。</p>
+<ul class="simple">
+<li><p>由于有限马尔可夫决策过程（MDP）只有有限数量的策略，此过程必定会在有限的迭代次数内收敛到最优策略和最优价值函数。用 <span class="math notranslate nohighlight">\(E\)</span> 表示评估，<span class="math notranslate nohighlight">\(I\)</span> 表示改进，该过程如下：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+  \pi_0 \xrightarrow{\text{E}} v_{\pi_0} \xrightarrow{\text{I}} \pi_1 \xrightarrow{\text{E}} v_{\pi_1} \xrightarrow{\text{I}} ... \xrightarrow{\text{I}} \pi_\star \xrightarrow{\text{E}} v_\star
+  \]</div>
+</li>
+<li><p><strong>策略迭代算法</strong>：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/algo_policy_iteration.png" alt="算法：策略迭代" style="width: 100%;">
+</div>
+</li>
+<li><p><strong>新的网格世界示例</strong>：同样，如果你觉得这些内容过于抽象，可以观看这个<a class="reference external" href="https://www.coursera.org/learn/fundamentals-of-reinforcement-learning/lecture/Xv32P/policy-iteration">课程视频</a>，它会提供更详细、更清晰的讲解。</p>
+<ul>
+<li><p><strong>描述</strong>：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#41-policy-evaluation-prediction-problem"><span class="xref myst">4.1节</span></a>中的网格世界示例实际上仅需一次迭代就能达到最优策略。现在，我们让这个示例稍微复杂一些：移除一个终止网格，并添加奖励值显著更低（为 <span class="math notranslate nohighlight">\(-10\)</span>）的蓝色状态。</p></li>
+</ul>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.3.1.png" alt="新的网格世界" style="width: 380px;">      
+</div>
+</li>
+<li><p><strong>策略迭代</strong>：</p>
+<ul>
+<li><p><strong>第一次迭代</strong>：</p>
+<div style="display: flex; justify-content: center; gap: 20px;">
+<div style="display: flex; flex-direction: column; align-items: center;">
+<h4>评估</h4>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.3.2.png" alt="评估" style="width: 200px;">
+</div>
+<div style="display: flex; flex-direction: column; align-items: center;">
+<h4>改进</h4>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.3.3.png" alt="改进" style="width: 200px;">
+</div>
+</div>
+</li>
+<li><p><strong>第二次迭代</strong>：</p>
+<ul class="simple">
+<li><p>注意贪婪化具体是如何执行的（例如，最后一行的第二个左网格）。
+请记住，<span class="math notranslate nohighlight">\(\pi'(s) = \arg\max_a \sum_{s', r} p(s', r|s,a)[r + \gamma v_\pi(s')]\)</span> 而不是 <span class="math notranslate nohighlight">\(\pi'(s) = \arg\max_a v(s')\)</span>，所以不要仅仅因为某个状态 <span class="math notranslate nohighlight">\(s'\)</span> 的值 <span class="math notranslate nohighlight">\(v(s')\)</span> 更高，就简单地朝着该状态贪婪地选择一个动作。</p></li>
+</ul>
+<div style="display: flex; justify-content: center; gap: 20px;">
+<div style="display: flex; flex-direction: column; align-items: center;">
+<h4>评估</h4>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.3.4.png" alt="评估" style="width: 200px;">
+</div>
+<div style="display: flex; flex-direction: column; align-items: center;">
+<h4>改进</h4>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.3.5.png" alt="改进" style="width: 200px;">
+</div>
+</div>
+</li>
+<li><p>…</p></li>
+<li><p><strong>最后一次迭代</strong>：</p>
+<ul class="simple">
+<li><p>注意在最后一次迭代中，经过策略改进后，策略保持不变，即（改进前的）原始策略已经是相对于其自身价值函数的贪婪策略，此时已找到最优策略。</p></li>
+</ul>
+<div style="display: flex; justify-content: center; gap: 20px;">
+<div style="display: flex; flex-direction: column; align-items: center;">
+<h4>评估</h4>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.3.6.png" alt="评估" style="width: 200px;">
+</div>
+<div style="display: flex; flex-direction: column; align-items: center;">
+<h4>改进</h4>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/example4.3.7.png" alt="改进" style="width: 200px;">
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="value-iteration">
+<h2>4.4 值迭代（Value Iteration）<a class="headerlink" href="#value-iteration" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>值迭代</strong>：是策略迭代的一种特殊情况，其中策略评估仅进行一次扫描后就停止。</p>
+<ul class="simple">
+<li><p><strong>策略迭代的缺点</strong>：需要迭代计算，其每次迭代都涉及策略评估，而策略评估本身可能是一个漫长的迭代计算过程，需要对状态集进行多次扫描，并且只有在极限情况下才会收敛，这会花费大量时间。</p></li>
+<li><p>值迭代在每次扫描中有效地融合了一次策略评估扫描和一次策略改进扫描。</p></li>
+</ul>
+</li>
+<li><p><strong>更新规则</strong>：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*}
+  V_{k + 1}(s)  &amp;\dot=  \max_a q_{k}(s, a) \\
+  &amp;= \max_a \sum_{s', r} p(s', r|s,a) [r + \gamma V_{k}(s')] \text{对于所有} s \in S
+  \end{align*}
+  \end{split}\]</div>
+<ul class="simple">
+<li><p>请注意，上述方程只是将贝尔曼最优方程转化为了一个更新规则。</p></li>
+</ul>
+</li>
+<li><p><strong>值迭代算法</strong>：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/algo_value_iteration.png" alt="算法：值迭代" style="width: 100%;">
+</div>
+</li>
+</ul>
+</section>
+<section id="generalized-policy-iteration-gpi">
+<h2>4.5 广义策略迭代（Generalized Policy Iteration，GPI）<a class="headerlink" href="#generalized-policy-iteration-gpi" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\star\)</span> <strong>两种动态规划类型</strong>：</p>
+<ul class="simple">
+<li><p><strong>同步动态规划（Synchronous DP）</strong>：按特定顺序系统地更新所有状态（对于大状态空间而言，所需时间极长）。</p></li>
+<li><p><strong>异步动态规划（Asynchronous DP）</strong>：无顺序地更新状态（可能更快，但当仅持续更新一小部分状态时也会出现问题）。</p></li>
+</ul>
+</li>
+<li><p><strong>广义策略迭代（GPI）</strong>：指的是让策略评估和策略改进过程相互作用的通用思想，而不考虑这两个过程的粒度和其他细节。</p>
+<ul class="simple">
+<li><p>几乎所有强化学习方法都可以很好地用广义策略迭代来描述。也就是说，所有方法都有可识别的策略和价值函数，策略总是相对于价值函数进行改进，而价值函数总是朝着该策略的价值函数方向发展：</p></li>
+</ul>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/gpi2.png" alt="广义策略迭代" style="width: 50%;;">
+</div>
+<p>只有当找到一个相对于其自身评估函数是贪婪的策略时（即当 <span class="math notranslate nohighlight">\(\pi\)</span> 本身是 <span class="math notranslate nohighlight">\(v_\pi\)</span> 的贪婪策略时），这两个过程才会稳定下来。这意味着状态价值函数的贝尔曼最优方程成立，因此该策略和价值函数是最优的。</p>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>4.6 总结<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>经典的动态规划方法通过对状态集进行扫描来操作，对每个状态执行一次<strong>期望更新（Expected Update）<strong>操作。状态的更新基于后继状态值的估计。也就是说，估计值是基于其他估计值进行更新的。我们将这种通用思想称为</strong>自举法（Bootstrapping）</strong>（这是许多强化学习算法中非常基础的概念，我们将在<a class="reference internal" href="../Contents/6_temporal_difference_learning.html"><span class="std std-doc">第6章</span></a>中深入介绍），并且它需要环境的完美模型。</p>
+<p>在下一章中，我们将探索蒙特卡洛方法——一种不需要模型且不使用自举法的强化学习方法。现在，快速总结如下：</p>
+<ul class="simple">
+<li><p><strong>当前内容思维导图</strong>：</p></li>
+</ul>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter4/chapter4_mindmap.png" alt="Mindmap" style="width:100%;">
+<ul>
+<li><p><strong>关键要点</strong>：</p>
+<ol class="arabic">
+<li><p><strong>动态规划概述</strong>：</p>
+<ul class="simple">
+<li><p>使用环境的完美模型（马尔可夫决策过程/MDP）计算最优策略。</p></li>
+<li><p>无需与环境交互；计算成本高，但为强化学习奠定了重要理论基础。</p></li>
+<li><p>核心思想是使用价值函数和贝尔曼方程作为更新规则来持续优化策略。</p></li>
+</ul>
+</li>
+<li><p><strong>策略评估（预测）</strong>：</p>
+<ul class="simple">
+<li><p>为给定策略 <span class="math notranslate nohighlight">\(\pi\)</span> 迭代估计其状态价值函数 <span class="math notranslate nohighlight">\(v_\pi\)</span>：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+       v_{k + 1}(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r | s, a) [r + \gamma v_k(s')]
+       \]</div>
+<ul class="simple">
+<li><p>当 <span class="math notranslate nohighlight">\(v(s)\)</span> 的变化小于阈值 <span class="math notranslate nohighlight">\(\theta\)</span> 时停止迭代。</p></li>
+</ul>
+</li>
+<li><p><strong>策略改进</strong>：</p>
+<ul class="simple">
+<li><p>基于当前价值函数 <span class="math notranslate nohighlight">\(v_\pi\)</span> 创建一个贪婪策略 <span class="math notranslate nohighlight">\(\pi'\)</span>：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+       \pi'(s) = \arg\max_a \sum_{s', r} p(s', r | s, a) [r + \gamma v_\pi(s')]
+       \]</div>
+<ul class="simple">
+<li><p>如果无法进一步改进，则当前策略 <span class="math notranslate nohighlight">\(\pi\)</span> 已达到最优。</p></li>
+</ul>
+</li>
+<li><p><strong>策略迭代</strong>：</p>
+<ul class="simple">
+<li><p>通过在策略评估和策略改进之间交替进行，直至收敛：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+       \pi_0 \rightarrow v_{\pi_0} \rightarrow \pi_1 \rightarrow v_{\pi_1} \rightarrow \ldots \rightarrow \pi_* \rightarrow v_*
+       \]</div>
+</li>
+<li><p><strong>值迭代</strong>：</p>
+<ul class="simple">
+<li><p>一种简化的策略迭代方法，每次迭代仅进行一次扫描：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+       V_{k + 1}(s) = \max_a \sum_{s', r} p(s', r | s, a) [r + \gamma V_k(s')]
+       \]</div>
+<ul class="simple">
+<li><p>最终收敛到最优价值函数 <span class="math notranslate nohighlight">\(V_*\)</span> 和最优贪婪策略 <span class="math notranslate nohighlight">\(\pi_*\)</span>。</p></li>
+</ul>
+</li>
+<li><p><strong>广义策略迭代（GPI）</strong>：</p>
+<ul class="simple">
+<li><p>策略评估和策略改进过程的持续交互与相互作用。</p></li>
+<li><p>当策略相对于其自身价值函数达到贪婪状态时，整个过程趋于稳定。</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p><strong>额外课程视频（可选）</strong>：<a class="reference external" href="https://www.coursera.org/learn/fundamentals-of-reinforcement-learning/lecture/phTdz/warren-powell-approximate-dynamic-programming-for-fleet-management-long">沃伦·鲍威尔：用于车队管理的近似动态规划（Long）</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-evaluation-prediction-problem">4.1 策略评估（Policy Evaluation，预测问题/Prediction Problem）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-improvement">4.2 策略改进（Policy Improvement）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-iteration-control">4.3 策略迭代（Policy Iteration，控制/Control）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#value-iteration">4.4 值迭代（Value Iteration）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-policy-iteration-gpi">4.5 广义策略迭代（Generalized Policy Iteration，GPI）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.6 总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

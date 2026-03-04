@@ -1,0 +1,753 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第9章. 基于函数近似的同策略控制 &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/9_基于函数近似的同策略控制';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/9_基于函数近似的同策略控制.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/9_基于函数近似的同策略控制.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/9_基于函数近似的同策略控制.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/9_基于函数近似的同策略控制.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第9章. 基于函数近似的同策略控制</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.1 回合制半梯度控制</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#average-reward-framework-for-continuing-tasks">9.2 平均奖励：一种新的控制问题表述方式（Average-Reward Framework for Continuing Tasks）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.3 总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>第9章. 基于函数近似的同策略控制<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>在本章中，我们将重点转向<strong>控制问题</strong>（control problem，即策略优化问题）。我们的目标是估计动作价值函数 <span class="math notranslate nohighlight">\(\hat{q}(s, a, \boldsymbol{w}) \dot= \boldsymbol{w}^{T} \boldsymbol{x}(s, a)\)</span>，并且仍然专注于<strong>同策略 (on-policy)</strong> 的情形。</p>
+<p>本章的核心内容是<strong>半梯度Sarsa算法</strong>（semi-gradient Sarsa）。该算法是上一章介绍的半梯度TD(0)算法在动作价值估计和同策略控制问题上的自然延伸。在<strong>回合制任务</strong>（episodic tasks）中，这种延伸相对直接明了。然而，在<strong>持续性任务</strong>（continuing tasks）中，我们需要重新审视折扣因子（discounting）在定义最优策略时所扮演的角色，并可能采取不同的思路。我们将探讨如何放弃折扣机制，转而采用一种新的控制问题表述方式——<strong>“平均奖励”框架</strong>（average-reward framework），并引入与之对应的新型**”差分”价值函数**（differential value functions）。</p>
+<section id="id2">
+<h2>9.1 回合制半梯度控制<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>如何计算动作价值函数</strong>（action-value function，线性情况）</p>
+<ul>
+<li><p>与上一章的线性情况类似，近似的动作价值函数通过以下方式计算：</p>
+<div class="math notranslate nohighlight">
+\[
+    \hat{q}(s, a, \boldsymbol{w}_t) \dot= \boldsymbol{w}^{T} \boldsymbol{x}(s, a)
+    \]</div>
+<ul class="simple">
+<li><p>对于依赖动作的函数近似，特征向量 <span class="math notranslate nohighlight">\(\boldsymbol{x}(s, a)\)</span> 是通过将每个动作的特征堆叠起来构建的。例如，代表系统状态的4个特征和3个可能的动作会产生一个包含12个元素的特征向量。</p></li>
+<li><p>为了对动作进行泛化（就像上一章中对状态进行泛化一样），我们可以将状态和动作都输入到神经网络中，该网络将以状态-动作对作为输入，并产生单个输出：该特定状态和动作的近似动作价值。</p></li>
+</ul>
+</li>
+<li><p>这个<a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/z9xQJ/episodic-sarsa-with-function-approximation">可选课程视频</a>生动地说明了上述笔记，即关于如何完成计算，特别是如何构建特征向量。</p></li>
+</ul>
+</li>
+<li><p><strong>梯度下降更新</strong>（gradient descent update）：</p>
+<ul>
+<li><p><strong>动作价值预测的通用更新规则</strong>（general update rule for action-value prediction）</p>
+<div class="math notranslate nohighlight">
+\[
+    \boldsymbol{w_{t+1}} \dot= \boldsymbol{w_t} + \alpha [U_t - \hat{q}(S_t, A_t, \boldsymbol{w_t})]\nabla\hat{q}(S_t, A_t, \boldsymbol{w_t})
+    \]</div>
+</li>
+<li><p>回合制半梯度单步Sarsa的更新规则</p>
+<ul>
+<li><p>更新规则</p>
+<div class="math notranslate nohighlight">
+\[
+      \boldsymbol{w_{t+1}} \dot= \boldsymbol{w_t} + \alpha [R_{t+1} + \gamma\hat{q}(S_{t+1}, A_{t+1}, \boldsymbol{w_t}) - \hat{q}(S_t, A_t, \boldsymbol{w_t})]\nabla\hat{q}(S_t, A_t, \boldsymbol{w_t})
+      \]</div>
+<ul class="simple">
+<li><p>注意，时间步 <span class="math notranslate nohighlight">\(t+1\)</span> 的更新目标是由时间步 <span class="math notranslate nohighlight">\(t\)</span> 的权重所对应的动作价值函数给出的。</p></li>
+</ul>
+</li>
+<li><p>算法：半梯度Sarsa（semi-gradient Sarsa）</p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter9/algo_episodic_semi_gradient_sarsa.png" alt="算法：回合制半梯度Sarsa" style="width: 100%;">    
+  </div>
+</li>
+</ul>
+</li>
+<li><p><strong>半梯度期望Sarsa</strong>（semi-gradient expected Sarsa）的更新规则：</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathbf{w} \leftarrow \mathbf{w} + \alpha \left( R_{t+1} + \gamma \sum_{a'} \pi(a' \mid S_{t+1}) \hat{q}(S_{t+1}, a', \mathbf{w}) - \hat{q}(S_t, A_t, \mathbf{w}) \right) \nabla \hat{q}(S_t, A_t, \mathbf{w})
+    \]</div>
+</li>
+<li><p><strong>半梯度Q学习</strong>（semi-gradient Q-learning）的更新规则：</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathbf{w} \leftarrow \mathbf{w} + \alpha \left( R_{t+1} + \gamma \max_{a'} \hat{q}(S_{t+1}, a', \mathbf{w}) - \hat{q}(S_t, A_t, \mathbf{w}) \right) \nabla \hat{q}(S_t, A_t, \mathbf{w})
+    \]</div>
+</li>
+</ul>
+</li>
+<li><p><strong>同策略控制的梯度方法</strong>（gradient methods for on-policy control）：登山车示例（课程视频）</p>
+<a href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/YgKc7/episodic-sarsa-in-mountain-car">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter9/mountain_car_example.png" alt="视频：登山车示例" style="width:80%;">
+</a>
+<ul>
+<li><p>简介：驾驶一辆马力不足的汽车上陡峭的山路，此时重力比汽车发动机的牵引力要大——这是一个简单的连续控制任务示例，在某种意义上，情况必须先变得更糟（离目标更远），然后才能变得更好。该问题的设置如下：</p>
+<ul>
+<li><p>汽车根据简化的物理规则移动。其位置 <span class="math notranslate nohighlight">\(x_t\)</span> 和速度 <span class="math notranslate nohighlight">\(\dot{x}_t\)</span> 按以下方式更新：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+      \begin{align*}
+      &amp; x_{t+1} \dot= \text{bound}[x_t + \dot{x}_t] \\
+      &amp; \dot{x}_{t+1} \dot= \text{bound}[\dot{x}_t + 0.001 A_t - 0.0025 \cos(3x_t)],
+      \end{align*}
+      \end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\text{bound}\)</span> 操作强制 <span class="math notranslate nohighlight">\(-1.2 \leq x_{t+1} \leq 0.5\)</span> 且 <span class="math notranslate nohighlight">\(-0.07 \leq \dot{x}_{t+1} \leq 0.07\)</span>。</p>
+</li>
+<li><p>此外，当 <span class="math notranslate nohighlight">\(x_t\)</span> 到达左边界时，<span class="math notranslate nohighlight">\(\dot{x}_{t+1}\)</span> 被重置为零。当它到达右边界时，即达到目标，该回合（episode）终止。</p></li>
+<li><p>每回合（episode）从一个随机位置 <span class="math notranslate nohighlight">\(x_t \in [-0.6, -0.4]\)</span> 和零速度开始。</p></li>
+<li><p>我们使用了8个瓦片（tilings），每个瓦片在每个维度上覆盖有界距离的 <span class="math notranslate nohighlight">\(1/8\)</span>。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><span class="math notranslate nohighlight">\({\star}\)</span> 函数近似下改进探索策略的方法</strong></p>
+<ul class="simple">
+<li><p>这一方面<strong>未包含在Sutton的书籍</strong>（2018版）中，但在此<a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/SCKKe/exploration-under-function-approximation">讲座视频</a>中得到了很好的介绍。简而言之，改进探索策略的两种主要方法（不一定效果都很好）是：</p>
+<ul>
+<li><p><strong>乐观初始值</strong>（Optimistic Initial Values）：在表格型设置中，将初始值设置得高于真实值可以鼓励探索。这在表格型设置中效果很好，但在函数近似（例如神经网络）中很复杂，因为输入和输出之间的关系是非线性的。虽然乐观初始化可以引导探索，但由于网络中的泛化或非局部更新，它可能会失去有效性。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心策略</strong>（Epsilon Greedy）：这种方法使用随机性来探索动作，适用于任何函数近似并且易于实现。然而，它不像乐观初始化那样提供系统性的探索。</p></li>
+</ul>
+</li>
+<li><p><strong>结论</strong>：将乐观值与函数近似相结合是复杂的，虽然<span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心方法可以普遍使用，但其探索方向性较差。<strong>在函数近似中改进探索仍然是一个悬而未决的研究问题。</strong></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="average-reward-framework-for-continuing-tasks">
+<h2>9.2 平均奖励：一种新的控制问题表述方式（Average-Reward Framework for Continuing Tasks）<a class="headerlink" href="#average-reward-framework-for-continuing-tasks" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>动机</strong>：此<a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/DXGwx/average-reward-a-new-way-of-formulating-control-problems">课程视频</a>阐述了平均奖励设定的动机，为可选观看内容。</p></li>
+<li><p><strong>定义</strong>：与折扣设定类似，平均奖励设定<strong>适用于持续性问题</strong>，但是，它没有折扣。在平均奖励设定中，平均奖励定义如下，它反映了策略 <span class="math notranslate nohighlight">\(\pi\)</span> 的质量。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align}
+  r(\pi) &amp;\dot= \lim_{h \to \infty} \frac{1}{h} \sum_{t=1}^h \mathbb{E}[R_t \mid S_0, A_{0:t-1} \sim \pi] \\
+  &amp;= \lim_{t \to \infty} \mathbb{E}[R_t \mid S_0, A_{0:t-1} \sim \pi], \\
+  &amp;= \sum_{s} \mu_\pi(s) \sum_{a} \pi(a \mid s) \sum_{s',r} p(s', r \mid s, a) r,
+  \end{align}
+  \end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu_\pi(s)\dot= \lim_{t 	o \infty} \Pr\{S_t = s \mid A_{0:t-1} \sim \pi\}\)</span> 是<strong>稳态分布</strong>（stationary distribution），假设对于任何策略 <span class="math notranslate nohighlight">\(\pi\)</span> 都存在，并且独立于初始状态 <span class="math notranslate nohighlight">\(S_0\)</span>（这个关于马尔可夫决策过程（MDP）的假设被称为<span class="math notranslate nohighlight">\(	extit{遍历性假设}\)</span>（ergodicity assumption））。</p></li>
+<li><p>我们认为所有达到 <span class="math notranslate nohighlight">\(r(\pi)\)</span> 最大值的策略都是最优策略。</p></li>
+<li><p>平均奖励设定的必要性：折扣设定在函数近似方面存在问题，感兴趣的读者可以参考本书第10.4章。</p></li>
+</ul>
+</li>
+<li><p><strong>派生定义</strong>：</p>
+<ul>
+<li><p><strong>回报（Returns）</strong>：回报是根据奖励与平均奖励之间的差额来定义的：</p>
+<div class="math notranslate nohighlight">
+\[
+    G_t \dot= R_{t+1} - r(\pi) + R_{t+2} - r(\pi) + R_{t+3} - r(\pi) + \cdots.
+    \]</div>
+</li>
+<li><p><strong>贝尔曼方程</strong>（Bellman equation）：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align}
+    v_\pi(s) &amp;= \sum_{a} \pi(a \mid s) \sum_{r, s'} p(s', r \mid s, a) \left[ r - r(\pi) + v_\pi(s') \right], \\
+    q_\pi(s, a) &amp;= \sum_{r, s'} p(s', r \mid s, a) \left[ r - r(\pi) + \sum_{a'} \pi(a' \mid s') q_\pi(s', a') \right], 
+    \end{align}
+    \end{split}\]</div>
+</li>
+<li><p><strong>贝尔曼最优方程</strong>（Bellman optimality equation）：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align}
+    v_*(s) &amp;= \max_{a} \sum_{r, s'} p(s', r \mid s, a) \left[ r - \max_\pi r(\pi) + v_*(s') \right], \\
+    q_*(s, a) &amp;= \sum_{r, s'} p(s', r \mid s, a) \left[ r - \max_\pi r(\pi) + \max_{a'} q_*(s', a') \right].
+    \end{align}
+    \end{split}\]</div>
+</li>
+<li><p><strong>两种TD误差</strong>（differential TD error）：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align}
+    \delta_t &amp;\dot= R_{t+1} - \bar{R}_t + \hat{v}(S_{t+1}, \mathbf{w}_t) - \hat{v}(S_t, \mathbf{w}_t), \\
+    \delta_t &amp;\dot= R_{t+1} - \bar{R}_t + \hat{q}(S_{t+1}, A_{t+1}, \mathbf{w}_t) - \hat{q}(S_t, A_t, \mathbf{w}_t).
+    \end{align}
+    \end{split}\]</div>
+</li>
+</ul>
+</li>
+<li><p><strong>派生算法示例</strong>：</p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter9/algo_differential_semi_gradient_sarsa.png" alt="算法：微分半梯度Sarsa" style="width: 100%;">    
+  </div>
+</li>
+</ul>
+<blockquote>
+<div><p>与Sarsa不同，微分Sarsa的一个关键区别在于，它必须跟踪其策略下的平均奖励估计，并在其更新中从样本奖励中减去该估计，如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+&gt; \bar{R} \leftarrow \bar{R} + \beta (R-\bar{R})
+&gt; \]</div>
+</div></blockquote>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; 在实践中，项$(R-\bar{R})$ 被替换为 $\delta$ 以获得更好的性能（即更低的方差）。
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>拓展课程视频（可选）</strong>：<a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/TKPHV/satinder-singh-on-intrinsic-rewards">Satinder Singh 谈论内在奖励</a>（intrinsic rewards）</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>9.3 总结<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>在本章中，我们将表格型控制方法扩展到函数近似，研究了探索技术中的变化，并引入了用于持续性控制问题的平均奖励框架。详细内容包括：</p>
+<ul>
+<li><p><strong>我们当前所处位置的思维导图</strong></p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter9/chapter9_mindmap.png" alt="半梯度控制和平均奖励设定的思维导图。" style="width:100%;">
+</li>
+<li><p><strong>核心要点</strong></p>
+<ol class="arabic simple">
+<li><p><strong>动作价值估计</strong>（action-value estimation）：对于离散动作空间，状态特征可以堆叠起来；而对于连续动作空间，动作可以与其他状态变量一起作为（神经网络的）输入。</p></li>
+<li><p><strong>算法概述</strong>：在算法图谱中引入了<strong>函数近似</strong>（function approximation）。我们专注于扩展表格型控制算法（SARSA、<strong>期望SARSA</strong>（expected SARSA）和Q学习），以适应函数近似。这些扩展涉及修改更新方程以使用基于梯度的权重更新。</p></li>
+<li><p><strong>回合制SARSA</strong>（episodic SARSA）：我们演示了回合制SARSA如何解决登山车问题，表明较大的步长（0.5）可以加快学习速度。</p></li>
+<li><p><strong>探索策略</strong>：乐观初始化对于结构化特征很有用，但对于像神经网络这样的非线性函数近似器可能无法按预期工作，因为乐观情绪可能会迅速消退。无论使用何种函数近似器，<span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心都是一种更可靠的探索方法。</p></li>
+<li><p><strong>平均奖励框架</strong>：我们引入了一种解决持续性控制问题的新方法，即最大化随时间推移的平均奖励，而不是关注折扣回报。我们定义了<strong>微分回报</strong>（differential return）和<strong>微分价值</strong>（differential value），这有助于智能体在此框架下评估动作。</p></li>
+<li><p><strong>微分半梯度SARSA</strong>（differential semi-gradient SARSA）：这种新算法使用平均奖励框架，通过近似微分价值来学习策略，扩展了先前的算法。</p></li>
+</ol>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.1 回合制半梯度控制</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#average-reward-framework-for-continuing-tasks">9.2 平均奖励：一种新的控制问题表述方式（Average-Reward Framework for Continuing Tasks）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.3 总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

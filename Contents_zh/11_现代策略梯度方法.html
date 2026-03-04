@@ -1,0 +1,1105 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 11 章 现代策略梯度方法（Modern Policy Gradient Methods） &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/11_现代策略梯度方法';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/11_现代策略梯度方法.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/11_现代策略梯度方法.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/11_现代策略梯度方法.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/11_现代策略梯度方法.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第 11 章 现代策略梯度方法（Modern Policy Gradient Methods）</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">11.1 优势函数的概念</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">11.1.1 定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">11.1.2 存在意义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">11.1.3 优势函数的估计方法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asynchronous-advantage-actor-critic-a3c">11.2 异步优势演员-评论员（Asynchronous Advantage Actor-Critic，A3C）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">11.2.1 背景</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">11.2.2 优势函数与梯度估计</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a3c">11.2.3 A3C 算法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">11.2.4 A3C 的特性</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantage-actor-critic-a2c">11.3 优势演员-评论员（Advantage Actor-Critic，A2C）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">11.3.1 背景</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a2c">11.3.2 A2C 的核心思想</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">11.3.3 A2C 的特性</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximal-policy-optimization-ppo">11.4 近端策略优化（Proximal Policy Optimization，PPO）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">11.4.1 背景</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">11.4.2 近端策略优化的目标函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ppo">11.4.3 PPO 算法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">11.4.4 PPO 的性质</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-based-relative-policy-optimization-grpo">11.5 群体相对策略优化（Group-based Relative Policy Optimization，GRPO）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">11.5.1 背景</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">11.5.2 优化目标</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grpo">11.5.3 GRPO 算法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">11.5.4 GRPO 的性质</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">11.6 总结</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">资源</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">参考文献</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">其他资源</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="modern-policy-gradient-methods">
+<h1>第 11 章 现代策略梯度方法（Modern Policy Gradient Methods）<a class="headerlink" href="#modern-policy-gradient-methods" title="Link to this heading">#</a></h1>
+<p>本章介绍的算法并未包含在 Sutton 的原著中，但每一个算法在强化学习发展历程中都具有里程碑意义，并持续推动该领域的深入研究。我用”现代”一词来区分本章算法与第10章的内容，而你在学习过程中会发现，这些策略近似方法实际上有很多相似之处。</p>
+<p>对于可追溯至原始论文的算法，本章保留了原论文的符号表示。尽管不同小节可能采用不同的符号规范，但这些符号均基于本教程已介绍的基本概念，因此读者理解起来不会有明显困难。请注意，学习本章内容需要具备神经网络的基础知识。</p>
+<section id="id1">
+<h2>11.1 优势函数的概念<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>11.1.1 定义<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>优势函数（Advantage Function）是一个比较动作Q值与状态价值函数的概念，用于衡量在特定状态下某个动作 <span class="math notranslate nohighlight">\(a_t\)</span> 相对于智能体平均行为的优劣。其定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+A(s_t, a_t) \ \dot= \ q(s_t, a_t) - v(s_t)
+\]</div>
+<ul class="simple">
+<li><p>直观理解：优势函数衡量动作 <span class="math notranslate nohighlight">\(a_t\)</span> 相对于状态 <span class="math notranslate nohighlight">\(s_t\)</span> 下期望回报 <span class="math notranslate nohighlight">\(E_\pi[G_t \vert s_t]\)</span> 的好坏程度。</p>
+<ul>
+<li><p>当 <span class="math notranslate nohighlight">\(A(s_t, a_t) &gt; 0\)</span> 时，动作 <span class="math notranslate nohighlight">\(a_t\)</span> 被认为优于状态 <span class="math notranslate nohighlight">\(s_t\)</span> 下的平均动作；</p></li>
+<li><p>当 <span class="math notranslate nohighlight">\(A(s_t, a_t) &lt; 0\)</span> 时，动作 <span class="math notranslate nohighlight">\(a_t\)</span> 不如状态 <span class="math notranslate nohighlight">\(s_t\)</span> 下的平均动作；</p></li>
+<li><p>当 <span class="math notranslate nohighlight">\(A(s_t, a_t) = 0\)</span> 时，该动作与期望值持平，既不更好也不更差。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>优势函数 <span class="math notranslate nohighlight">\(A(s_t, a_t)\)</span> 常简写为 <span class="math notranslate nohighlight">\(A_t\)</span>，但请注意区分动作 <span class="math notranslate nohighlight">\(A_t\)</span> 和优势 <span class="math notranslate nohighlight">\(A(s_t, a_t)\)</span>。在后续章节中，当需要明确区分这两者时，我们将使用 <span class="math notranslate nohighlight">\(A(s_t, a_t)\)</span> 表示优势。</p>
+</div>
+</section>
+<section id="id3">
+<h3>11.1.2 存在意义<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>如第10章中REINFORCE算法所示，策略梯度方法的梯度估计通常噪声较大，这是因为该估计依赖于观测到的回报（Return），而回报本身具有随机性且可能差异显著。</p>
+<p>优势函数通过在梯度估计中简单替换回报项，有效降低了梯度估计的方差，从而实现更稳定的参数更新：</p>
+<div class="math notranslate nohighlight">
+\[
+\theta_{t+1} \doteq \theta_t + \alpha \ A(s_t, a_t) \frac{\nabla \pi(A_t|S_t, \theta)}{\pi(A_t|S_t, \theta)}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>对于带基线的 REINFORCE 方法，当使用近似状态价值函数 <span class="math notranslate nohighlight">\(\hat{v}(S_t, \boldsymbol{w})\)</span> 作为基线时，量 <span class="math notranslate nohighlight">\(G_t - b(S_t)\)</span> 可被视为优势 <span class="math notranslate nohighlight">\(A_t\)</span> 的一种估计形式，因为根据定义，<span class="math notranslate nohighlight">\(G_t\)</span> 是 <span class="math notranslate nohighlight">\(q(s_t, a_t)\)</span> 的估计值。</p></li>
+<li><p>在实际中，人们常将带基线的 REINFORCE 方法视为 演员-评论员 方法。但本教程遵循 Sutton 书中的原则，仅将那些利用 critic 模型进行自举的方法视为 AC 方法。</p></li>
+</ul>
+</div>
+</section>
+<section id="id4">
+<h3>11.1.3 优势函数的估计方法<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>定义估计法</strong>：<span class="math notranslate nohighlight">\(A(s_t, a_t)\)</span> 可直接通过动作价值减去状态价值来估计：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*}
+  \hat{A}(s_t, a_t) \ &amp;\dot= \ q(s_t, a_t) - v(s_t) \\
+  &amp;= G_t - v(s_t) 
+  \end{align*}
+  \end{split}\]</div>
+<p>需注意，这种估计方法在实际应用中较少使用，因为它需要学习两个评论员（critic）模型，通常会被第二种方法替代。</p>
+</li>
+<li><p><strong>TD误差估计法</strong>：时间差分（TD）误差是一种实用的优势近似估计方法。回顾第3章第3.3节，</p>
+<div class="math notranslate nohighlight">
+\[
+  q(s,a) \dot= \sum_{s', r}p(s', r|s, a) [r + \gamma v_{\pi}(s')]
+  \]</div>
+<p>这表明，当从状态-动作对 (s,a) 出发并实际到达状态 <span class="math notranslate nohighlight">\(s'\)</span> 时，<span class="math notranslate nohighlight">\(r + \gamma v_{\pi}(s')\)</span> 可视为一个单次实现（realization）。</p>
+<p>因此，我们可用 <span class="math notranslate nohighlight">\(r_{t+1} + \gamma v(s_{t+1})\)</span> 代替 <span class="math notranslate nohighlight">\(q(s_t,a_t)\)</span>，并将优势估计为：</p>
+<div class="math notranslate nohighlight">
+\[
+  \hat{A}(s_t, a_t) \ = \ r_{t+1} + \gamma v(s_{t+1}) - v(s_{t})
+  \]</div>
+</li>
+<li><p><strong>广义优势估计（Generalized Advantage Estimation，GAE）</strong>：</p>
+<p>如前所述，优势可通过 <span class="math notranslate nohighlight">\(G_t - v(s_t)\)</span> 来估计，因为时间步 <span class="math notranslate nohighlight">\(t\)</span> 的回报是对应动作价值的一个估计。现在我们从另一角度考虑回报的估计方式。在 <span class="math notranslate nohighlight">\(n\)</span> 步TD方法中（本教程未详细介绍），回报定义为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*}
+  G_{t:t+n} \ &amp;\dot= \ R_{t+1} + \gamma R_{t+2} + \cdots + \gamma^{n-1} R_{t+n} + \gamma^n V(S_{t+n}) \\
+  &amp;= \sum_{k=0}^{n-1} \gamma^k R_{t+k+1} + \gamma^n v(s_{t+n})
+  \end{align*}
+  \end{split}\]</div>
+<p>这种 <span class="math notranslate nohighlight">\(n\)</span> 步回报 <span class="math notranslate nohighlight">\(G_{t:t+n}\)</span> 相比蒙特卡洛回报具有更低的方差，但代价是引入了一定偏差。为进一步推广这一思想，我们可使用衰减参数 <span class="math notranslate nohighlight">\(\lambda\)</span> 对 <span class="math notranslate nohighlight">\(n\)</span> 步回报进行指数加权平均，得到 <span class="math notranslate nohighlight">\(\lambda\)</span>-回报：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*}
+  G^{\lambda}_t \ &amp;\dot= \ (1 - \lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_{t:t+n} \\
+  &amp;= (1 - \lambda) \sum_{n=1}^{T-t-1} \lambda^{n-1} G_{t:t+n} + \lambda^{T-t-1} G_t
+  \end{align*}
+  \end{split}\]</div>
+<p>上式第二个等式基于时间步 <span class="math notranslate nohighlight">\(T\)</span> 之后所有奖励为0的假设推导而来，此时对于所有 <span class="math notranslate nohighlight">\(n \geq T-t\)</span>，有 <span class="math notranslate nohighlight">\(G_{t:t+n} = G_{t:T}\)</span>。与 <span class="math notranslate nohighlight">\(n\)</span> 步回报在离散设置中调节偏差-方差权衡不同，<span class="math notranslate nohighlight">\(\lambda\)</span>-回报提供了一种连续的调节机制，使权衡更加平滑。实证研究表明，<span class="math notranslate nohighlight">\(\lambda\)</span>-回报的性能优于简单的 <span class="math notranslate nohighlight">\(n\)</span> 步回报。</p>
+<p>广义优势估计（GAE）通过用 <span class="math notranslate nohighlight">\(\lambda\)</span>-回报替代蒙特卡洛回报来计算：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*}
+  \hat{A}^{GAE}(s_t, a_t) \ &amp;\dot= \ G^{\lambda}_t - v(s_t)  \tag{1} \\
+  &amp;= \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}  \tag{2} \\
+  &amp;= \delta_{t} + (\gamma \lambda)\delta_{t+1} + (\gamma \lambda)^2\delta_{t+2} + \ ...  \tag{3}  \\
+  &amp;= \delta_{t} + (\gamma \lambda)\hat{A}^{GAE}(s_{t+1}, a_{t+1}) \tag{4} 
+  \end{align*}
+  \end{split}\]</div>
+<p>关于GAE如何具体由公式<span class="math notranslate nohighlight">\((2)\)</span>表示，感兴趣的读者可参考原始论文。公式<span class="math notranslate nohighlight">\((3)\)</span>是GAE的展开形式，它给出了TD误差的加权和，其中未来的TD误差通过<span class="math notranslate nohighlight">\(\lambda\)</span>参数进行折扣和平滑。在实际应用中，GAE通常使用公式<span class="math notranslate nohighlight">\((4)\)</span>以反向递归方式在每个时间步计算。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>关于 <span class="math notranslate nohighlight">\(n\)</span> 步回报 <span class="math notranslate nohighlight">\(G_{t:t+n}\)</span> 的直觉理解：当 <span class="math notranslate nohighlight">\(n=1\)</span> 时，回报为 <span class="math notranslate nohighlight">\(R_{t+1} + \gamma v(s_{t+1})\)</span>，这正是 TD 方法的更新目标（高偏差，低方差）；当 <span class="math notranslate nohighlight">\(n\)</span> 趋于无穷时，则回到原始蒙特卡洛回报（无偏，高方差）。因此，<span class="math notranslate nohighlight">\(n\)</span> 是价值估计器中偏差与方差之间的权衡参数。</p></li>
+<li><p>关于 <span class="math notranslate nohighlight">\(\lambda\)</span> 回报的直觉理解：类似于 <span class="math notranslate nohighlight">\(n\)</span> 步回报，<span class="math notranslate nohighlight">\(\lambda=0\)</span> 时退化为单步回报（1 步 TD 目标），而 <span class="math notranslate nohighlight">\(\lambda=1\)</span> 时恢复为蒙特卡洛回报。</p></li>
+<li><p>关于 GAE 的直觉理解：同样，当 <span class="math notranslate nohighlight">\(\lambda=0\)</span> 时，GAE 退化为 1 步 TD；而 <span class="math notranslate nohighlight">\(\lambda=1\)</span> 时，GAE 回到蒙特卡洛估计。</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="asynchronous-advantage-actor-critic-a3c">
+<h2>11.2 异步优势演员-评论员（Asynchronous Advantage Actor-Critic，A3C）<a class="headerlink" href="#asynchronous-advantage-actor-critic-a3c" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h3>11.2.1 背景<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>异步优势演员-评论家（Asynchronous Advantage Actor-Critic，A3C）是一种演员-评论家（Actor-Critic）算法，它通过多个工作线程（并行执行体）异步地探索环境并更新共享模型（在一台机器上使用多个 CPU 线程）。A3C 的作者将异步方法应用于四种已有的强化学习算法：一步 Q-learning、一步 Sarsa、n 步 Q-learning 和演员-评论员（Actor-Critic）。在这四种算法中，异步优势演员-评论员在当时的 Atari 游戏中实现了最先进的性能表现。</p>
+</section>
+<section id="id6">
+<h3>11.2.2 优势函数与梯度估计<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>优势函数估计</strong>：A3C 中的优势函数按定义估计，但不使用蒙特卡洛回报，而是采用 <span class="math notranslate nohighlight">\(n\)</span> 步回报来计算 <span class="math notranslate nohighlight">\(A(s_t, a_t; \theta, \theta_v)\)</span>（符号记法不同于 <a class="reference internal" href="#111-the-concept-of-advantage"><span class="xref myst">11.1</span></a> 节）：</p>
+<div class="math notranslate nohighlight">
+\[
+  A(s_t, a_t; \theta, \theta_v) = \sum_{i=0}^{k-1} \gamma^i r_{t+i} + \gamma^k V(s_{t+k}; \theta_v) - V(s_t; \theta_v)
+  \]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\theta, \theta_v\)</span> 分别表示演员和评论员模型的参数。步数 <span class="math notranslate nohighlight">\(k\)</span> 因状态而异，并受到上限 <span class="math notranslate nohighlight">\(t_{max}\)</span> 的约束。</p>
+</li>
+<li><p><strong>优化目标</strong>：在估计出优势函数后，A3C 中策略模型的梯度按常规估计为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*}
+  \hat{g} &amp;= \nabla_{\theta'} \log \pi(a_t | s_t; \theta')A(s_t, a_t; \theta, \theta_v) \\
+  &amp;=\nabla_{\theta'} \log \pi(a_t | s_t; \theta') (R_t - V(s_t; \theta_v))
+  \end{align*}
+  \end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(R_t\)</span> 是 <span class="math notranslate nohighlight">\(n\)</span> 步回报。</p>
+</li>
+</ul>
+</section>
+<section id="a3c">
+<h3>11.2.3 A3C 算法<a class="headerlink" href="#a3c" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>A3C 的伪代码</strong>：</p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter11/algo_a3c.png" alt="Algorithm: A3C" style="width: 100%;;">
+  </div>
+</li>
+<li><p><strong>演员 与 Critic 参数共享</strong></p>
+<p>在上述伪代码中，为了通用性展示了策略参数 <span class="math notranslate nohighlight">\(\theta\)</span> 与价值函数参数 <span class="math notranslate nohighlight">\(\theta_v\)</span> 是分开的，但在实际中我们通常会共享部分参数。</p>
+<p>在 A3C 的论文中，作者指出他们通常使用一个卷积神经网络，该网络有一个 softmax 输出用于策略 <span class="math notranslate nohighlight">\(\pi(a_t|s_t; \theta)\)</span>，一个线性输出用于价值函数 <span class="math notranslate nohighlight">\(V(s_t; \theta_v)\)</span>，而所有非输出层是共享的。</p>
+</li>
+<li><p><strong>熵奖励</strong></p>
+<p>在目标函数中加入策略 <span class="math notranslate nohighlight">\(\pi\)</span> 的熵项可以提升探索能力，防止过早收敛到次优的确定性策略。</p>
+<p>加入熵奖励 / 正则化后，对策略参数的完整目标函数的梯度形式为：</p>
+<div class="math notranslate nohighlight">
+\[
+  \nabla_{\theta'} \log \pi(a_t | s_t; \theta') (R_t - V(s_t; \theta_v)) + \beta \nabla_{\theta'} H(\pi(s_t; \theta'))
+  \]</div>
+<p>其中 <span class="math notranslate nohighlight">\(H\)</span> 表示熵，超参数 <span class="math notranslate nohighlight">\(\beta\)</span> 控制熵正则项的强度。</p>
+</li>
+</ul>
+</section>
+<section id="id7">
+<h3>11.2.4 A3C 的特性<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>优点</strong></p>
+<ul>
+<li><p>多线程计算：A3C首次将强化学习算法的计算从多台独立机器和多个GPU，转移到单台机器的多个CPU线程上，并在性能上超越了其前身算法。</p></li>
+<li><p>训练速度：训练时间的减少大致与并行actor-learner（演员-学习者）的数量成线性关系。</p></li>
+<li><p>稳定训练过程：可以在每个actor-learner中显式使用不同的探索策略以最大化多样性。多个actor-learner并行在线更新参数时整体更不易时间相关，从而有助于训练过程的稳定。</p></li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li><p>可能收敛于局部最优：A3C中每个agent（智能体）独立与全局参数通信，可能导致线程内agent使用的是不同版本的策略，从而使得聚合更新并非最优。</p></li>
+<li><p>调试复杂：A3C的异步特性增加了调试和分析的难度。由于多个worker（工作线程）独立更新全局网络，训练过程中错误或不一致的来源难以追踪。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="advantage-actor-critic-a2c">
+<h2>11.3 优势演员-评论员（Advantage Actor-Critic，A2C）<a class="headerlink" href="#advantage-actor-critic-a2c" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h3>11.3.1 背景<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>优势演员-评论员（Advantage Actor-Critic，A2C）是异步优势演员-评论员（A3C）的简化版本，目前并没有正式的发表文献系统介绍该方法。此处我们简要概述A2C的核心思想，并引导感兴趣的读者参考本教程的相关章节了解更详细的技术内容。</p>
+<p>在A3C中，每个worker（工作线程）拥有自己的环境副本并独立更新共享的全局参数，这种机制引入了异步性。然而OpenAI的研究人员发现，并没有证据表明异步机制带来性能提升。相反，如果在每个演员完成其经验片段后再统一更新，并在多个演员之间进行平均，可以简化调试过程并更有效地利用GPU。</p>
+<p>去除异步机制后，所得方法自然被称为优势演员-评论员（A2C）。接下来我们深入探讨其核心思想。</p>
+</section>
+<section id="a2c">
+<h3>11.3.2 A2C 的核心思想<a class="headerlink" href="#a2c" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>梯度更新</strong></p>
+<p>除了去除异步性外，A2C中的梯度更新形式与A3C完全相同。为解决A3C中梯度更新不一致的问题，A2C中一个协调器等待所有并行演员完成工作后再统一更新全局参数。这样下一轮所有演员从同一策略开始执行。同步的梯度更新使训练更加一致，并可能加速收敛。</p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter11/comp_a2c_a3c.png" alt="Comparison between A2C and A3C" style="width: 80%;;">
+  </div>
+</li>
+<li><p><strong>算法</strong></p>
+<p>实际上，当使用并行 演员 时，第 10 章 <a class="reference internal" href="10_%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%96%B9%E6%B3%95.html#1051-一步演员-评论员"><span class="std std-ref">第 10.5.1 节</span></a> 中介绍的一步演员–评论员算法就是 A2C 的一个典型例子，其优势函数通过一步 TD 误差估计。</p>
+<p>为了以类似于 <a class="reference internal" href="#1112-justification-of-existence"><span class="xref myst">11.2</span></a>节更实用的方式介绍 A2C 算法，我们采用 <a class="reference external" href="https://www.nature.com/articles/s41593-018-0147-8">这篇发表在 Nature 上的论文</a> 中给出的伪代码如下：</p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter11/algo_a2c.png" alt="Algorithm: A2C" style="width: 90%;;">
+  </div>
+<p>注意上述所示的 <span class="math notranslate nohighlight">\(E\)</span> 个 episode（回合）在实际实现中会被多个演员并行运行。</p>
+</li>
+</ul>
+</section>
+<section id="id9">
+<h3>11.3.3 A2C 的特性<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>优点</strong></p>
+<ul>
+<li><p>在单 GPU 机器上，A2C 比 A3C 性价比更高；当策略模型较大时，A2C 的速度也优于纯 CPU 实现的 A3C。</p></li>
+<li><p>该方法的一大优势是能更高效地利用 GPU，尤其适合大批量数据的并行加速处理。</p></li>
+</ul>
+</li>
+<li><p><strong>缺点</strong></p>
+<ul>
+<li><p>由于依赖梯度下降（Gradient Descent），A2C 在训练过程中可能出现不稳定和收敛问题，容易导致参数更新过快或不可预测，从而引发震荡、发散或性能下降。梯度裁剪（gradient clipping）和信赖域技术（trust region）等方法有助于实现更平滑、可靠的训练过程。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>一些研究者认为 <a class="reference external" href="https://arxiv.org/pdf/2205.09123">A2C 是 Proximal Policy Optimization（PPO）</a>的一个特例，我们将在下一节介绍 PPO。</p>
+</div>
+</section>
+</section>
+<section id="proximal-policy-optimization-ppo">
+<h2>11.4 近端策略优化（Proximal Policy Optimization，PPO）<a class="headerlink" href="#proximal-policy-optimization-ppo" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h3>11.4.1 背景<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>在所有现代强化学习算法中，近端策略优化（Proximal Policy Optimization，PPO）是最具影响力的框架之一。PPO基于信任区域策略优化（Trust Region Policy Optimization，TRPO）改进而来，相比TRPO，PPO实现更加简单，且在经验上表现不逊色甚至优于TRPO。本节仅通过简要介绍TRPO的核心思想来铺垫PPO的背景。</p>
+<p>在引入优势函数的前提下，所有策略梯度方法的梯度估计器（即最大化目标）可统一表示为：</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{g} = \hat{\mathbb{E}}_t \left[ \nabla_{\theta} \log \pi_{\theta}(a_t \mid s_t) \hat{A}_t \right]
+\]</div>
+<p>TRPO 采用如下的最大化目标：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp;\text{maximize}_{\theta} \ \hat{\mathbb{E}}_t \left[ \frac{\pi_{\theta}(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)} \hat{A}_t \right] \\
+&amp;\text{subject to} \quad \hat{\mathbb{E}}_t \left[ \text{KL}\left[\pi_{\theta{\text{old}}}(\cdot \mid s_t), \pi_{\theta}(\cdot \mid s_t)\right] \right] \leq \delta,
+\end{align*}
+\end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\theta_{old}\)</span> 表示更新前的策略参数。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TRPO 背后的理论建议使用惩罚项代替约束条件，即解决一个无约束的最优化问题，在参数 <span class="math notranslate nohighlight">\(\theta\)</span> 上最大化：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{maximize}_{\theta} \; \hat{\mathbb{E}}_t \left[ \frac{\pi_{\theta}(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)} \hat{A}_t - \beta \, \text{KL}\left[\pi_{\theta_{\text{old}}}(\cdot \mid s_t), \pi_{\theta}(\cdot \mid s_t)\right] \right]
+\]</div>
+<p>TRPO 实际使用了硬约束而不是惩罚项，这是因为很难选取一个在不同问题间（甚至在同一个问题中）都表现良好的惩罚系数 <span class="math notranslate nohighlight">\(\beta\)</span>。</p>
+</div>
+</section>
+<section id="id11">
+<h3>11.4.2 近端策略优化的目标函数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>我们已经看到，TRPO最大化如下形式的”代理”目标函数：</p>
+<div class="math notranslate nohighlight">
+\[
+L^{CPI}(\theta) = \hat{\mathbb{E}}_t \left[ r_t(\theta) \hat{A}_t \right],
+\]</div>
+<p>其中<span class="math notranslate nohighlight">\(r_t(\theta)\)</span>表示概率比率<span class="math notranslate nohighlight">\(\frac{\pi_\theta(a_t | s_t)}{\pi_{\theta_{\text{old}}}(a_t | s_t)}\)</span>（<span class="math notranslate nohighlight">\(r(\theta_{\text{old}}) = 1\)</span>）。<span class="math notranslate nohighlight">\(CPI\)</span>指的是保守策略迭代（conservative policy iteration）。PPO不再使用KL散度，而是通过引入<span class="math notranslate nohighlight">\(\textit{截断代理目标}\)</span>来限制策略变动幅度，使<span class="math notranslate nohighlight">\(r_t(\theta)\)</span>不会偏离1过多。具体来说，PPO 的优化目标由三个部分组成：</p>
+<ul>
+<li><p><strong>截断代理目标（Clipped Surrogate Objective）</strong>：通过将 <span class="math notranslate nohighlight">\(r_t(θ)\)</span> 限制在给定的范围内，惩罚那些使 <span class="math notranslate nohighlight">\(r_t(θ)\)</span> 偏离 1 的策略变化：</p>
+<div class="math notranslate nohighlight">
+\[
+  L^{CLIP}(\theta) \ \dot= \ \hat{\mathbb{E}}_t \left[ \min \left( r_t(\theta) \hat{A}_t, \, \text{clip}(r_t(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_t \right) \right],
+  \]</div>
+<p>其中 epsilon 是用于控制截断范围的超参数。</p>
+</li>
+<li><p><strong>价值函数损失（Value Function Loss）</strong>：记作 <span class="math notranslate nohighlight">\(L_t^{VF}(\theta)\)</span>，它是一个平方误差损失，形式如下：</p>
+<div class="math notranslate nohighlight">
+\[
+  L_t^{VF}(\theta) \dot= (V_\theta(s_t) - V_t^{targ})^2
+  \]</div>
+</li>
+<li><p><strong>熵奖励（Entropy Bonus）</strong>：PPO 在目标中加入熵奖励 <span class="math notranslate nohighlight">\(S[\pi_\theta](s_t)\)</span>，表示为：</p>
+<div class="math notranslate nohighlight">
+\[
+  S[\pi_\theta](s_t) = − \sum_a \pi(a_t \vert s_t) \log \pi(a_t \vert s_t)
+  \]</div>
+<p>由于 PPO 使用梯度上升（Gradient Ascent），加入熵项鼓励智能体在最优动作上保持一定的不确定性（更高的熵意味着更高的不确定性），从而在训练中探索更广泛的动作空间。</p>
+<p>如果策略过于确定（即总是选择相同的动作），熵值将降低，智能体将被激励去探索更多样的动作，这在训练早期尤为重要。</p>
+</li>
+<li><p><strong>最终 PPO 目标函数</strong>：假设我们使用的神经网络结构在策略与价值函数之间共享参数，那么损失函数需将策略代理目标与价值函数误差项结合起来。再加入熵奖励以确保足够的探索，最终的 PPO 目标定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+  L_t^{CLIP+VF+S}(\theta) = \hat{\mathbb{E}}_t \left[ L_t^{CLIP}(\theta) - c_1 L_t^{VF}(\theta) + c_2 S[\pi_\theta](s_t) \right],
+  \]</div>
+<p>其中 <span class="math notranslate nohighlight">\(c_1\)</span>, <span class="math notranslate nohighlight">\(c_2\)</span> 为<strong>正的</strong>系数。注意 <span class="math notranslate nohighlight">\(L_t^{VF}(\theta)\)</span> 是一个负项，因此在最大化整体目标时，相当于最小化平方误差损失。</p>
+</li>
+</ul>
+</section>
+<section id="ppo">
+<h3>11.4.3 PPO 算法<a class="headerlink" href="#ppo" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>伪代码</strong></p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter11/algo_ppo.png" alt="Algorithm: PPO in AC style" style="width: 100%;;">
+  </div>
+<p>每次迭代中，<span class="math notranslate nohighlight">\(N\)</span>个（并行）演员各自收集<span class="math notranslate nohighlight">\(T\)</span>步的数据。然后我们基于这些<span class="math notranslate nohighlight">\(N \times T\)</span>的数据构造代理损失，并用小批量随机梯度下降（SGD）优化<span class="math notranslate nohighlight">\(K\)</span>轮。</p>
+</li>
+<li><p><strong>算法细节</strong></p>
+<ul>
+<li><p><strong>优势函数估计</strong>：如你在伪代码中可能已注意到，PPO 使用截断版本的广义优势估计。</p>
+<p>一种由 <a class="reference external" href="https://arxiv.org/pdf/1602.01783">A3C 论文</a> 推广的策略梯度实现方式是让策略运行 <span class="math notranslate nohighlight">\(T\)</span> 步（<span class="math notranslate nohighlight">\(T\)</span> 通常远小于一个完整回合的长度）。这种方法需要不会超出第 <span class="math notranslate nohighlight">\(T\)</span> 步的优势估计器：</p>
+<div class="math notranslate nohighlight">
+\[
+    \hat{A}_t = -V(s_t) + r_t + \gamma r_{t+1} + \cdots + \gamma^{T - t + 1} r_{T - 1} + \gamma^{T - t} V(s_T).
+    \]</div>
+<p>对该方法的推广是，PPO 使用截断版本的广义优势估计，当 <span class="math notranslate nohighlight">\(\lambda = 1\)</span> 时退化为上述形式：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align*}
+    \hat{A}_t &amp;= \delta_t + (\gamma \lambda) \delta_{t+1} + \cdots + (\gamma \lambda)^{T - t + 1} \delta_{T - 1} \\
+    &amp;= \delta_t + \gamma\lambda\hat{A}_{t+1},
+    \end{align*}
+    \end{split}\]</div>
+</li>
+<li><p><strong>实际中的梯度上升</strong></p>
+<p>实际中，演员和评论家模型的更新是分开的。策略模型的梯度（上升）估计器如下：</p>
+<div class="math notranslate nohighlight">
+\[
+    \hat{g}_{actor} = \frac{1}{NT}\sum_{n=0}^{N} \sum_{t=0}^{T} [\min ( r_t(\theta) \hat{A}_t, \ \text{clip}(r_t(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_t) + S[\pi_\theta](s_0)]
+    \]</div>
+<p>而价值函数的梯度（下降）估计器为：</p>
+<div class="math notranslate nohighlight">
+\[
+    \hat{g}_{critic} = \frac{1}{NT}\sum_{n=0}^{N} \sum_{t=0}^{T}L_t^{VF}(\theta),
+    \]</div>
+<p>适用于任意形式的价值函数损失。</p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h3>11.4.4 PPO 的性质<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li><p>学习稳定：PPO 使用截断目标函数限制每次更新时策略的变化幅度，防止过大、不稳定的更新导致训练不稳定。</p></li>
+<li><p>实现简单：与 TRPO 等更复杂的方法相比，PPO 实现相对简单，同时在多种任务中仍能达到具有竞争力的性能。</p></li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li><p>对超参数敏感：PPO 对超参数（如截断参数和学习率）非常敏感，需要仔细调参以达到最优性能，这通常需要实验和对具体问题设置的理解。</p></li>
+<li><p>计算开销大：PPO 的计算开销较高，特别是在分布式设置或大规模环境中，因为它在每次更新前依赖于收集数据批次，并且需要同时更新演员和评论家模型。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="group-based-relative-policy-optimization-grpo">
+<h2>11.5 群体相对策略优化（Group-based Relative Policy Optimization，GRPO）<a class="headerlink" href="#group-based-relative-policy-optimization-grpo" title="Link to this heading">#</a></h2>
+<section id="id13">
+<h3>11.5.1 背景<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p>与前面介绍的所有算法不同，群体相对策略优化（GRPO）是专为一种特定的强化学习任务提出的——大型语言模型（LLMs）的后训练。目前它在其他类型任务中的效果研究较少，因此我们主要在 LLM 训练背景下介绍 GRPO。</p>
+<p>在 GRPO 提出之前，用于 LLM 训练的默认算法是 PPO，并配有一个特定的改动——在奖励中加入来自参考模型的 KL 惩罚项，以防止策略在更新过程中偏离参考模型太远。奖励计算方式如下：</p>
+<div class="math notranslate nohighlight">
+\[
+r_t = r_\phi(s_t, a_t) - \beta \log \frac{\pi_\theta(a_t\vert s_t)}{\pi_{ref}(a_t\vert s_t)}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(r_\phi\)</span> 是奖励模型，参考模型 <span class="math notranslate nohighlight">\(\pi_{ref}\)</span> 是策略的一个冻结副本（不可训练）。</p>
+<p>在 LLM 训练中，评论家模型通常与策略模型规模相当（共享部分参数）。为降低计算负担，GRPO 不再需要额外的价值函数逼近，而是<strong>使用多个采样输出的平均奖励作为基线</strong>（在优势估计中说明）。具体流程如下图所示。</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter11/comp_ppo_grpo.png" alt="Comparison between PPO and GRPO" style="width: 100%;;">
+</div>
+<p>简而言之，GRPO 不需要评论员模型，采用群体平均奖励作为基线，优势值也通过该群体方法进行估计（后文介绍）。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在 LLM 训练中的记号说明：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(q\)</span>：输入给 LLM 的问题。</p></li>
+<li><p><span class="math notranslate nohighlight">\(o_i\)</span>：时间步 <span class="math notranslate nohighlight">\(t\)</span> 的观测（状态）<span class="math notranslate nohighlight">\(i\)</span>，通常为 <span class="math notranslate nohighlight">\(q\)</span> 与到 <span class="math notranslate nohighlight">\(t\)</span> 为止所有已生成内容的拼接。</p></li>
+<li><p><span class="math notranslate nohighlight">\(r_i\)</span>：奖励模型 <span class="math notranslate nohighlight">\(\phi\)</span> 基于 <span class="math notranslate nohighlight">\(o_i\)</span> 给出的奖励。</p></li>
+<li><p><span class="math notranslate nohighlight">\(A_i\)</span>：在时间步 <span class="math notranslate nohighlight">\(t\)</span> 计算得到的优势。</p></li>
+</ul>
+</div>
+</section>
+<section id="id14">
+<h3>11.5.2 优化目标<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>总体目标</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*}
+  \mathcal{J}_{GRPO}(\theta) &amp;= \mathbb{E}_{q \sim P(Q), \{o_i\}_{i=1}^G \sim \pi_{\theta_{old}}(O|q)} \left[\frac{1}{G} \sum_{i=1}^G \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \min \left( \frac{\pi_{\theta}(o_{i,t}|q, o_i,&lt;t)}{\pi_{\theta_{old}}(o_{i,t}|q, o_i,&lt;t)} \hat{A}_{i,t}, \, \text{clip} \left( \frac{\pi_{\theta}(o_{i,t}|q, o_i,&lt;t)}{\pi_{\theta_{old}}(o_{i,t}|q, o_i,&lt;t)}, 1 - \epsilon, 1 + \epsilon \right) \hat{A}_{i,t} \right) - \beta D_{KL}[\pi_{\theta_{old}} || \pi_{ref}] \right] \\
+  &amp;\text{with} \ \mathbb{D}_{KL} (\pi_{\theta} || \pi_{\text{ref}}) = \frac{\pi_{\text{ref}}(o_i|q)}{\pi_{\theta}(o_i|q)} - \log \frac{\pi_{\text{ref}}(o_i|q)}{\pi_{\theta}(o_i|q)} - 1
+  \end{align*}
+  \end{split}\]</div>
+<p>与 PPO 相同，群体相对策略优化（GRPO）也采用截断目标函数，但不同的是，其目标函数中不包含熵奖励项。</p>
+<p>还需注意，GRPO 并非在奖励中加入 KL 惩罚，而是通过<strong>直接在最大化目标中加入训练策略与参考策略之间的 KL 散度</strong>来实现正则化，从而避免了复杂化 <span class="math notranslate nohighlight">\(A_{i,t}\)</span> 的计算。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注意到 GRPO 使用一种不同于本节开头所述 KL 估计的无偏估计方法来估计 KL 散度。</p>
+</div>
+</li>
+<li><p><strong>优势估计</strong></p>
+<p>由于 GRPO 不需要价值函数，它通过仅基于每个组内输出的相对奖励来计算优势 <span class="math notranslate nohighlight">\(A_{i,t}\)</span>，方式如下：</p>
+<div class="math notranslate nohighlight">
+\[
+  A_{i,t} = \frac{r_i - \text{mean}(\{r_1, r_2, \dots, r_G\})}{\text{std}(\{r_1, r_2, \dots, r_G\})}
+  \]</div>
+</li>
+</ul>
+</section>
+<section id="grpo">
+<h3>11.5.3 GRPO 算法<a class="headerlink" href="#grpo" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>伪代码</strong></p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter11/algo_grpo.png" alt="Algorithm: GRPO" style="width: 100%;;">
+  </div>
+<p>上述群体相对策略优化（GRPO）算法 [参考 GRPO] 采用迭代方式，除常规计算所有必要组件外，还有两个主要点需注意：</p>
+</li>
+<li><p><strong>奖励模型再训练</strong>：在迭代式 GRPO 中，作者基于策略模型的采样结果生成新的奖励模型训练集，并使用包含 10% 历史数据的<strong>重放机制</strong>持续训练旧的奖励模型。然后，将参考模型设置为策略模型，并用新奖励模型持续训练策略模型。</p></li>
+</ul>
+</section>
+<section id="id15">
+<h3>11.5.4 GRPO 的性质<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>优点</strong></p>
+<ul>
+<li><p>降低计算负担：群体相对策略优化（GRPO）不再需要评论家模型，通过基于群体的采样减少内存占用和计算成本。</p></li>
+<li><p>高效优势估计：通过比较同一输入的多个输出，GRPO 实现稳定且高效的优势估计。</p></li>
+<li><p>保守的策略更新：GRPO 目标函数中的 KL 惩罚项确保策略更新更稳定、更保守。</p></li>
+</ul>
+</li>
+<li><p><strong>缺点</strong></p>
+<ul>
+<li><p>奖励设计复杂：GRPO 需要精心设计奖励函数以准确反映输出质量，这具有挑战性。</p></li>
+<li><p>依赖于群体大小：群体大小影响优势估计的准确性，群体过小信息不足，而群体过大会增加计算开销。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id16">
+<h2>11.6 总结<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<p>本章介绍了多种强化学习算法，重点阐述了它们的核心概念、优点与缺点。首先讨论了**优势（Advantage）**的概念，用于衡量在某一状态下某个动作相对于平均行为的好坏程度，有助于减少梯度估计的方差，从而使策略梯度方法的更新更稳定。优势可以通过 TD 误差、蒙特卡罗回报或广义优势估计（GAE）来估算，其中 GAE 在偏差与方差之间提供平滑权衡。</p>
+<p>随后我们介绍了异步的**优势演员-评论家（A3C）**算法，它利用多个工作线程异步探索环境并更新共享模型。A3C 使用 n 步回报估计优势，并加入熵奖励以增强探索能力。虽然 A3C 利用多线程实现更快训练，但可能收敛于局部最优，且异步特性带来调试难度。</p>
+<p>接着我们讨论了<strong>优势演员-评论家（A2C）</strong>，它是 A3C 的同步变体，多个并行演员协同进行更新。这种方法在单 GPU 机器上更具性价比，并提高了 GPU 利用率，但由于依赖梯度下降，可能面临不稳定和收敛问题。</p>
+<p>**近端策略优化（PPO）**在保持性能的同时简化了 TRPO，使用截断目标限制策略变化。PPO 结合了截断代理目标、价值函数损失和熵奖励，具有学习稳定、实现简单的优点，但需要仔细调参，且计算成本较高。</p>
+<p>最后，**群体相对策略优化（GRPO）**主要用于大型语言模型（LLMs）的后训练，通过群体采样替代评论家模型，采用平均奖励作为基线，并加入 KL 惩罚以实现保守更新。GRPO 减轻了计算负担并高效估计优势，但高度依赖复杂的奖励设计和群体大小的合理设置。</p>
+</section>
+<section id="id17">
+<h2>资源<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<section id="id18">
+<h3>参考文献<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<p><strong>[1] GAE paper</strong>: <a class="reference external" href="https://arxiv.org/pdf/1506.02438">High-Dimensional Continuous Control Using Generalized Advantage Estimation</a></p>
+<p><strong>[2] A3C paper</strong>: <a class="reference external" href="https://arxiv.org/pdf/1602.01783">Asynchronous Methods for Deep Reinforcement Learning</a></p>
+<p><strong>[3] Paper that proposed the Entropy Bonus</strong>: <a class="reference external" href="https://www.researchgate.net/publication/2703232_Function_Optimization_Using_Connectionist_Reinforcement_Learning_Algorithms">Function optimization using connectionist reinforcement learning algorithms</a></p>
+<p><strong>[4] A2C blog from OpenAI</strong>: <a class="reference external" href="https://openai.com/index/openai-baselines-acktr-a2c/">https://openai.com/index/openai-baselines-acktr-a2c/</a></p>
+<p><strong>[5] PPO paper</strong>: <a class="reference external" href="https://arxiv.org/pdf/1707.06347">Proximal Policy Optimization Algorithms</a></p>
+<p><strong>[6] GRPO paper</strong>: <a class="reference external" href="https://arxiv.org/pdf/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a></p>
+<p><strong>[7] Lil’Llog</strong> which gives the graphical comparison between A3C and A2C: <a class="reference external" href="https://lilianweng.github.io/posts/2018-04-08-policy-gradient/#a2c">https://lilianweng.github.io/posts/2018-04-08-policy-gradient/#a2c</a></p>
+<p><strong>[8] Shulman’s blog</strong> that proposed the unbiased KL divergence estimator used in GRPO: <a class="reference external" href="http://joschu.net/blog/kl-approx.html">http://joschu.net/blog/kl-approx.html</a></p>
+</section>
+<section id="id19">
+<h3>其他资源<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<p>如果你对专门对 LLM 后训练开发的 RL 算法感兴趣，下面是一些建议参考的内容 （截止至该教程完成日，因此很遗憾以下参考不具有时效性）：</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://neurips.cc/virtual/2023/poster/72308">RRHF: Rank Responses to Align Language Models with Human Feedback</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2304.06767">RAFT: Reward rAnked FineTuning for Generative Foundation Model Alignment</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2402.14740">Back to Basics: Revisiting REINFORCE Style Optimization for Learning from Human Feedback in LLMs</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2310.10505">ReMax: A Simple, Effective, and Efficient Reinforcement Learning Method for Aligning Large Language Models</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2501.03262">REINFORCE++: A Simple and Efficient Approach for Aligning Large Language Models</a></p></li>
+</ol>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">11.1 优势函数的概念</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">11.1.1 定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">11.1.2 存在意义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">11.1.3 优势函数的估计方法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asynchronous-advantage-actor-critic-a3c">11.2 异步优势演员-评论员（Asynchronous Advantage Actor-Critic，A3C）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">11.2.1 背景</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">11.2.2 优势函数与梯度估计</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a3c">11.2.3 A3C 算法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">11.2.4 A3C 的特性</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantage-actor-critic-a2c">11.3 优势演员-评论员（Advantage Actor-Critic，A2C）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">11.3.1 背景</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a2c">11.3.2 A2C 的核心思想</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">11.3.3 A2C 的特性</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximal-policy-optimization-ppo">11.4 近端策略优化（Proximal Policy Optimization，PPO）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">11.4.1 背景</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">11.4.2 近端策略优化的目标函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ppo">11.4.3 PPO 算法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">11.4.4 PPO 的性质</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-based-relative-policy-optimization-grpo">11.5 群体相对策略优化（Group-based Relative Policy Optimization，GRPO）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">11.5.1 背景</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">11.5.2 优化目标</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grpo">11.5.3 GRPO 算法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">11.5.4 GRPO 的性质</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">11.6 总结</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">资源</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">参考文献</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">其他资源</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

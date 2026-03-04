@@ -1,0 +1,849 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 6 章 时序差分学习 &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/6_时序差分学习';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/6_时序差分学习.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/6_时序差分学习.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/6_时序差分学习.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/6_时序差分学习.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第 6 章 时序差分学习</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.1 时序差分预测</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.2 时序差分控制</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sarsa">6.2.1 Sarsa: 同策略时序差分控制</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-learning-q">6.2.2 Q-learning（Q学习）：异策略时序差分控制</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sarsa-expected-sarsa">6.2.3 期望 Sarsa (Expected Sarsa)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.3 总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>第 6 章 时序差分学习<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>时序差分（Temporal-Difference, TD）学习结合了蒙特卡洛（Monte Carlo, MC）方法和动态规划（Dynamic Programming, DP）的思想。像蒙特卡洛方法一样，时序差分方法<strong>可以直接从原始经验中学习</strong>，不需要环境模型；像动态规划方法一样，时序差分方法在更新估计时部分依赖于其他已经学习到的估计值，而不必等到最终结果（<strong>即它们使用自举更新（bootstrap）</strong>）。</p>
+<p>和往常一样，我们首先关注策略评估或预测问题，即在给定策略 <span class="math notranslate nohighlight">\(\pi\)</span> 的情况下估计其状态价值函数 <span class="math notranslate nohighlight">\(v_\pi\)</span> 的问题。对于控制问题（寻找最优策略），动态规划、时序差分和蒙特卡洛方法都使用某种形式的广义策略迭代（Generalized Policy Iteration, GPI）。这些方法之间的差异主要体现在它们解决预测问题的方式上。</p>
+<section id="id2">
+<h2>6.1 时序差分预测<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>为了引入时序差分方法，首先回顾</strong>
+$<span class="math notranslate nohighlight">\(
+  	\begin{align}
+  	v_{\pi}(s) &amp;\dot= E[G_t | S_t = s] \\
+  	&amp;= E[R_{t+1} + \gamma G_{t+1}| S_t = s] \\
+  	&amp;= E[R_{t+1} + \gamma v_{\pi}(S_{t+1})| S_t = s]
+  	\end{align}
+  \)</span>$</p>
+<ul>
+<li><p><strong>蒙特卡洛方法（Monte Carlo methods）</strong> 使用公式（1）的估计作为目标：</p>
+<p><span class="math notranslate nohighlight">\(V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))\)</span>，其中 <span class="math notranslate nohighlight">\(G_t\)</span> 是每个回合中的一次实际回报。</p>
+</li>
+<li><p><strong>动态规划方法（Dynamic Programming methods）</strong> 使用公式（3）的估计作为目标：
+<span class="math notranslate nohighlight">\(V(s) = \sum_a \pi(a|s) \sum_{s', r} p(s',r|s,a) [r + \gamma V(s')]\)</span></p></li>
+<li><p><strong>时序差分方法（Temporal Difference methods）</strong> 也使用公式（3）的估计，但不需要环境模型，通过以下方式结合了上述两种方法：</p>
+<p><span class="math notranslate nohighlight">\(V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))\)</span>，其中 <span class="math notranslate nohighlight">\(R_{t+1} + \gamma V(S_{t+1})\)</span> 是 <span class="math notranslate nohighlight">\(R_{t+1} + \gamma v_\pi(S_{t+1})\)</span> 的一次实际取值。</p>
+<ul class="simple">
+<li><p>时序差分更新的目标是 <span class="math notranslate nohighlight">\(R_{t+1} + \gamma V(S_{t+1})\)</span>，这种时序差分方法称为 <strong>TD(0) 或一步TD（one-step TD）</strong>，它是 TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) 或 n步TD 的特例（本教程未涉及）。</p></li>
+<li><p>时序差分结合了蒙特卡洛的采样和动态规划的自举更新（bootstrapping）：</p>
+<ol class="arabic simple">
+<li><p>时序差分和蒙特卡洛都涉及对后继状态（或状态–动作对）进行采样，即它们都使用 <span class="math notranslate nohighlight">\(\textit{采样更新（sample update）}\)</span>，而不像动态规划那样使用 <span class="math notranslate nohighlight">\(\textit{期望更新（expected update）}\)</span>。</p></li>
+<li><p>蒙特卡洛方法必须等到整个回合结束后才能确定 <span class="math notranslate nohighlight">\(V(S_t)\)</span> 的更新量（因为只有那时 <span class="math notranslate nohighlight">\(G_t\)</span> 才可知），而时序差分和动态规划方法只需等到下一个时间步，即它们使用自举更新（bootstrap）。</p></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>术语<span class="math notranslate nohighlight">\(\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\)</span>称为<span class="math notranslate nohighlight">\(\textit{TD误差（TD error）}\)</span>。<span class="math notranslate nohighlight">\(\delta_t\)</span>是<span class="math notranslate nohighlight">\(V(S_t)\)</span>的误差，在时间<span class="math notranslate nohighlight">\(t+1\)</span>即可获得。</p></li>
+</ul>
+</li>
+<li><p><strong>用于估计<span class="math notranslate nohighlight">\(v_\pi\)</span>的表格型TD(0)算法（Tabular TD(0)）</strong>：</p>
+<ul>
+<li><p>算法：</p>
+  <div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/algo_tabular_td.png" alt="Algorithm: Tabular TD(0)" style="width: 100%;;">
+  </div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>注意时序差分与蒙特卡洛算法的区别，现在不再需要生成整个回合。相反，一旦采取了动作并观察到新状态，就会立即更新 $V(s)$，也就是说，时序差分方法是以&quot;逐步（step-wise）&quot;的方式工作的。
+</pre></div>
+</div>
+</div>
+</li>
+<li><p><strong>驾车回家示例</strong> （点击观看讲座视频）</p>
+  <a href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/9Dxlq/the-advantages-of-temporal-difference-learning">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/driving_home.png" alt="Video: TD prediction on Driving Home Example" style="width:70%;">
+  </a>
+</li>
+<li><p><strong>时序差分预测的优势</strong>:</p>
+<ul>
+<li><p>相较于动态规划：时序差分方法不需要环境的模型；相较于蒙特卡洛方法：时序差分方法可以天然地以在线、完全增量的方式实现，即不需要等到回合结束。</p></li>
+<li><p>对于任意固定策略 <span class="math notranslate nohighlight">\(\pi\)</span>，TD(0) 已被证明会收敛到 <span class="math notranslate nohighlight">\(v_\pi\)</span>。详细内容请参考教材第6.2章，本教程中略去证明。</p></li>
+<li><p>在实际中，时序差分方法在随机任务中通常比常数步长的蒙特卡洛方法收敛得更快。一个示例性视频如下所示：</p>
+  <a href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/CEzFc/comparing-td-and-monte-carlo">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/random_walk.png" alt="Video: Comparing TD and MC" style="width:70%;">
+  </a>			
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h2>6.2 时序差分控制<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="sarsa">
+<h3>6.2.1 Sarsa: 同策略时序差分控制<a class="headerlink" href="#sarsa" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>Sarsa的背景</strong>:</p>
+<ul>
+<li><p>由于时序差分方法适用于没有环境模型的任务，因此自然会估计 <span class="math notranslate nohighlight">\(Q_\pi(s,a)\)</span> 而不是 <span class="math notranslate nohighlight">\(V_\pi(s)\)</span>。类似于<a class="reference internal" href="#id2">第6.1节</a>，<strong>Sarsa的更新规则</strong>如下：</p>
+<div class="math notranslate nohighlight">
+\[Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)]\]</div>
+<p>其中若 <span class="math notranslate nohighlight">\(S_t\)</span> 是终止状态，则 <span class="math notranslate nohighlight">\(Q(S_t, A_t)=0\)</span>。</p>
+</li>
+<li><p><strong>Sarsa命名的由来</strong>：上述更新规则使用了状态–动作对转移中的五元组事件（<span class="math notranslate nohighlight">\(S_t,A_t,R_{t+1},S_{t+1},A_{t+1}\)</span>）的每一项。这五元组构成了名称Sarsa（<strong>S</strong>tate，<strong>A</strong>ction，<strong>R</strong>eward，<strong>S</strong>tate，<strong>A</strong>ction）的由来。</p></li>
+<li><p>与其他任意同策略方法类似，我们持续对行为策略<span class="math notranslate nohighlight">\(\pi\)</span>估计<span class="math notranslate nohighlight">\(q_\pi\)</span>，同时将<span class="math notranslate nohighlight">\(\pi\)</span>逐步调整为对<span class="math notranslate nohighlight">\(q_\pi\)</span>趋于贪婪（即广义策略迭代（GPI）的模式）。</p></li>
+</ul>
+</li>
+<li><p><strong>Sarsa（同策略时序差分控制）用于估计 <span class="math notranslate nohighlight">\(Q \approx q_\star\)</span></strong></p>
+  <div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/algo_sarsa.png" alt="Algorithm: SARSA" style="width: 100%;;">
+  </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><strong>不需要在一开始初始化策略 <span class="math notranslate nohighlight">\(\pi\)</span></strong>，当所有 <span class="math notranslate nohighlight">\(Q(s,a)\)</span> 都已知时，可以直接根据给定策略选取动作，其中 <span class="math notranslate nohighlight">\(s \in S, a \in A(s)\)</span>。</p></li>
+<li><p>在选取下一个动作时，要确保使用一个软策略（soft-policy）以保证探索。</p></li>
+<li><p>注意，在转移到状态 <span class="math notranslate nohighlight">\(S'\)</span> 后，仍需执行另一个动作 <span class="math notranslate nohighlight">\(A'\)</span>，才能更新 <span class="math notranslate nohighlight">\(Q(S,A)\)</span>。</p></li>
+<li><p>只要所有状态–动作对被访问无限次，且策略最终收敛于贪婪策略，Sarsa以概率1收敛至最优策略和动作价值函数（例如，通过设置 <span class="math notranslate nohighlight">\(\epsilon = 1/t\)</span> 的 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪策略来实现）。</p></li>
+</ul>
+</div>
+</li>
+<li><p><strong>示例：有风网格世界中的Sarsa</strong></p>
+  <a href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/RZeRQ/sarsa-in-the-windy-grid-world">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/windy_gridworld.png" alt="Video: Sarsa in the Windy Gridworld" style="width:70%;">
+  </a>
+<ul class="simple">
+<li><p>注意，前几个回合可能需要几千步才能完成。随着曲线逐渐变陡，说明每个回合完成得越来越快。</p></li>
+<li><p>注意回合完成速率停止上升。这意味着智能体的策略在最优策略附近徘徊，但由于探索的存在，不会完全达到最优。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="q-learning-q">
+<h3>6.2.2 Q-learning（Q学习）：异策略时序差分控制<a class="headerlink" href="#q-learning-q" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>Q-learning的背景</strong>:</p>
+<ul>
+<li><p>Q-learning 的更新规则为：</p>
+<div class="math notranslate nohighlight">
+\[Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)]\]</div>
+</li>
+<li><p>这种直接逼近 <span class="math notranslate nohighlight">\(q_\star\)</span> 的方式大大简化了算法的分析，并促成了早期的收敛性证明。正确收敛所需的唯一条件是所有状态–动作对持续被更新（即保持探索）。</p></li>
+</ul>
+</li>
+<li><p><strong><span class="math notranslate nohighlight">\(Q\)</span>-learning（异策略时序差分控制）用于估计 <span class="math notranslate nohighlight">\(\pi \approx \pi_\star\)</span></strong></p>
+  <div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/algo_q_learning.png" alt="Algorithm: Q-Learning" style="width: 100%;;">
+  </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- **与Sarsa不同的是，在目标状态 $S&#39;$，Q-learning 直接选择使 $Q(S&#39;, a)$ 最大化的贪婪动作**，而不是根据从 $Q$ 导出的策略选择（虽然由 $Q$ 导出的策略也可以是贪婪策略，如果是这样，Sarsa和Q-learning的更新规则是相同的）。
+
+- **Q-learning 为什么是异策略（off-policy）的？** 将当前 $Q$ 导出的策略视为 $\textit{行为策略}$，例如 $\epsilon$-贪婪策略，但Q-learning的 $\textit{目标策略}$ 实际上是根据更新规则中的最大值项选择的贪婪策略（动作根据 $\epsilon$-贪婪选择，更新则依据贪婪策略）。想了解Q-learning为何是离策略的读者可参考此[讲座视频](https://www.coursera.org/learn/sample-based-learning-methods/lecture/1OikH/how-is-q-learning-off-policy) 
+</pre></div>
+</div>
+</div>
+</li>
+<li><p><strong>示例：有风网格世界中的 Q-learning</strong></p>
+  <a href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/BZbSy/q-learning-in-the-windy-grid-world">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/q_learning_windy_gridworld.png" alt="Video: Sarsa in the Windy Gridworld" style="width:70%;">
+  </a>
+<ul class="simple">
+<li><p>刚开始时，两种算法的学习速度相近。到后期，Q-learning 似乎学得了更优的最终策略。</p></li>
+<li><p>当我们减小步长参数 <span class="math notranslate nohighlight">\(\alpha\)</span>，Sarsa 学习到的最终策略与 Q-learning 相同，但收敛更慢。此实验凸显了强化学习中参数选择的重要性。<span class="math notranslate nohighlight">\(\alpha\)</span>、<span class="math notranslate nohighlight">\(\epsilon\)</span>、初始值和实验长度都可能影响最终结果。</p></li>
+</ul>
+</li>
+<li><p><strong>悬崖漫步示例 —— Sarsa 与 Q-learning 的另一对比</strong></p>
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/cliff_walking.png" alt="Video: Sarsa in the Windy Gridworld" style="width:95%;">
+<ul class="simple">
+<li><p><strong>描述</strong>：</p>
+<ul>
+<li><p>状态与目标：智能体从左下角状态 <span class="math notranslate nohighlight">\(S\)</span> 出发，试图到达右下角的目标点 <span class="math notranslate nohighlight">\(G\)</span>。</p></li>
+<li><p>动作：上、下、左、右。</p></li>
+<li><p>奖励：除进入标记为”悬崖”区域的转移奖励为 <span class="math notranslate nohighlight">\(-100\)</span> 外，所有转移奖励均为 <span class="math notranslate nohighlight">\(-1\)</span>。</p></li>
+</ul>
+</li>
+<li><p><strong>性能比较</strong>：</p>
+<ul>
+<li><p>Q-learning（红色）：学习得到的策略是沿悬崖边缘向右移动的最优策略，但因 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪动作选择，有时会掉下悬崖。</p></li>
+<li><p>Sarsa（蓝色）：学习较长但更安全的路径，绕过网格上方。</p></li>
+<li><p>虽然 Q-learning 实际学习到了最优策略的价值，<strong>但其在线表现却不如学习绕行策略的Sarsa</strong>。当然，如果逐渐减小 <span class="math notranslate nohighlight">\(\epsilon\)</span>，则<strong>两者最终都会渐进收敛至最优策略。</strong></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="sarsa-expected-sarsa">
+<h3>6.2.3 期望 Sarsa (Expected Sarsa)<a class="headerlink" href="#sarsa-expected-sarsa" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>期望 Sarsa的背景</strong>:</p>
+<ul class="simple">
+<li><p>更新规则:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+		\begin{align*}
+		Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma E_\pi[Q(S_{t+1}, A_{t+1})|S_{t+1})] - Q(S_t, A_t)] \\
+		\leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \sum_{a}\pi(a|S_{t+1}) Q(S_{t+1}, a) - Q(S_t, A_t)]
+		\end{align*}
+	\end{split}\]</div>
+<ul class="simple">
+<li><p>给定下一个状态 <span class="math notranslate nohighlight">\(S_{t+1}\)</span>，该更新确定性地沿着Sarsa的期望方向移动，因此称为期望 Sarsa（Expected Sarsa）。</p></li>
+<li><p>期望Sarsa在计算上比Sarsa更复杂，但它消除了由于随机选择动作 <span class="math notranslate nohighlight">\(A_{t+1}\)</span> 而产生的方差。在相同经验量的情况下，期望Sarsa的表现通常略优于Sarsa。</p></li>
+</ul>
+</li>
+<li><p><strong>期望Sarsa用于估计 <span class="math notranslate nohighlight">\(\pi \approx \pi_\star\)</span></strong></p>
+<ul class="simple">
+<li><p>算法参数: 步长 <span class="math notranslate nohighlight">\(\alpha \in (0,1], \epsilon &gt; 0\)</span></p></li>
+<li><p>初始化 <span class="math notranslate nohighlight">\(Q(s,a)\)</span>, 对于所有 <span class="math notranslate nohighlight">\(s \in S^+, a \in A(s)\)</span></p></li>
+<li><p>遍历每个回合:</p>
+<ul>
+<li><p>初始化 <span class="math notranslate nohighlight">\(S\)</span></p></li>
+<li><p>遍历每一步:</p>
+<ul>
+<li><p>使用 <span class="math notranslate nohighlight">\(Q\)</span> 导出的策略（如 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪策略）从 <span class="math notranslate nohighlight">\(S\)</span> 选择 <span class="math notranslate nohighlight">\(A\)</span></p></li>
+<li><p>执行动作 <span class="math notranslate nohighlight">\(A\)</span>, 观察到 <span class="math notranslate nohighlight">\(R, S'\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Q(S, A) \leftarrow Q(S, A) + \alpha [R + \gamma \sum_{a}\pi(a|S') Q(S', a) - Q(S, A)]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(S \leftarrow S'\)</span></p></li>
+</ul>
+</li>
+<li><p>直到 <span class="math notranslate nohighlight">\(S\)</span> 终止</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>该算法与 Q-learning 类似，但它不是取下一状态动作对的最大值，而是计算期望值，考虑当前策略下各动作的可能性。</p></li>
+<li><p><strong>期望 Sarsa 的有趣之处在于，它既可以是同策略，也可以是异策略</strong>。上述算法为同策略的情形，但一般情况下，期望 Sarsa 可以使用与目标策略 <span class="math notranslate nohighlight">\(\pi\)</span> 不同的策略来生成行为，此时它就成为异策略算法。</p>
+<ul>
+<li><p>例如，若 <span class="math notranslate nohighlight">\(\pi\)</span> 是贪婪策略，而行为策略更具探索性，则期望 Sarsa 恰好等同于 Q-learning。</p></li>
+<li><p>从这个意义上讲，期望 Sarsa 包含并推广了 Q-learning，同时在性能上优于 Sarsa。<strong>除了计算开销略有增加外，期望 Sarsa 很可能完全优于其他两种更为知名的时序差分控制算法。</strong></p></li>
+</ul>
+</li>
+</ul>
+</div>
+</li>
+<li><p><strong>悬崖漫步示例中的比较</strong>：</p>
+<p>下图展示了三种时序差分控制方法在悬崖漫步任务中，随步长参数 <span class="math notranslate nohighlight">\(\alpha\)</span> 变化的中期和渐近性能表现。</p>
+<ul>
+<li><p>三种算法均使用 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪婪策略，<span class="math notranslate nohighlight">\(\epsilon=0.1\)</span>。</p></li>
+<li><p>渐近性能为100,000回合的平均结果，再对10次运行取平均。</p></li>
+<li><p>中期性能为前100回合的平均结果，再对50,000次运行取平均。</p>
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/comparison_cliff_walking.png" alt="Comparison of three TD control methods on cliff walking task" style="width: 60%;">
+</li>
+</ul>
+<p>期望 Sarsa 保留了 Sarsa 相比于 Q-learning 在该问题上的显著优势。在悬崖漫步中，状态转移是确定性的，所有随机性仅来自策略。在这种情况下，期望 Sarsa 可以安全地设置 <span class="math notranslate nohighlight">\(\alpha = 1\)</span> 而不影响渐近性能；而 Sarsa 只能在较小的 <span class="math notranslate nohighlight">\(\alpha\)</span> 值下长期表现良好，但其短期性能较差。</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2>6.3 总结<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>本章介绍的方法是如今最为广泛使用的强化学习方法。这很可能归功于它们的极简特性：它们可在线应用，计算量极小，直接基于与环境交互产生的经验；且几乎可以用单个方程完全表达，便于通过小型程序实现。</p>
+<p>本章介绍的时序差分方法特例应称为<span class="math notranslate nohighlight">\(\textit{单步、表格型、无模型}\)</span>时序差分方法。下一章我们将扩展至包含环境模型的形式，但目前，简要总结如下：</p>
+<ul>
+<li><p><strong>思维导图：我们现在的位置</strong></p>
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter6/chapter6_mindmap.png" alt="Mindmap" style="width:100%;">
+</li>
+<li><p><strong>关键要点</strong></p>
+<ul>
+<li><p><strong>时序差分预测（TD(0)）</strong></p>
+<ul>
+<li><p>每步更新价值估计：</p>
+<div class="math notranslate nohighlight">
+\[V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))\]</div>
+</li>
+<li><p>时序差分误差（<span class="math notranslate nohighlight">\(\delta_t\)</span>）衡量预测值与更新值之间的差异。</p></li>
+<li><p>优点：无需环境模型，增量更新，收敛速度快于蒙特卡洛方法。</p></li>
+</ul>
+</li>
+<li><p><strong>时序差分控制方法</strong></p>
+<ul class="simple">
+<li><p>Sarsa（同策略）：基于当前策略更新。更安全，但可能找不到最优路径。</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)]\]</div>
+<ul class="simple">
+<li><p>Q-learning（异策略）：利用最大未来奖励更新。学习最优策略，但探索时风险较大。</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)]\]</div>
+<ul class="simple">
+<li><p>期望 Sarsa：使用期望未来奖励，降低方差，提升稳定性。</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \sum_a \pi(a|S_{t+1}) Q(S_{t+1}, a) - Q(S_t, A_t)]\]</div>
+</li>
+<li><p><strong>比较</strong></p>
+<ul class="simple">
+<li><p>Sarsa 学习到的策略较为保守，适合存在风险的环境。</p></li>
+<li><p>Q-learning 能够找到最优策略，但由于探索带来的风险，其在线表现可能较差。</p></li>
+<li><p>期望 Sarsa 兼顾了两者的优点，性能稳定且额外计算开销较小。</p></li>
+</ul>
+</li>
+<li><p><strong>收敛性</strong>：只要探索充分且学习率设置合理，所有方法都能收敛至最优策略。</p></li>
+</ul>
+</li>
+<li><p><strong>额外讲座视频（可选）</strong>：<a class="reference external" href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/MgFyz/rich-sutton-the-importance-of-td-learning">Rich Sutton：时序差分学习的重要性</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.1 时序差分预测</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.2 时序差分控制</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sarsa">6.2.1 Sarsa: 同策略时序差分控制</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-learning-q">6.2.2 Q-learning（Q学习）：异策略时序差分控制</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sarsa-expected-sarsa">6.2.3 期望 Sarsa (Expected Sarsa)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.3 总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

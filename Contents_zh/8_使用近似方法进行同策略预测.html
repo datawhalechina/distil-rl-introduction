@@ -1,0 +1,908 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第8章. 使用近似方法进行同策略预测 &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/8_使用近似方法进行同策略预测';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/8_使用近似方法进行同策略预测.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/8_使用近似方法进行同策略预测.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/8_使用近似方法进行同策略预测.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/8_使用近似方法进行同策略预测.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第8章. 使用近似方法进行同策略预测</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.1 价值函数近似</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.2 随机梯度和半梯度方法</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">示例：状态聚合</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">8.3 线性模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">8.4 线性方法的特征构建</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">8.4.1 粗编码</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8.4.2 瓦片编码</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">8.5 总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>第8章. 使用近似方法进行同策略预测<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>在本章中，我们将重点关注如何根据同策略数据（on-policy data）来估计状态价值函数。近似价值函数不再以表格形式呈现，而是 <strong>采用参数化的函数形式（parametric function form），记为 <span class="math notranslate nohighlight">\(\hat{v}(s, \boldsymbol{w}) \approx v_\pi(s)\)</span>，其中 <span class="math notranslate nohighlight">\(\boldsymbol{w} \in \mathbb{R}^d\)</span> 是权重向量</strong>（weight vector）。</p>
+<p>例如，<span class="math notranslate nohighlight">\(\hat{v}\)</span> 可能是一个关于状态特征的线性函数，<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> 就是特征权重向量。更一般地，<span class="math notranslate nohighlight">\(\hat{v}\)</span> 可能是由多层人工神经网络计算得到的函数，<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> 则是所有层中的连接权重向量。</p>
+<p><strong>通常情况下，权重的数量（即 <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> 的维度）远小于状态的数量（<span class="math notranslate nohighlight">\(d &lt;&lt; |S|\)</span>）</strong>，并且改变一个权重会影响多个状态的估计值。因此，当更新单个状态时，这种改变会从该状态泛化到其他许多状态，进而影响它们的价值。这种泛化特性使得学习过程可能更强大，但同时也更难管理和理解。</p>
+<section id="id2">
+<h2>8.1 价值函数近似<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>更新规则回顾</strong>：</p>
+<ul class="simple">
+<li><p><strong>动态规划</strong>：
+<span class="math notranslate nohighlight">\(s \rightarrow E_\pi[R_{t+1} + \gamma \hat{v}(S_{t+1}, \boldsymbol{w}_t)|S_t = s]\)</span></p></li>
+<li><p><strong>蒙特卡罗方法</strong>：
+<span class="math notranslate nohighlight">\(s \rightarrow G_t\)</span></p></li>
+<li><p><strong>时序差分方法</strong>：
+<span class="math notranslate nohighlight">\(s \rightarrow R_{t+1} + \gamma \hat{v}(S_{t+1}, \boldsymbol{w}_t)\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>用于函数近似的监督学习</strong></p>
+<ul class="simple">
+<li><p>我们将每次更新解释为指定价值函数所需的输入 - 输出（<span class="math notranslate nohighlight">\(s\rightarrow u\)</span>）行为的一个示例，其中 <span class="math notranslate nohighlight">\(u\)</span> 表示 <strong>更新目标</strong>（update target）。</p></li>
+<li><p>在函数近似中，我们将每次更新的输入 - 输出行为 <span class="math notranslate nohighlight">\(s\rightarrow u\)</span> 作为一个训练示例，然后将训练后得到的近似函数解释为估计的价值函数。</p></li>
+</ul>
+</li>
+<li><p><strong>预测目标（<span class="math notranslate nohighlight">\(\overline{VE}\)</span>）</strong></p>
+<ul>
+<li><p><strong>动机</strong>：由于我们假设状态数量远多于权重数量，因此提高一个状态的估计精度必然会降低其他状态的估计精度。所以，我们必须明确指出哪些状态对我们来说最为重要。</p></li>
+<li><p><strong>衡量指标</strong>：平均平方价值误差（mean squared value error，<span class="math notranslate nohighlight">\(\overline{VE}\)</span>），公式如下：</p>
+<div class="math notranslate nohighlight">
+\[
+    \overline{VE}(\boldsymbol{w}) = \sum_{s \in S} \mu(s)[v_\pi(s) - \hat{v}(s,\boldsymbol{w})]^2
+    \]</div>
+<p>其中，状态分布 <span class="math notranslate nohighlight">\(\mu(s) \ge 0\)</span> 且 <span class="math notranslate nohighlight">\(\sum_s \mu(s)=1\)</span>，称为 <strong>同策略分布</strong>（on-policy distribution），它表示我们对每个状态 <span class="math notranslate nohighlight">\(s\)</span> 的误差的关注程度。通常情况下，<span class="math notranslate nohighlight">\(\mu(s)\)</span> 被选择为在状态 <span class="math notranslate nohighlight">\(s\)</span> 上花费的时间比例。</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>最适合寻找更优策略的价值函数并不一定是最小化 <span class="math notranslate nohighlight">\(\overline{VE}\)</span> 的函数。不过，目前还不清楚价值预测更有用的替代目标是什么。就目前而言，我们将重点关注 <span class="math notranslate nohighlight">\(\overline{VE}\)</span>。</p></li>
+<li><p>对于像神经网络这样的复杂函数逼近器，我们通常无法找到一个全局最优（global optimum）的 <span class="math notranslate nohighlight">\(\boldsymbol{w}_\star\)</span>，使得对于所有的 <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> 都有 <span class="math notranslate nohighlight">\(\overline{VE}(\boldsymbol{w}_\star) \le \overline{VE}(\boldsymbol{w})\)</span>。相反，我们只能找到一个局部最优解（local optimum），即在 <span class="math notranslate nohighlight">\(\boldsymbol{w}_\star\)</span> 的某个邻域内，对于所有的 <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> 都有 <span class="math notranslate nohighlight">\(\overline{VE}(\boldsymbol{w}_\star) \le \overline{VE}(\boldsymbol{w})\)</span>，但通常这已经足够了。</p></li>
+</ul>
+</div>
+</section>
+<section id="id3">
+<h2>8.2 随机梯度和半梯度方法<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>梯度下降方法的设置</strong>：</p>
+<ul class="simple">
+<li><p>权重向量是一个列向量，包含固定数量的实值分量，记为 <span class="math notranslate nohighlight">\(\boldsymbol{w} \dot= (w_1,w_2,...,w_d)^T\)</span>。（注意，在本书中，除非明确以水平形式写出或进行转置，否则向量通常被视为列向量。）</p></li>
+<li><p>近似价值函数 <span class="math notranslate nohighlight">\(\hat{v}(s,\boldsymbol{w})\)</span> 对于所有的 <span class="math notranslate nohighlight">\(s \in S\)</span> 都是关于 <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> 的可微函数。</p></li>
+</ul>
+</li>
+<li><p><strong>随机梯度方法</strong>（stochastic gradient descent，SGD）</p>
+<ul>
+<li><p><strong>设置</strong>：假设在每一步，我们观察到一个新的示例 <span class="math notranslate nohighlight">\(S_t \rightarrow v_\pi(S_t)\)</span>，它由一个（可能是随机选择的）状态 <span class="math notranslate nohighlight">\(S_t\)</span> 及其在策略下的真实值组成。</p></li>
+<li><p><strong>SGD 方法</strong>：</p>
+<ul>
+<li><p><strong>更新规则</strong>：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+      \begin{align}
+      \boldsymbol{w_{t+1}} &amp;\dot= \boldsymbol{w_t} - \frac{1}{2} \alpha \nabla[v_\pi(S_t) - \hat{v}(S_t, \boldsymbol{w_t})]^2 \\
+      &amp;= \boldsymbol{w_t} + \alpha [v_\pi(S_t) - \hat{v}(S_t, \boldsymbol{w_t})]\nabla\hat{v}(S_t, \boldsymbol{w_t})
+      \end{align}
+      \end{split}\]</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>在实际应用中，显然不可能直接得到 <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span>。实际上，只要目标是 <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span> 的无偏估计，即 <span class="math notranslate nohighlight">\(E[Target | S_t=s] = v_\pi(S_t)\)</span>，那么在通常的随机近似条件下（随着 <span class="math notranslate nohighlight">\(\alpha\)</span> 逐渐减小），<span class="math notranslate nohighlight">\(\boldsymbol{w_t}\)</span> 保证收敛到一个局部最优解（关于收敛的主题不在 DistilRL 中讨论，请参考书籍的第 2.7 章获取详细信息）。</p></li>
+<li><p>根据定义，蒙特卡罗目标 <span class="math notranslate nohighlight">\(G_t\)</span> 是 <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span> 的无偏估计器。</p></li>
+</ul>
+</div>
+<ul>
+<li><p><strong>用于估计 <span class="math notranslate nohighlight">\(\hat{v} \approx v_\pi\)</span> 的梯度蒙特卡罗算法</strong></p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/algo_gradient_mc.png" alt="Algorithm: Gradient Monte Carlo" style="width: 100%;">        
+</div>
+</li>
+<li><p><strong>半梯度方法</strong>（semi-gradient methods）：</p>
+<ul>
+<li><p><strong>设置</strong>：训练示例 <span class="math notranslate nohighlight">\(S_t \rightarrow U_t\)</span>，其中 <span class="math notranslate nohighlight">\(U_t \in \mathbb{R}\)</span> 不是真实值 <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span> 而是使用 <span class="math notranslate nohighlight">\(\hat{v}\)</span> 的<strong>自举目标</strong>（bootstrapped target）</p></li>
+<li><p><strong>半梯度方法</strong>：</p>
+<ul>
+<li><p><strong>更新规则</strong>：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+      \begin{align}
+      \boldsymbol{w_{t+1}} &amp;\dot= \boldsymbol{w_t} - \frac{1}{2} \alpha \nabla[U_t - \hat{v}(S_t, \boldsymbol{w_t})]^2 \\
+      &amp;= \boldsymbol{w_t} + \alpha [U_t - \hat{v}(S_t, \boldsymbol{w_t})]\nabla\hat{v}(S_t, \boldsymbol{w_t})
+      \end{align} 
+      \end{split}\]</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><p>如果使用 <span class="math notranslate nohighlight">\(v(S_t)\)</span> 的自举估计作为目标 <span class="math notranslate nohighlight">\(U_t\)</span>，则不能保证像随机梯度方法那样收敛。自举方法使用 <span class="math notranslate nohighlight">\(\hat{v}(S_{t+1}, \boldsymbol{w_t})\)</span> 作为目标，这依赖于当前的 <span class="math notranslate nohighlight">\(\boldsymbol{w_t}\)</span>。然而，从等式 <span class="math notranslate nohighlight">\((1)\)</span> 到 <span class="math notranslate nohighlight">\((2)\)</span> 的推导需要关于 <span class="math notranslate nohighlight">\(\boldsymbol{w_t}\)</span> 的独立性。</p>
+<p>换句话说，自举方法考虑改变权重向量 <span class="math notranslate nohighlight">\(\boldsymbol{w_t}\)</span> 对估计的影响，但忽略其对目标的影响。它们只包含梯度的一部分，因此，我们称它们为 <span class="math notranslate nohighlight">\(\textit{半梯度方法}\)</span>。</p>
+</li>
+<li><p>尽管半梯度（自举）方法不如梯度方法那样稳健地收敛，但它们确实在重要情况下（如线性情况）可靠地收敛，并且由于自举相对于蒙特卡罗方法的优势，在实践中通常更受欢迎。</p></li>
+</ul>
+</div>
+<ul>
+<li><p><strong>用于估计 <span class="math notranslate nohighlight">\(\hat{v} \approx v_\pi\)</span> 的半梯度 TD(0) 算法</strong></p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/algo_semi_gradient_td.png" alt="Algorithm: Semi-gradient TD" style="width: 100%;">        
+</div>
+</li>
+</ul>
+<section id="id4">
+<h3>示例：状态聚合<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>状态聚合</strong>（state aggregation）：一种通过将状态分组来实现函数近似泛化的方法，同一组内的状态共享一个估计值。</p></li>
+<li><p><strong>将状态聚合用于梯度蒙特卡罗方法（课程视频）</strong>：</p>
+<a href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/aJ9j6/state-aggregation-with-monte-carlo">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/state_aggregation_mc.png" alt="视频：用于蒙特卡罗方法的状态聚合" style="width:60%;">
+</a>
+</li>
+<li><p><strong>将状态聚合用于半梯度 TD 方法（课程视频）</strong>：</p>
+<a href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/jS4tj/comparing-td-and-monte-carlo-with-state-aggregation">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/state_aggregation_td.png" alt="视频：用于 TD 方法的状态聚合" style="width:60%;">
+</a>
+</li>
+<li><p><strong>额外课程视频（可选）</strong>：<a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/ipyWM/doina-precup-building-knowledge-for-ai-agents-with-reinforcement-learning">Doina Precup：利用强化学习为人工智能智能体构建知识</a></p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>8.3 线性模型<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>线性方法</strong>：线性方法将价值函数 <span class="math notranslate nohighlight">\(\hat{v}(s, \boldsymbol{w})\)</span> 近似为一个线性函数，即 <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> 与特征向量 <span class="math notranslate nohighlight">\(\boldsymbol{x}(s)\)</span> 的内积，公式如下：</p>
+<div class="math notranslate nohighlight">
+\[
+  \hat{v}(s, \boldsymbol{w}) \dot= \boldsymbol{w}^{T} \boldsymbol{x}(s) \dot= \sum_{i=1}^d w_i x_i(s)
+  \]</div>
+<ul class="simple">
+<li><p>在这种情况下，近似价值函数被称为 <strong>权重线性</strong>（weighted linear），或简称为 <strong>线性</strong>。</p></li>
+<li><p>特征向量 <span class="math notranslate nohighlight">\(\boldsymbol{x}(s) \dot= (x_1(s), x_2(s), ... x_d(s))^{T}\)</span> 与权重向量 <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> 具有相同的维度 <span class="math notranslate nohighlight">\(d\)</span>。每个特征 <span class="math notranslate nohighlight">\(x_i: S \rightarrow \mathbb{R}\)</span> 是一个所谓的 <strong>基函数</strong>（basis function），它为状态 <span class="math notranslate nohighlight">\(s\)</span> 分配一个值（<span class="math notranslate nohighlight">\(x_i(s)\)</span>）。</p></li>
+</ul>
+</li>
+<li><p><strong>线性价值函数的（半）梯度方法</strong></p>
+<ul>
+<li><p><strong>更新规则</strong>：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align*}
+    \boldsymbol{w_{t+1}} &amp;\dot= \boldsymbol{w_t} + \alpha [U_t - \hat{v}(S_t, \boldsymbol{w_t})]\nabla\hat{v}(S_t, \boldsymbol{w_t}) \\
+    &amp;= \boldsymbol{w_t} + \alpha [U_t - \hat{v}(S_t, \boldsymbol{w_t})]\boldsymbol{x}(S_t) \\
+    \end{align*}
+    \end{split}\]</div>
+</li>
+<li><p><strong>收敛性</strong>：</p>
+<ul>
+<li><p><strong>蒙特卡罗方法</strong>：如果 <span class="math notranslate nohighlight">\(\alpha\)</span> 随时间按照通常的条件减小，那么上一节中介绍的梯度蒙特卡罗算法在线性函数近似下收敛到 <span class="math notranslate nohighlight">\(\overline{VE}\)</span> 的全局最优解。</p></li>
+<li><p><strong>TD(0) 方法</strong>：权重向量最终收敛到局部最优解附近的一个点。</p>
+<ul>
+<li><p><strong>更新规则</strong>：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+        \begin{align*}
+        \boldsymbol{w_{t+1}} &amp;\dot= \boldsymbol{w_t} + \alpha [R_{t+1} + \gamma \hat{v}(S_{t+1}, \boldsymbol{w_t}) - \hat{v}(S_t, \boldsymbol{w_t})]\boldsymbol{x_t} \\
+        &amp;= \boldsymbol{w_t} + \alpha [R_{t+1} + \gamma \boldsymbol{w_t}^{T}\boldsymbol{x_{t+1}} - \boldsymbol{w_t}^{T}\boldsymbol{x_{t}}]\boldsymbol{x_t} \\
+        &amp;= \boldsymbol{w_t} + \alpha [R_{t+1}\boldsymbol{x_{t}} - \boldsymbol{x_{t}}(\boldsymbol{x_{t}} - \gamma \boldsymbol{x_{t+1}})^{T}\boldsymbol{w_{t}}]\\
+        \end{align*}
+        \end{split}\]</div>
+<p>注意：为了简化表示，<span class="math notranslate nohighlight">\(\boldsymbol{x_t}\)</span> 用来表示 <span class="math notranslate nohighlight">\(\boldsymbol{x}(S_t)\)</span>。</p>
+</li>
+<li><p><strong>稳态（收敛）情况</strong>：</p>
+<div class="math notranslate nohighlight">
+\[
+        E[\boldsymbol{w_{t+1}}|\boldsymbol{w_{t}}] = \boldsymbol{w_{t}} + \alpha(\boldsymbol{b - Aw_{t+1}})
+        \]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\boldsymbol{b} \dot= E[R_{t+1}\boldsymbol{x_{t}}] \in \mathbb{R}^d\)</span>，<span class="math notranslate nohighlight">\(\boldsymbol{A} \dot= E[\boldsymbol{x_{t}}(\boldsymbol{x_{t}} - \gamma \boldsymbol{x_{t+1}})^{T}] \in \mathbb{R}^d \times \mathbb{R}^d\)</span>。
+并且在收敛时：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+        \begin{align*}
+        &amp; \Rightarrow \quad \mathbf{b} - \mathbf{A}\mathbf{w}_{\text{TD}} = \mathbf{0} \\
+        &amp; \Rightarrow \quad \mathbf{b} = \mathbf{A}\mathbf{w}_{\text{TD}} \\
+        &amp; \Rightarrow \quad \mathbf{w}_{\text{TD}} \dot= \mathbf{A}^{-1}\mathbf{b}.
+        \end{align*}
+        \end{split}\]</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{w}_{\text{TD}} \dot= \mathbf{A}^{-1}\mathbf{b}\)</span> 被称为 <strong>TD 不动点</strong>（TD fixed point）。线性半梯度 TD (0) 方法收敛到这个点。</p></li>
+<li><p>已经证明（在连续情况下），在 TD 不动点处，<span class="math notranslate nohighlight">\(\overline{VE}\)</span> 处于最小可能误差的有界扩展范围内：</p>
+<div class="math notranslate nohighlight">
+\[
+  \overline{VE}(\mathbf{w}_{\text{TD}}) \le \frac{1}{1-\gamma} \underset{\boldsymbol{w}}{min}\overline{VE}(\boldsymbol{w})
+  \]</div>
+<p>由于 <span class="math notranslate nohighlight">\(\gamma\)</span> 通常接近 1，这个扩展因子可能相当大，因此 TD 方法在渐近性能上可能会有显著损失。</p>
+</li>
+</ul>
+</div>
+</section>
+<section id="id6">
+<h2>8.4 线性方法的特征构建<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>为任务选择合适的特征是将先验领域知识融入强化学习系统的重要方法。直观地说，特征应该对应于状态空间中适合进行泛化（generalization）的方面。</p>
+<p>线性形式的一个局限性是它无法考虑特征之间的任何交互，例如特征 <span class="math notranslate nohighlight">\(i\)</span> 仅在特征 <span class="math notranslate nohighlight">\(j\)</span> 不存在时才是有益的。换句话说，我们需要能够考虑不同状态或状态维度组合的特征。</p>
+<p>在最后一节中，我们将研究如何构建这样的 <span class="math notranslate nohighlight">\(x(s)\)</span> 来近似价值函数，并在泛化和区分能力之间取得平衡。</p>
+<section id="id7">
+<h3>8.4.1 粗编码<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>介绍</strong>：</p>
+<ul>
+<li><p><strong>场景</strong>：假设状态集的自然表示是一个连续的二维空间，一种可能的特征表示形式是状态空间中的 <strong>圆</strong>。</p></li>
+<li><p><strong>特征构建</strong>：如果状态位于一个圆内，则对应的特征值为 1，表示该特征存在；否则，特征值为 0，表示该特征不存在。（这种取值为 1 或 0 的特征称为 <strong>二进制特征</strong>）</p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/coarse_coding.png" alt="Demonstration for Coarse Coding" style="width:45%;">
+<p>与每个圆（即特征）对应的是一个单一的权重（<span class="math notranslate nohighlight">\(w\)</span> 的一个分量），该权重会在学习过程中受到影响。对一个状态的权重进行更新会改变该状态所在的所有 <strong>感受野</strong>（receptive field，在这种情况下是圆）内的状态的价值估计。在上面的图像中，对状态 <span class="math notranslate nohighlight">\(s\)</span> 的更新也会改变状态 <span class="math notranslate nohighlight">\(s\prime\)</span> 的价值估计。</p>
+</li>
+<li><p><strong>定义</strong>：以这种重叠的方式（尽管它们不一定是圆或二进制的）用特征表示状态被称为 <strong>粗编码</strong>（coarse coding）。</p></li>
+</ul>
+</li>
+<li><p><strong>泛化和区分能力</strong>：</p>
+<p>你可以选择观看这个 <a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/JnNF5/generalization-properties-of-coarse-coding">课程视频</a>，因为下面的内容在视频中有很好的讲解，如果你更喜欢可视化和音频内容而不是文本的话。</p>
+<ul>
+<li><p><strong>演示</strong>：直观地说，如果圆很小，那么泛化的范围就会很短，如下面左图所示；而如果圆很大，泛化的范围就会很大，如中间图所示。特征的形状也会决定泛化的性质（右图）。</p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/coarse_coding_generalization.png" alt="Generalization for Coarse Coding" style="width:90%;">
+<p>如上所示，具有大 <strong>感受野</strong> 的特征可以实现广泛的泛化，但似乎在区分能力上有所不足。但与直觉相反的是，事实并非如此。从一个点到另一个点的初始泛化确实由 <strong>感受野</strong> 的大小和形状控制，但最终的精细区分能力更多地由 <strong>特征的总数</strong> 控制，如下一个例子所示。</p>
+</li>
+<li><p><strong>示例：粗编码的粗糙程度</strong></p>
+<ul class="simple">
+<li><p><strong>设置</strong>：基于粗编码的线性函数近似和半梯度方法被用于学习一个一维方波函数，该函数的值被用作目标 <span class="math notranslate nohighlight">\(U_t\)</span>。</p></li>
+<li><p><strong>结果</strong>：如下所示，特征的宽度在学习初期有很大影响。然而，最终学习到的函数受特征宽度的影响很小。</p></li>
+</ul>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/coarseness.png" alt="Example of Generalization for Coarse Coding" style="width:77%;">
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id8">
+<h3>8.4.2 瓦片编码<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>介绍</strong>：</p>
+<ul>
+<li><p><strong>描述</strong>：瓦片编码（tile coding）是一种用于多维连续空间的 <strong>粗编码形式</strong>。在瓦片编码中，特征的 <strong>感受野</strong> 被分组为状态空间的划分。每个这样的划分称为一个 <strong>瓦片集</strong>（tiling），划分中的每个元素称为一个 <strong>瓦片</strong>（tile）。</p></li>
+<li><p><strong>演示</strong>：</p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/tile_coding.png" alt="Demonstration for Tile Coding" style="width:85%;">
+<ul class="simple">
+<li><p>二维状态空间最简单的瓦片集是均匀网格，如上图左侧所示。注意，仅使用一个瓦片集时，这不是粗编码，而只是状态聚合（state aggregation）的一种情况。</p></li>
+<li><p>为了通过瓦片编码实现真正的粗编码，需要使用多个瓦片集，每个瓦片集偏移一个瓦片宽度的分数（如上图右侧所示）。每个状态（由白色点表示）在四个瓦片集中的每个瓦片集中都恰好落在一个瓦片中。这四个瓦片对应于四个特征，当该状态出现时，这些特征会被激活。在这个例子中，有 <span class="math notranslate nohighlight">\(4 \times 4 \times 4 = 64\)</span> 个分量，除了对应于状态 <span class="math notranslate nohighlight">\(s\)</span> 所在瓦片的四个分量外，其余所有分量都为 0。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ul class="simple">
+<li><p><strong>易于设置学习率</strong>：对于任何状态，同时激活的特征总数是相同的，因此存在的特征总数始终与瓦片集的数量相同。这使得步长参数（step-size parameter）<span class="math notranslate nohighlight">\(\alpha\)</span> 可以很容易、直观地设置，例如，选择 <span class="math notranslate nohighlight">\(\alpha = \frac{1}{n}\)</span>（其中 <span class="math notranslate nohighlight">\(n\)</span> 是瓦片集的数量）可以实现精确的单步学习。</p></li>
+<li><p><strong>计算优势</strong>：在计算 <span class="math notranslate nohighlight">\(\sum_{i=1}^d w_i x_i(s)\)</span> 时，只需计算 <span class="math notranslate nohighlight">\(n \ll d\)</span> 个激活特征的索引（<span class="math notranslate nohighlight">\(n\)</span> 等于瓦片集的数量），然后将权重向量中对应的 <span class="math notranslate nohighlight">\(n\)</span> 个分量相加即可。</p></li>
+</ul>
+</li>
+<li><p><strong>工作原理</strong>：</p>
+<p>建议观看下面的课程视频，因为它对瓦片编码如何与 TD 方法配合使用提供了更全面的解释。</p>
+<a href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/ZR42J/using-tile-coding-in-td">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/tile_coding_example.png" alt="瓦片编码示例" style="width:50%;">
+</a>
+</li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>8.5 总结<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>在本章中，我们重点关注如何将强化学习（RL）从表格形式扩展到函数近似，这是处理现实世界中大型状态空间的关键一步。以下是简要总结：</p>
+<ul>
+<li><p><strong>我们目前的知识体系思维导图</strong>：</p>
+<p><img alt="非表格方法思维导图" src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter8/chapter8_mindmap.png" /></p>
+</li>
+<li><p><strong>关键要点</strong>：</p>
+<ol class="arabic simple">
+<li><p><strong>向函数近似的转变</strong>：</p>
+<ul class="simple">
+<li><p>摆脱表格方法使 RL 能够应用于更复杂的问题，在这些问题中，枚举每个状态是不切实际的。</p></li>
+<li><p>概念上的转变涉及参数化函数近似（parametric function approximation），即我们不再将状态值存储在表格中。</p></li>
+<li><p>我们的目标是最小化 <strong>平均平方价值误差</strong>（mean squared value error），该误差衡量了真实状态值与我们的近似值之间的差异，并根据访问频率 <span class="math notranslate nohighlight">\(u(s)\)</span> 进行加权。</p></li>
+</ul>
+</li>
+<li><p><strong>梯度方法</strong>：</p>
+<ul class="simple">
+<li><p><strong>梯度蒙特卡罗方法</strong>（gradient Monte Carlo）：在每个回合结束时，使用采样回报进行更新。</p></li>
+<li><p><strong>半梯度 TD 方法</strong>（semi-gradient TD）：使用下一个时间步的价值估计进行自举（bootstrapping），从而能够在回合中进行更新，加快学习速度。</p>
+<ul>
+<li><p>我们还介绍了具有函数近似的 <strong>线性 TD 方法</strong>（linear TD），它被证明可以收敛到一个易于理解的解。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>泛化和区分能力</strong>：</p>
+<ul class="simple">
+<li><p><strong>泛化</strong>（generalization）：允许对一个状态的更新改善其他相似状态的价值估计，从而加速学习过程。</p></li>
+<li><p><strong>区分能力</strong>（discrimination）：确保不同的状态被赋予不同的值，防止过度泛化。</p></li>
+</ul>
+</li>
+<li><p><strong>特征构建和表示</strong>：</p>
+<ul class="simple">
+<li><p><strong>粗编码</strong>（coarse coding）：将相邻状态分组为任意形状的特征，例如重叠的圆，当状态位于圆内时，圆对应的特征值为 1（激活），否则为 0（未激活）。</p></li>
+<li><p><strong>瓦片编码</strong>（tile coding）：</p>
+<ul>
+<li><p>一种特殊形式的粗编码，使用 <strong>重叠网格（瓦片集）</strong>（overlapping grids/tilings）。</p></li>
+<li><p>每个瓦片集内的瓦片不重叠，每个网格有一个激活特征，但多个偏移的瓦片集允许更精细的状态区分。</p></li>
+<li><p>瓦片集的设计需要在泛化、区分能力和效率之间取得平衡。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>额外课程视频（可选）</strong>：<a class="reference external" href="https://www.coursera.org/learn/prediction-control-function-approximation/lecture/xZuSl/david-silver-on-deep-learning-rl-ai">David Silver：深度学习 + 强化学习 = 人工智能？</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.1 价值函数近似</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.2 随机梯度和半梯度方法</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">示例：状态聚合</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">8.3 线性模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">8.4 线性方法的特征构建</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">8.4.1 粗编码</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8.4.2 瓦片编码</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">8.5 总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

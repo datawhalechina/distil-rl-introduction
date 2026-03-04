@@ -1,0 +1,831 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第7章 使用表格方法规划和学习 &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/7_规划_学习_执行';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/7_规划_学习_执行.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/7_规划_学习_执行.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/7_规划_学习_执行.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/7_规划_学习_执行.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第7章 使用表格方法规划和学习</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1 模型和规划</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dyna">7.2 Dyna：统筹规划、行动和学习</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.3 当模型错误时</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.4 总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>第7章 使用表格方法规划和学习<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>在本章中，我们将从统一视角来审视强化学习方法，将其分为两类：一类是需要环境模型的方法（即<span class="math notranslate nohighlight">\(\textit{基于模型}\)</span>的强化学习方法），例如动态规划；另一类是无需模型即可使用的方法（即<span class="math notranslate nohighlight">\(\textit{无模型}\)</span>的强化学习方法），例如蒙特卡洛方法和时序差分方法。</p>
+<p><strong>基于模型的方法主要依靠<span class="math notranslate nohighlight">\(\textit{规划}\)</span></strong>，而<strong>无模型的方法主要依靠<span class="math notranslate nohighlight">\(\textit{学习}\)</span></strong>。尽管这两类方法存在实际差异，但也有许多相似之处：</p>
+<ul class="simple">
+<li><p>这两类方法的核心都是计算价值函数。</p></li>
+<li><p>所有方法都基于对未来事件的前瞻性计算，计算一个回传的价值，并将其作为逼近价值函数的更新目标。</p></li>
+</ul>
+<p>除了对规划与学习方法的统一视角外，本章的第二个主题是以小而渐进的步骤进行规划的益处。这使得规划可以在任何时候被中断或重新定向，而几乎不会浪费计算资源，这似乎是高效地将规划、执行与模型学习交织进行的关键要求。</p>
+<section id="id2">
+<h2>7.1 模型和规划<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(\textit{模型}\)</span>（环境的模型）</strong>：智能体用于预测环境对其动作反应的任何方法或机制，</p></li>
+<li><p><span class="math notranslate nohighlight">\(\textit{分布模型}\)</span>：生成所有可能情况及其概率的描述。例如，动态规划中使用的模型（即环境转移概率：<span class="math notranslate nohighlight">\(p(r, s' | s, a)\)</span>）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\textit{采样模型}\)</span>：仅生成根据概率分布采样出的一种可能情况。</p></li>
+<li><p>这两种模型都可用于<span class="math notranslate nohighlight">\(\textit{模拟}\)</span>环境并生成<span class="math notranslate nohighlight">\(\textit{模拟经验}\)</span>。给定一个起始状态和策略，采样模型可以生成完整的一次轨迹，分布模型则可以生成所有可能轨迹及其概率。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(\textit{规划}\)</span></strong>：任何以<span class="math notranslate nohighlight">\(\textit{模型}\)</span>为输入并生成或改进与建模环境交互策略的计算过程，其形式如下所示：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+model \xrightarrow{\text{planning}} policy
+\]</div>
+<p>规划有两种截然不同的方法：</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\textit{状态空间规划 （State-space planning）}\)</span>：在状态空间中搜索最优策略或通往目标的最优路径。动作引起状态之间的转移，价值函数是在状态上进行计算的。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\star\textit{计划空间规划 （Plan-space planning）}\)</span>：在计划空间中进行搜索。算子将一个计划转化为另一个计划，若定义了价值函数，也是在计划空间上定义的。计划空间方法难以高效应用于强化学习所关注的随机顺序决策问题，因此我们不再进一步讨论此类方法。</p></li>
+<li><p><strong>统一基于模型与无模型的强化学习方法</strong>：学习与规划（状态空间规划）方法的核心都是<strong>通过2）回传更新操作来1）估计价值函数</strong>。两者的区别在于，规划使用模型生成的模拟经验，而学习方法使用环境生成的真实经验。</p>
+<ul class="simple">
+<li><p>规划与学习之间的共同结构可用如下图示表示：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+  \text{model} \rightarrow \text{simulated experience} \xrightarrow{\text{backups}} \text{values} \rightarrow \text{policy}
+  \]</div>
+<ul>
+<li><p>规划的示例：<span class="math notranslate nohighlight">\(\textit{随机采样一步表格}\)</span> <strong>Q-规划</strong></p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/algo_one_step_q_planning.png" alt="Algorithm: One-step Tabular Q-planning" style="width: 100%;">      
+  </div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="dyna">
+<h2>7.2 Dyna：统筹规划、行动和学习<a class="headerlink" href="#dyna" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>在线规划智能体</strong>：与环境实时交互，并根据新获得的信息更新模型。</p>
+<ul>
+<li><p>下图概括了经验、模型、价值和策略之间可能存在的关系:</p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/planning_agent.png" alt="Architecture of a planning agent" style="width: 39%;">      
+  </div>
+</li>
+<li><p>根据真实经验的使用方式，强化学习过程可以分为直接强化学习和间接强化学习：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\textit{直接强化学习}\)</span>：使用真实经验直接改进价值函数和策略。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\textit{间接强化学习}\)</span>（或称为<span class="math notranslate nohighlight">\(\textit{模型学习}\)</span>）：使用真实经验来改进模型。</p></li>
+<li><p>注意：间接方法通常能更充分地利用有限的经验，因此在较少的环境交互下获得更优策略。另一方面，直接方法更简单，不受模型设计偏差的影响。（本书并不强调这两者之间的对比，而是更关注它们之间的相似性。）</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Dyna 智能体</strong>：一种在线规划智能体，能够同时执行上述所有过程——规划、行动、模型学习和直接强化学习——并且这些过程会持续进行。</p>
+<ul>
+<li><p>架构：</p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/dyna_agent_architecture.png" alt="Architecture of Dyna agent" style="width: 50%;">      
+  </div>
+</li>
+<li><p>解释：</p>
+<ul class="simple">
+<li><p>图中左侧的箭头表示直接强化学习，它基于真实经验来改进价值函数和策略。</p></li>
+<li><p>右侧则是基于模型的过程。模型通过真实经验学习得到，并用于生成模拟经验。</p></li>
+<li><p>通常，学习真实经验与从模拟经验中进行规划都会使用相同的强化学习方法。</p></li>
+</ul>
+</li>
+<li><p>计算时间分配：</p>
+<ul class="simple">
+<li><p>通常，执行、模型学习和直接强化学习过程计算量较小，我们假设它们只消耗一小部分时间。</p></li>
+<li><p>每一步中可以将更多时间用于规划过程，因为规划本质上是计算密集型的。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>一种 Dyna 智能体类型：用于估计 <span class="math notranslate nohighlight">\(q_\pi\)</span> 的表格法 Dyna-Q</strong>:</p>
+<ul>
+<li><p>算法</p>
+<div style="display: flex; justify-content: center;">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/algo_tabular_dyna_q.png" alt="Algorithm: Tabular Dyna-Q" style="width: 100%;">      
+  </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Model(s, a)\)</span> 表示对状态-动作对 <span class="math notranslate nohighlight">\((s, a)\)</span> 的预测结果，包括下一状态及所获得的奖励。</p></li>
+<li><p>直接强化学习和模型学习分别通过步骤 <code class="docutils literal notranslate"><span class="pre">(d)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">(e)</span></code> 实现。</p></li>
+<li><p>整个步骤 <code class="docutils literal notranslate"><span class="pre">(f)</span></code> 执行规划。</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\textit{搜索控制}\)</span>：步骤 <code class="docutils literal notranslate"><span class="pre">(f)</span></code> 中的前两步，用于选择用于模型生成模拟经验的起始状态和动作。</p></li>
+<li><p>注意：规划中的起始状态是随机选择的，不一定是真实的起始状态。</p></li>
+<li><p><strong>注意：规划只会针对智能体已经积累了真实经验的状态进行。</strong></p></li>
+</ul>
+</li>
+<li><p>如果省略步骤 <code class="docutils literal notranslate"><span class="pre">(e)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">(f)</span></code>，则剩下的算法就是一步表格法 Q 学习。</p></li>
+</ul>
+</div>
+</li>
+<li><p>讲解示例的视频（从 <code class="docutils literal notranslate"><span class="pre">3:13</span></code> 开始）：在一个带有障碍物的网格世界中，智能体从左下角的格子出发，前往右上角的终止状态。初始策略 <span class="math notranslate nohighlight">\(\pi\)</span> 为四个动作（左、右、上、下）分配相等的概率。</p>
+<a href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/k7Out/the-dyna-algorithm">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/dyna_q_example.png" alt="Video: The dyna algorithm" style="width:50%;">
+  </a>
+</li>
+</ul>
+</li>
+<li><p><strong>示例：Dyna 迷宫</strong></p>
+<ul>
+<li><p>举例说明，规划智能体的学习速度可能比纯学习智能体快得多：</p>
+<a href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/TGSQi/dyna-q-learning-in-a-simple-maze">
+  <img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/example_maze.png" alt="Video: The Maze example" style="width:60%;">
+  </a>
+</li>
+<li><p>智能体需要进行多次规划步骤，原因是搜索控制是随机采样状态-动作对的。如果采样到的状态-动作对产生的 TD 误差为 0，那么该次规划更新不会产生任何效果。在这个环境中，这种情况频繁发生，因为所有奖励都是 0，初始值也同样为 0。</p></li>
+<li><p>在更大的环境中，随机搜索控制的问题会更加严重。但在本例中，规划次数越多，智能体的表现越好。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h2>7.3 当模型错误时<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>不准确的模型</strong>：模型可能不完整（缺少某些转移信息），或者环境发生了变化（导致模型中存储的转移信息不再准确）。</p>
+<ul class="simple">
+<li><p>当模型出错时：我们需要在规划过程中权衡探索与利用：</p>
+<ul>
+<li><p>探索：尝试能够改进模型的动作</p></li>
+<li><p>利用：根据当前模型采取最优行为</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>示例：阻塞迷宫 - 当环境变得”更糟”时</strong></p>
+<ul>
+<li><p><strong>描述</strong>：最初，从起点到目标有一条穿过障碍物右侧的捷径，如左上角图所示。经过1000个时间步后，这条捷径被”阻塞”，同时在障碍物左侧开辟了一条更长的路径</p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/example_blocking_maze.png" alt="The blocking maze example" style="width:60%;">
+</li>
+<li><p><strong>解释</strong></p>
+<ul class="simple">
+<li><p>图表的第一部分显示，两个 Dyna 智能体在1000步内都找到了这条捷径。</p></li>
+<li><p>当环境发生变化后，图线变得平坦，表明智能体在一段时间内未能获得任何奖励，因为它们一直在障碍物后方徘徊。</p></li>
+<li><p>不过不久之后，它们找到了新的通道，并形成了新的最优行为策略。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>示例：捷径迷宫 - 当环境变得”更好”时</strong></p>
+<ul>
+<li><p><strong>描述</strong>：最初，最优路径是绕过障碍物左侧（左上角）。但在3000步之后，右侧开辟了一条更短的路径，同时未影响原来的较长路径</p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/example_shortcut_maze.png" alt="The shortcut maze example" style="width:60%;">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>当环境变得”更好”（出现了更优的解）时，更难察觉模型错误，因此在规划过程中需要更多地考虑探索，以保持模型的更新。</p>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Dyna-Q+ 智能体 - 鼓励在规划过程中探索</strong></p>
+<ul>
+<li><p>对所有 <span class="math notranslate nohighlight">\(s ∈ S\)</span> 和 <span class="math notranslate nohighlight">\(a ∈ A\)</span> 初始化 <span class="math notranslate nohighlight">\(Q(s,a)\)</span> 和 <span class="math notranslate nohighlight">\(Model(s,a)\)</span></p></li>
+<li><p>循环执行以下步骤：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">(a)</span></code> <span class="math notranslate nohighlight">\(S \leftarrow\)</span> 当前（非终止）状态</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(b)</span></code> <span class="math notranslate nohighlight">\(A \leftarrow \epsilon\)</span>-greedy(<span class="math notranslate nohighlight">\(S, Q\)</span>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(c)</span></code> 执行动作 <span class="math notranslate nohighlight">\(A\)</span>，观察奖励 <span class="math notranslate nohighlight">\(R\)</span> 和下一状态 <span class="math notranslate nohighlight">\(S'\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(d)</span></code> <span class="math notranslate nohighlight">\(Q(S, A) \leftarrow Q(S, A) + \alpha [R + \gamma max_a Q(S', a) - Q(S, A)]\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(e)</span></code> <span class="math notranslate nohighlight">\(Model(S, A)\)</span> <span class="math notranslate nohighlight">\(\leftarrow R, S'\)</span> 并将 <span class="math notranslate nohighlight">\(S\)</span> <span class="math notranslate nohighlight">\(\leftarrow S'\)</span>（假设环境是确定性的）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(f)</span></code> 如果 <span class="math notranslate nohighlight">\(S\)</span> 是终止状态，则将 <span class="math notranslate nohighlight">\(S \leftarrow\)</span> 起始状态并重新开始，否则重复执行 <span class="math notranslate nohighlight">\(n\)</span> 次：</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(S \leftarrow\)</span> 随机选择的<strong>之前观察过的</strong>状态</p></li>
+<li><p><span class="math notranslate nohighlight">\(A \leftarrow\)</span> 在 <span class="math notranslate nohighlight">\(S\)</span> 中<strong>可用的随机动作（不必是之前执行过的）</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(R, S' \leftarrow Model(S, A)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(R = R + \kappa \sqrt \tau_{S,A,R,S'}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Q(S, A) \leftarrow Q(S, A) + \alpha [R + \gamma max_a Q(S', a) - Q(S, A)]\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>修改1：奖励现在变为 <span class="math notranslate nohighlight">\(R + \kappa \sqrt \tau\)</span>，其中 <span class="math notranslate nohighlight">\(\kappa\)</span> 是一个常数，<span class="math notranslate nohighlight">\(\tau\)</span> 表示在真实经验中状态-动作对 <span class="math notranslate nohighlight">\((S,A)\)</span> 到 <span class="math notranslate nohighlight">\((R, S')\)</span> 的转移已经多长时间没有被尝试过。</p>
+<ul>
+<li><p>时间间隔越长，我们可以推测这对转移的动态可能已经发生变化，导致模型不再准确的可能性越大。</p></li>
+<li><p>注意：<span class="math notranslate nohighlight">\(\tau\)</span> 只会在真实交互中更新，而不会在规划过程中更新。</p></li>
+<li><p>这种鼓励探索的方式类似于第2章中描述的上置信界动作选择（Upper-Confidence-Bound Action Selection），两者都在一定程度上衡量了不确定性。</p></li>
+</ul>
+</li>
+<li><p>修改2：在规划步骤 <code class="docutils literal notranslate"><span class="pre">(f)</span></code> 中，允许考虑从未在某个状态下尝试过的动作。对于这些动作，初始模型假设它们会导致回到同一状态，并获得0的奖励。</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h2>7.4 总结<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>思维导图：我们现在的位置</strong></p>
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter7/chapter7_mindmap.png" alt="Mindmap" style="width: 100%;">
+</li>
+<li><p><strong>关键要点</strong></p>
+<ol class="arabic simple">
+<li><p><strong>基于模型与无模型方法的对比</strong></p>
+<ul class="simple">
+<li><p>基于模型的方法（如动态规划）利用模型进行规划。</p></li>
+<li><p>无模型方法（如蒙特卡洛、TD）直接从实际经验中学习。</p></li>
+<li><p>两者的核心都是通过回传操作计算价值函数，区别在于经验来源的不同（模拟经验 vs 真实经验）。</p></li>
+</ul>
+</li>
+<li><p><strong>模型与规划的本质</strong></p>
+<ul class="simple">
+<li><p>模型的作用是预测环境对动作的反应。</p>
+<ul>
+<li><p>分布模型能够提供所有可能的结果及其概率。</p></li>
+<li><p>采样模型仅生成一个符合概率分布的采样结果。</p></li>
+</ul>
+</li>
+<li><p>规划则是利用模型来改进策略的过程。</p>
+<ul>
+<li><p>状态空间规划通过搜索状态转移来寻找最优策略。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Dyna：规划、行动与学习的集成</strong></p>
+<ul class="simple">
+<li><p>Dyna 架构将直接强化学习、模型学习和规划有机结合。</p>
+<ul>
+<li><p>直接强化学习从真实经验中更新价值函数。</p></li>
+<li><p>模型学习从真实经验中更新环境模型。</p></li>
+<li><p>规划则利用模型生成的模拟经验来加速学习过程。</p></li>
+</ul>
+</li>
+<li><p>表格型 Dyna-Q 通过在真实经验和模拟经验之间交替学习，显著加快了学习速度。</p></li>
+</ul>
+</li>
+<li><p><strong>应对模型不准确的挑战</strong></p>
+<ul class="simple">
+<li><p>当环境发生变化或模型缺乏某些信息时，模型就会变得不准确。</p></li>
+<li><p>此时，我们需要在规划过程中权衡探索（改进模型）与利用（使用当前模型）之间的关系。</p></li>
+</ul>
+</li>
+<li><p><strong>Dyna-Q+：促进探索的有效机制</strong></p>
+<ul class="simple">
+<li><p>Dyna-Q+ 根据动作未被访问的时间长度，为奖励添加额外的探索奖励。</p></li>
+<li><p>在规划过程中纳入未尝试过的动作，以促进更广泛的探索。</p></li>
+<li><p>这种机制帮助智能体能够更快地适应动态变化的环境，并及时检测到环境中的变化。</p></li>
+</ul>
+</li>
+<li><p><strong>实用洞察与建议</strong></p>
+<ul class="simple">
+<li><p>采用增量式规划方法能够更灵活地应对环境变化。</p></li>
+<li><p>基于模型的方法在交互次数较少的情况下通常学习更快，而无模型方法则更为简单，且能够避免模型偏差问题。</p></li>
+<li><p>有效的规划需要通过搜索控制机制，优先处理那些最有价值的模拟经验。</p></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>额外课程视频（可选）</strong>: <a class="reference external" href="https://www.coursera.org/learn/sample-based-learning-methods/lecture/pvjdV/drew-bagnell-self-driving-robotics-and-model-based-rl">Drew Bagnell：自动驾驶、机器人技术与基于模型的强化学习</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1 模型和规划</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dyna">7.2 Dyna：统筹规划、行动和学习</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.3 当模型错误时</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.4 总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

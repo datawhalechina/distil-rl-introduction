@@ -1,6 +1,10 @@
 DistilRL: A Condensed Introduction
 ==================================
 
+.. raw:: html
+
+   English | <a href="index_zh" class="my-button">中文</a>
+
 I. Introduction
 ~~~~~~~~~~~~~~~
 

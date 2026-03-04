@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第2章. 多臂老虎机问题（Multi-armed Bandit） &#8212; DistilRLIntro 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Contents_zh/2_多臂老虎机问题';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="DistilRLIntro 0.1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="DistilRLIntro 0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">I. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/0_prelude.html">Chapter 0. Prelude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/1_intro.html">Chapter 1. Introduction to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.1. Fundamentals of Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/2_multi_armed_bandits.html">Chapter 2. Multi-armed Bandit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/3_markov_decision_process.html">Chapter 3. Finite Markov Decision Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/4_dynamic_programming.html">Chapter 4. Dynamic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">II.2. Sample-based Learning Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/5_monte_carlo_methods.html">Chapter 5. Monte Carlo Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/6_temporal_difference_learning.html">Chapter 6. Temporal-Difference Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/7_planning_learning_acting.html">Chapter 7. Planning and Learning with Tabular Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.1. Value Function Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/8_on_policy_prediction_with_approximation.html">Chapter 8. On-policy Prediction with Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/9_on_policy_control_with_approximation.html">Chapter 9. On-policy Control with Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">III.2. Policy Approximation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Contents/10_policy_gradient_methods.html">Chapter 10. Policy Gradient Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Contents/11_modern_policy_gradient_methods.html">Chapter 11. Modern Policy Gradient Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/blob/master/Contents_zh/2_多臂老虎机问题.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/edit/master/Contents_zh/2_多臂老虎机问题.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Dong237/DistilRLIntroduction/issues/new?title=Issue%20on%20page%20%2FContents_zh/2_多臂老虎机问题.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Contents_zh/2_多臂老虎机问题.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>第2章. 多臂老虎机问题（Multi-armed Bandit）</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k">2.1 k臂老虎机问题</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.2 动作价值方法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.3 十臂测试平台</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incremental-implementation">2.4 动作价值的增量估计（Incremental Implementation）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.4.1 平稳问题</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.4.2 非平稳问题</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.5 更多探索技巧</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimistic-initial-values">2.5.1 乐观初始值法（Optimistic Initial Values）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upper-confidence-bound-action-selection">2.5.2 上置信界动作选择法（Upper-Confidence-Bound Action Selection）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.6 总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section class="tex2jax_ignore mathjax_ignore" id="multi-armed-bandit">
+<h1>第2章. 多臂老虎机问题（Multi-armed Bandit）<a class="headerlink" href="#multi-armed-bandit" title="Link to this heading">#</a></h1>
+<p>在本章中，我们将在一个简化的环境中研究强化学习的评价性（evaluative）问题，该环境不涉及在多种情况下学习如何动作，即只有一个单一的状态。</p>
+<section id="k">
+<h2>2.1 k臂老虎机问题<a class="headerlink" href="#k" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>设定</strong>：在单一状态下，你有 <span class="math notranslate nohighlight">\(k\)</span> 种不同的选项或动作可供选择。每次采取一个动作，都会从一个固定的概率分布中随机获得一个数值奖励。<strong>目标是在一段时间内最大化预期总奖励</strong>。</p>
+<ul>
+<li><p>时间步（Time steps）：时间步描述了采取动作的次数。</p></li>
+<li><p>动作价值（Action value）：采取该动作所获得的平均奖励</p>
+<div class="math notranslate nohighlight">
+\[
+    q_{*}(a) \dot= E[R_{t}|A_{t}=a]
+    \]</div>
+<p>我们假设你并不确定地知道每个动作的价值（否则问题就已经解决了）。在时间步 <span class="math notranslate nohighlight">\(t\)</span>，你可能对动作 <span class="math notranslate nohighlight">\(a\)</span> 的价值有一个估计值 <span class="math notranslate nohighlight">\(Q_t(a)\)</span>，理想情况下，<span class="math notranslate nohighlight">\(Q_t(a)\)</span> 应该接近 <span class="math notranslate nohighlight">\(q_{*}(a)\)</span>。</p>
+</li>
+<li><p>对于觉得这个设定比较抽象的初学者，可以观看这个<a class="reference external" href="https://www.coursera.org/learn/fundamentals-of-reinforcement-learning/lecture/PtVBs/sequential-decision-making-with-evaluative-feedback">可选课程视频</a>，讲师在视频中用医生选择药物的小例子引出了这个问题。</p></li>
+</ul>
+</li>
+<li><p><strong>探索与利用的权衡（Exploration vs. Exploitation）</strong>：在任何强化学习问题中，我们总是需要在两个选项之间进行权衡：探索或利用。在这个设定下的解释如下：</p>
+<ul class="simple">
+<li><p><strong>利用（Exploitation）</strong>：利用你当前对动作价值的了解，即总是选择估计价值最大的那个动作。这个动作也被称为<strong>贪心动作（greedy action）</strong>。</p></li>
+<li><p><strong>探索（Exploration）</strong>：选择一个非贪心动作。这有时候是有益的，因为它能让你改进对非贪心动作价值的估计。</p></li>
+</ul>
+<p>利用是在当前步骤中最大化预期奖励的正确做法，但从长远来看，探索可能会带来更大的总奖励。这种权衡在强化学习问题中几乎无处不在。我们将在<a class="reference internal" href="#id5">2.5节</a>中看到一些鼓励探索的技巧。</p>
+</li>
+</ul>
+</section>
+<section id="id1">
+<h2>2.2 动作价值方法<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>定义</strong>：用于估计动作价值并使用这些估计值来做出动作选择决策的方法被称为动作价值方法（Action-value methods）。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(Q_{t}(a)\)</span> 的估计</strong>：</p>
+<p>一种自然的估计 <span class="math notranslate nohighlight">\(Q_{t}(a)\)</span> 的方法是使用所谓的**样本平均法（sample-average method）**对实际收到的奖励进行平均</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*}
+      Q_{t}(a) \ &amp;\dot= \ \frac{\text{在$t$之前采取动作$a$所获得的奖励总和}}{\text{在$t$之前采取动作$a$的次数}} \\
+      &amp;= \frac{\sum_{i=1}^{t-1}R_{i} \cdot \mathbb{1}_{A_{i}=a}}{\sum_{i=1}^{t-1} \mathbb{1}_{A_{i}=a}}
+      \end{align*}
+  \end{split}\]</div>
+</li>
+<li><p><strong>动作选择方法</strong>：基于估计值选择动作有两种自然的方法，一种是最大化利用，另一种在此基础上考虑了探索：</p>
+<ul class="simple">
+<li><p><strong>贪心动作选择（Greedy action selection）</strong>：总是利用当前的知识来最大化即时奖励</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+  A_t \dot= \underset{a}{\arg\max} Q_{t}(a)
+  \]</div>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心动作选择（<span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy action selection）</strong>：大多数时候表现得很贪心，但每次都有一个小概率 <span class="math notranslate nohighlight">\(\epsilon\)</span>（<span class="math notranslate nohighlight">\(0&lt;\epsilon&lt;1\)</span> 且接近 0），我们会以相等的概率在所有动作（包括贪心动作）中随机选择。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>2.3 十臂测试平台<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>设置</strong>：为了证明贪心和 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心动作选择的有效性，我们进行了以下实验：</p>
+<ul>
+<li><p>我们设置 <span class="math notranslate nohighlight">\(k = 10\)</span>，即创建一个十臂老虎机问题。</p></li>
+<li><p>设计每个动作的奖励分布遵循标准正态分布（<span class="math notranslate nohighlight">\(\mu = 0\)</span> 且 <span class="math notranslate nohighlight">\(\sigma = 1\)</span>）</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter2/reward_distribution.png" alt="Reward Distribution" style="width:70%;">
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>性能</strong>：每种动作选择方法的性能是通过对 2000 次独立的<strong>运行（runs）<strong>结果进行平均来衡量的，每次</strong>运行</strong>包含 1000 个时间步（回想一下，时间步描述了采取动作的次数）。</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter2/running_results.png" alt="Results of running" style="width:70%;">
+</div>
+<p>更大的 <span class="math notranslate nohighlight">\(\epsilon\)</span> 值表示更多的探索，并且所有选择方法都使用样本平均值作为它们的动作价值估计。从上图可以得出以下结论：</p>
+<ul class="simple">
+<li><p>从长远来看，贪心方法的表现明显更差，因为它常常会陷入执行次优动作的困境。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon = 0.01\)</span> 的方法（探索较少）改进得更慢，但最终会比 <span class="math notranslate nohighlight">\(\epsilon = 0.1\)</span> 的方法（探索较多）表现更好。这强调了探索和利用之间的权衡，即探索（<span class="math notranslate nohighlight">\(\epsilon = 0.01\)</span>）可以提高性能，但过度探索（<span class="math notranslate nohighlight">\(\epsilon = 0.1\)</span>）会使结果变差。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>关于探索优势的说明：取决于具体任务。</p>
+<ul>
+<li><p>奖励方差（Reward Variance）：如果奖励方差较大（奖励更具噪声），则需要更多的探索来找到最优动作，在这种情况下，<span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心方法应该更好。相反，如果奖励方差为零，贪心方法显然会表现得最好。</p></li>
+<li><p>平稳性（Stationarity）：假设奖励的分布随时间变化（就像在下一章将介绍的马尔可夫决策过程中的不同状态一样）。在这种情况下，即使在确定性情况下也需要进行探索，以确保某个非贪心动作没有变得比贪心动作更好。</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="incremental-implementation">
+<h2>2.4 动作价值的增量估计（Incremental Implementation）<a class="headerlink" href="#incremental-implementation" title="Link to this heading">#</a></h2>
+<p>我们现在重新审视<a class="reference internal" href="#id1">2.2节</a>中提到的样本平均法，并研究如何以一种计算高效的方式计算这些平均值。具体来说，我们分别在平稳和非平稳场景下研究这个问题。</p>
+<section id="id3">
+<h3>2.4.1 平稳问题<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>推导</strong>：设 <span class="math notranslate nohighlight">\(R_i\)</span> 表示在第 <span class="math notranslate nohighlight">\(i\)</span> 次选择动作 <span class="math notranslate nohighlight">\(a\)</span> 时获得的奖励，<span class="math notranslate nohighlight">\(Q_n\)</span> 表示在<span class="math notranslate nohighlight">\(n - 1\)</span> 次选择动作 <span class="math notranslate nohighlight">\(a\)</span> 后对该动作价值的估计。对于第 <span class="math notranslate nohighlight">\(n\)</span> 次动作选择：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*} Q_{n+1} &amp;= \frac{R_1 + R_2 + ... + R_n}{n} \\ &amp;= \frac{1}{n}\sum_{i=1}^{n}R_i \\ &amp;= \frac{1}{n}(R_{n} + (n - 1)\frac{1}{n - 1}\sum_{i=1}^{n - 1}R_i) \\ &amp;= \frac{1}{n}(R_{n} + (n - 1)Q_n) \\ &amp;= Q_n + \frac{1}{n}(R_{n} - Q_n) \quad \text{(一种增量估计)} \end{align*}
+  \end{split}\]</div>
+<ul>
+<li><p>上述增量估计遵循一般形式：</p>
+<div class="math notranslate nohighlight">
+\[
+    新估计值 \leftarrow 旧估计值 + 步长（StepSize） * [目标值 - 旧估计值]
+    \]</div>
+<p>其中步长等于 <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span>，它会随着时间步的变化而变化。在本书中，步长用 <span class="math notranslate nohighlight">\(\alpha\)</span> 表示，更一般地用 <span class="math notranslate nohighlight">\(\alpha_t(a)\)</span> 表示。</p>
+</li>
+<li><p>这个增量估计方程是强化学习中许多基本更新规则的一个非常有代表性的形式，将在第6章中进行深入介绍。</p></li>
+<li><p>有了这个增量实现，我们现在可以为解决<strong>平稳</strong>老虎机问题编写如下伪代码。</p></li>
+</ul>
+</li>
+<li><p><strong>算法</strong>：一个简单的老虎机算法</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter2/algo_bandit.png" alt="Reward Distribution" style="width:100%;">
+</div>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3>2.4.2 非平稳问题<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>推导</strong>：如果问题是非平稳的（nonstationary），即奖励分布随时间变化，那么给近期奖励赋予比久远奖励更多的权重会更有意义。为了实现这个目标，我们可以使用一个恒定的步长参数 <span class="math notranslate nohighlight">\(\alpha\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{align*} Q_{n+1} &amp;= Q_n + \alpha \left[ R_n - Q_n \right] \\        &amp;= \alpha R_n + (1 - \alpha) Q_n \\        &amp;= \alpha R_n + (1 - \alpha) \left[ \alpha R_{n-1} + (1 - \alpha) Q_{n-1} \right] \\        &amp;= \alpha R_n + (1 - \alpha) \alpha R_{n-1} + (1 - \alpha)^2 Q_{n-1} \\        &amp;= \alpha R_n + (1 - \alpha) \alpha R_{n-1} + (1 - \alpha)^2 \alpha R_{n-2} + \\        &amp;\quad \ldots + (1 - \alpha)^{n-1} \alpha R_1 + (1 - \alpha)^n Q_1 \\        &amp;=(1 - \alpha)^n Q_1 + \sum_{i=1}^n \alpha (1 - \alpha)^{n-i} R_i \end{align*}
+  \end{split}\]</div>
+</li>
+<li><p><strong>解释</strong>：</p>
+<ul class="simple">
+<li><p>最终形式的直觉解释</p>
+<ul>
+<li><p>最终结果仍然是一个加权平均，因为 <span class="math notranslate nohighlight">\((1 - \alpha)^n + \sum_{i=1}^n \alpha (1 - \alpha)^{n - i} = 1\)</span></p></li>
+<li><p>随着中间奖励数量的增加，即随着 <span class="math notranslate nohighlight">\(i\)</span> 变得更久远，赋予 <span class="math notranslate nohighlight">\(R_i\)</span> 的权重呈指数下降。</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> 的直觉解释</p>
+<ul>
+<li><p>如果 <span class="math notranslate nohighlight">\(\alpha = 1\)</span>，<span class="math notranslate nohighlight">\(Q_{n + 1} = R_n\)</span>；如果 <span class="math notranslate nohighlight">\(\alpha = 0\)</span>，<span class="math notranslate nohighlight">\(Q_{n + 1} = Q_{n}\)</span>。<span class="math notranslate nohighlight">\(\alpha\)</span> 控制着赋予近期奖励的权重。</p></li>
+<li><p>选择 <span class="math notranslate nohighlight">\(\alpha_n(a) = \frac{1}{n}\)</span> 会得到样本平均法。</p></li>
+</ul>
+</li>
+<li><p>可选内容：关于不同 <span class="math notranslate nohighlight">\(\alpha_n(a)\)</span> 选择下估计收敛性的研究，请参考原书第2.5章。一般来说，由于现实中的非平稳性，实际上更希望 <span class="math notranslate nohighlight">\(\alpha_n(a)\)</span> 使估计永远不会收敛。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>2.5 更多探索技巧<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>除了 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心算法（或作为其扩展）之外，还有两种简单的鼓励探索的技巧。请注意，由于后续各小节将解释的原因，它们仅适用于平稳问题。</p>
+<section id="optimistic-initial-values">
+<h3>2.5.1 乐观初始值法（Optimistic Initial Values）<a class="headerlink" href="#optimistic-initial-values" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>定义</strong>：该方法通过将初始动作值设置为一个较大的正数来鼓励探索（仅在开始阶段）。</p></li>
+<li><p><strong>性能表现</strong>：例如，在<a class="reference internal" href="#id2">2.3节</a>介绍的十臂老虎机测试平台中，我们现在将所有动作 <span class="math notranslate nohighlight">\(a\)</span> 的 <span class="math notranslate nohighlight">\(Q_1(a)\)</span> 都设置为 <span class="math notranslate nohighlight">\(+5\)</span>（这是非常乐观的估计，因为动作值是由标准正态分布给出的）。使用与之前相同的设置再次进行实验，即对 2000 次运行结果进行平均，每次运行包含 1000 个时间步。</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter2/optimistic_initial_value.png" alt="Optimistic initial value" style="width:70%;">
+</div>
+<ul class="simple">
+<li><p>起初，乐观初始值法的表现较差，因为它进行了更多的探索，但最终它的表现会更好，因为随着时间的推移，其探索程度会降低。</p></li>
+<li><p>在开始阶段，由于频繁探索，乐观初始值法的最优动作选择比例会急剧上升。</p></li>
+</ul>
+</li>
+<li><p><strong>特性</strong>：</p>
+<ul class="simple">
+<li><p>它不太适合非平稳问题，因为其探索驱动力本质上是暂时的，即仅在运行开始阶段有效。</p></li>
+<li><p>尽管如此，这些简单的方法（包括样本平均法），或者其中之一，或者它们的某种简单组合，在实践中通常就足够了。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="upper-confidence-bound-action-selection">
+<h3>2.5.2 上置信界动作选择法（Upper-Confidence-Bound Action Selection）<a class="headerlink" href="#upper-confidence-bound-action-selection" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>定义</strong>：该方法通过考虑动作的不确定性来进行探索，公式如下：</p>
+<div class="math notranslate nohighlight">
+\[
+  A_t \dot= \underset{a}{\arg\max} [Q_{t}(a) + c\sqrt{\frac{\ln(t)}{N_t(A)}}]
+  \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(t\)</span> 表示当前时间步</p></li>
+<li><p><span class="math notranslate nohighlight">\(N_t(A)\)</span> 表示截至时间步 <span class="math notranslate nohighlight">\(t\)</span> 动作 <span class="math notranslate nohighlight">\(A\)</span> 被选择的次数</p></li>
+<li><p><span class="math notranslate nohighlight">\(c &gt; 0\)</span> 控制探索的程度</p></li>
+</ul>
+</li>
+<li><p><strong>原理直觉</strong>：</p>
+<ul class="simple">
+<li><p>命名约定：平方根项是对动作 <span class="math notranslate nohighlight">\(a\)</span> 值的<strong>不确定性（uncertainty）<strong>或方差的一种度量。因此，被最大化的量是动作 <span class="math notranslate nohighlight">\(a\)</span> 可能真实值的一种</strong>上界（upper bound）</strong>，<span class="math notranslate nohighlight">\(c\)</span> 决定了置信水平。</p></li>
+<li><p>工作机制：</p>
+<ul>
+<li><p>每次选择动作 <span class="math notranslate nohighlight">\(a\)</span> 时，其不确定性预计会降低：<span class="math notranslate nohighlight">\(N_t(a)\)</span> 增加，由于它出现在分母中，不确定性项会减小。</p></li>
+<li><p>另一方面，每次选择除 <span class="math notranslate nohighlight">\(a\)</span> 之外的动作时，动作 <span class="math notranslate nohighlight">\(a\)</span> 的不确定性估计会增加，导致其动作值估计变大，在后续选择中该动作会被更多地探索。</p></li>
+<li><p>所有动作最终都会被选择，但估计值较低或已经被频繁选择的动作，随着时间的推移，其被选择的频率会降低。简而言之，不确定性越大，探索越多，而探索又会反过来降低不确定性。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>性能表现</strong>：</p>
+<div style="display: flex; justify-content: center;">
+<img src="https://datawhalechina.github.io/distil-rl-introduction/_static/img/chapter2/ucb.png" alt="Upper-Confidence-Bound result" style="width:65%;">
+</div>
+<ul class="simple">
+<li><p>除了在前 <span class="math notranslate nohighlight">\(k\)</span> 步随机选择尚未尝试过的动作之外，上置信界法通常比 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心动作选择法表现更好。</p></li>
+<li><p>与乐观初始值法类似，上置信界法在实验开始阶段也会导致平均奖励突然增加。这是因为上置信界法用乐观的上置信界初始化每个动作（当 <span class="math notranslate nohighlight">\(N_t(a)\)</span> 较小时，<span class="math notranslate nohighlight">\(c\sqrt{\frac{\ln(t)}{N_t(A)}}\)</span> 相当大），使得所有动作在开始时都具有较高的值，从而被探索。</p></li>
+</ul>
+</li>
+<li><p><strong>特性</strong>：由于以下原因，与 <span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心算法相比，上置信界法更难从多臂老虎机问题扩展到本书其余部分所考虑的更一般的强化学习场景：</p>
+<ul class="simple">
+<li><p>处理非平稳问题的难度：对于上置信界法，<span class="math notranslate nohighlight">\(N_t(a)\)</span> 会随时间累积。这意味着较旧的观测值在估计奖励 <span class="math notranslate nohighlight">\(Q_t(a)\)</span> 中占主导地位。如果奖励分布随时间发生变化，上置信界法不能快速适应，即它会继续利用过时的”最优”动作，而不是重新进行探索。</p></li>
+<li><p>处理大状态空间的难度：当动作数量较多或由于环境变化需要频繁重新评估动作时，上置信界法的计算成本可能会很高。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h2>2.6 总结<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>本章介绍了多臂老虎机问题（Multi-armed Bandit），这是一个简化的强化学习问题，在该问题中，智能体需要在 <span class="math notranslate nohighlight">\(k\)</span> 个动作中进行选择，每个动作都有一个未知的奖励分布。目标是在平衡利用和探索的同时，随着时间的推移最大化总奖励。</p>
+<ul class="simple">
+<li><p><strong>关键要点</strong></p>
+<ol class="arabic simple">
+<li><p>探索与利用的权衡</p>
+<ul>
+<li><p>贪心算法<strong>最大化即时奖励</strong>，但可能会陷入局部最优。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-贪心算法</strong>以概率 <span class="math notranslate nohighlight">\(\epsilon\)</span>（在所有动作中平均分配）随机探索，以寻找更好的动作。</p></li>
+</ul>
+</li>
+<li><p>更好的探索方法</p>
+<ul>
+<li><p><strong>乐观初始值法（Optimistic Initial Values）</strong>：从较高的初始值开始，鼓励早期探索。</p></li>
+<li><p><strong>上置信界法（Upper-Confidence-Bound, UCB）</strong>：更频繁地探索<strong>不确定性较高</strong>的动作。</p></li>
+</ul>
+</li>
+<li><p>高效学习</p>
+<ul>
+<li><p><strong>样本平均更新</strong>适用于稳定的奖励情况。</p></li>
+<li><p><strong>恒定步长（<span class="math notranslate nohighlight">\(\alpha\)</span>）更新</strong>能适应变化的奖励情况。</p></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>额外课程视频（可选）</strong>：<a class="reference external" href="https://www.coursera.org/learn/fundamentals-of-reinforcement-learning/lecture/GkDVA/jonathan-langford-contextual-bandits-for-real-world-reinforcement-learning">乔纳森·兰福德：现实世界强化学习中的上下文老虎机</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Dong237/DistilRLIntroduction",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Contents_zh"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k">2.1 k臂老虎机问题</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.2 动作价值方法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.3 十臂测试平台</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incremental-implementation">2.4 动作价值的增量估计（Incremental Implementation）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.4.1 平稳问题</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.4.2 非平稳问题</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.5 更多探索技巧</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimistic-initial-values">2.5.1 乐观初始值法（Optimistic Initial Values）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upper-confidence-bound-action-selection">2.5.2 上置信界动作选择法（Upper-Confidence-Bound Action Selection）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.6 总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Youxiang Dong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Youxiang Dong.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
