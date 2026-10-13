@@ -1,0 +1,23 @@
+{% extends "!page.html" %}
+
+{% block body %}
+  <div class="distilrl-page{% if pagename in ['index', 'index_zh'] %} distilrl-home{% endif %}">
+    {% if seo_page and pagename not in ['index', 'index_zh'] %}
+      <p class="distilrl-mobile-language-switch">
+        <span>{{ "阅读此页：" if seo_page.language == "zh-CN" else "Read this page: " }}</span>
+        <a href="{{ pathto(seo_alternate_pagename) }}"
+           lang="{{ seo_alternate_language }}"
+           hreflang="{{ seo_alternate_language }}"
+           rel="alternate"
+           data-seo-event="language_switch"
+           data-seo-location="article-mobile">
+          {{ "English" if seo_page.language == "zh-CN" else "中文" }}
+        </a>
+      </p>
+    {% endif %}
+    {% if seo_page and seo_breadcrumbs|length > 1 %}
+      {% include "seo-breadcrumbs.html" %}
+    {% endif %}
+    {{ super() }}
+  </div>
+{% endblock %}

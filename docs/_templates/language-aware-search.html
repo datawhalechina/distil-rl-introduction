@@ -1,0 +1,5 @@
+{% if seo_page and seo_page.language == "zh-CN" %}
+  {% include "search-field-zh.html" %}
+{% else %}
+  {% include "search-field.html" %}
+{% endif %}

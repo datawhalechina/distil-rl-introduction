@@ -1,0 +1,13 @@
+{% if seo_page %}
+<div class="distilrl-language-switcher" aria-label="Language switcher">
+  <span class="distilrl-language-label">{{ "语言" if seo_page.language == "zh-CN" else "Language" }}</span>
+  <a href="{{ pathto(seo_alternate_pagename) }}"
+     lang="{{ seo_alternate_language }}"
+     hreflang="{{ seo_alternate_language }}"
+     rel="alternate"
+     data-seo-event="language_switch"
+     data-seo-location="sidebar">
+    {{ "English" if seo_page.language == "zh-CN" else "中文" }}
+  </a>
+</div>
+{% endif %}

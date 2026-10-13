@@ -1,0 +1,13 @@
+{% set page_toc = generate_toc_html() %}
+{%- if page_toc | length >= 1 %}
+{%- set page_navigation_heading_id = unique_html_id("pst-page-navigation-heading") -%}
+  <div
+    id="{{ page_navigation_heading_id }}"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i>
+    {{ "本页目录" if seo_page and seo_page.language == "zh-CN" else translate(theme_toc_title) }}
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="{{ page_navigation_heading_id }}">
+    {{ page_toc }}
+  </nav>
+{%- endif %}

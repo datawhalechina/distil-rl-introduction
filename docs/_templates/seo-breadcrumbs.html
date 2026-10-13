@@ -1,0 +1,13 @@
+<nav class="distilrl-breadcrumbs" aria-label="{{ '面包屑导航' if seo_page.language == 'zh-CN' else 'Breadcrumb' }}">
+  <ol>
+    {% for item in seo_breadcrumbs %}
+      <li>
+        {% if not loop.last %}
+          <a href="{{ item.url|e }}">{{ item.name }}</a>
+        {% else %}
+          <span aria-current="page">{{ item.name }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</nav>

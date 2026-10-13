@@ -1,0 +1,15 @@
+{% if seo_page and seo_page.language == "zh-CN" %}
+<nav class="distilrl-zh-nav" aria-label="中文章节导航">
+  <p class="distilrl-nav-title">章节导航</p>
+  {% for group in seo_navigation_groups %}
+    <p class="caption"><span class="caption-text">{{ group.title }}</span></p>
+    <ul>
+      {% for item in group["items"] %}
+        <li class="{{ 'current' if item.current else '' }}">
+          <a href="{{ pathto(item.pagename) }}"{% if item.current %} aria-current="page"{% endif %}>{{ item.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</nav>
+{% endif %}

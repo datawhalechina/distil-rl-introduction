@@ -1,0 +1,5 @@
+{% if seo_page and seo_page.language == "zh-CN" %}
+  {% include "sidebar-logo-zh.html" %}
+{% else %}
+  {% include "navbar-logo.html" %}
+{% endif %}
