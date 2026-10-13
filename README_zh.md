@@ -1,70 +1,92 @@
 # 📚 蒸馏版强化学习：简明导论
 
-[![许可证](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![网站](https://img.shields.io/badge/网站-访问站点-blue?logo=github)](https://datawhalechina.github.io/distil-rl-introduction/)
-[![关于作者](https://img.shields.io/badge/About%20the%20Author-GitHub-blue?logo=github)](https://github.com/Dong237)
-[![GitHub星标](https://img.shields.io/github/stars/Dong237/DistilRLIntroduction?style=social)](https://github.com/datawhalechina/distil-rl-introduction)
+**从 Sutton & Barto 到 PPO 与 GRPO 的双语、可视化 12 章强化学习精简路径。**
 
----
+[![许可证](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![在线阅读](https://img.shields.io/badge/在线阅读-进入网站-2563eb?logo=readthedocs&logoColor=white)](https://datawhalechina.github.io/distil-rl-introduction/index_zh.html)
+[![English](https://img.shields.io/badge/Language-English-334155)](README.md)
+[![中文](https://img.shields.io/badge/语言-中文-c2410c)](README_zh.md)
+[![GitHub 星标](https://img.shields.io/github/stars/datawhalechina/distil-rl-introduction?style=social)](https://github.com/datawhalechina/distil-rl-introduction)
 
 <span>[ <a href="README.md">English</a> | 中文 ]</span>
 
-## 📚 项目简介
-
-<img src="docs/\_static/img/logo.png" align="right" width="40%"/>
-
-作为一名强化学习（RL）的学习者，我一直在寻找能够在难度和实用度之间达到适当平衡的学习资源。Sutton 的《强化学习导论》虽然是强化学习领域的经典之作，但从头到尾通读需要付出大量精力。
-
-所以我用自己的RL学习笔记制作了这个教程：一个精简的"知识库"，希望能帮助其他RL入门者更快更轻松地掌握核心概念
-
 ---
 
-## 🎯 项目目的与使用方法
+<img src="docs/_static/img/logo.png" align="right" width="34%" alt="DistilRL 强化学习导论项目图标"/>
 
-> **💡 核心理念：** 本教程精选了《强化学习导论》中的重要章节，并将其与[Coursera强化学习专项课程](https://www.coursera.org/specializations/reinforcement-learning)的内容融合，以提供更高效的学习体验。
+## 开始阅读
 
-> **🛠️ 使用方法：** 在[本网站](https://datawhalechina.github.io/distil-rl-introduction/)阅读完整教程。在第0章（序言）中，你将找到更多关于这个项目的来龙去脉以及最佳使用方法的详细信息。
+DistilRL 将 Sutton 与 Barto 的《强化学习导论》和 [University of Alberta / Coursera 强化学习专项课程](https://www.coursera.org/specializations/reinforcement-learning)中的部分核心内容重新筛选、组织为一条更精简的概念路径。12 章内容从多臂老虎机、MDP、动态规划、蒙特卡洛方法、时序差分和函数近似，逐步过渡到策略梯度、PPO 与 GRPO。
+
+- **刚开始学强化学习？** [从第 0 章开始，按完整路径阅读](https://datawhalechina.github.io/distil-rl-introduction/Contents_zh/0_%E5%89%8D%E8%A8%80.html)。
+- **为 PPO、GRPO 或大模型后训练补强化学习基础？** [从第 3 章的 MDP 基础开始](https://datawhalechina.github.io/distil-rl-introduction/Contents_zh/3_%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B.html)，再依次阅读第 6、8、10、11 章。
+- **更习惯英文？** [阅读完整英文版](https://datawhalechina.github.io/distil-rl-introduction/)。
+
+**[在线阅读中文教程](https://datawhalechina.github.io/distil-rl-introduction/index_zh.html)** · **[在 GitHub 上为 DistilRL 加星](https://github.com/datawhalechina/distil-rl-introduction)**
+
+<br clear="right"/>
+
+## 适合谁阅读
+
+- 希望先理清强化学习主线，再深入阅读原教材的学习者。
+- 希望补齐策略梯度、PPO 与 GRPO 概念基础的 ML 和 LLM 工程师。
+- 希望在同一条 12 章学习路径中对照中英文内容的读者。
+
+DistilRL 是一份阅读指南和概念学习伴侣，不是代码实战课，也不以完整替代 Sutton 与 Barto 原教材为目标。
+
+## 12 章学习路径
+
+> **简单决策 → 序列决策 → 已知模型求解 → 从样本中学习 → 时序差分 → 函数近似 → 直接策略优化 → PPO 与 GRPO。**
+
+第 0 章介绍项目的由来和阅读方法。你可以借助可选内容标记和可视化总结，按自己的目标选择阅读深度。
 
 ---
 
 ## 📋 目录
 
 ### 🌟 介绍
-- [第0章：序言](docs/Contents/0_prelude.md)
-- [第1章：强化学习简介](docs/Contents/1_intro.md)
+
+- [第 0 章：序言](docs/Contents_zh/0_前言.md)
+- [第 1 章：强化学习简介](docs/Contents_zh/1_强化学习简介.md)
 
 ### 🧮 表格解决方法
+
 #### 强化学习基础
-- [第2章：多臂赌博机](docs/Contents/2_multi_armed_bandits.md)
-- [第3章：马尔可夫决策过程](docs/Contents/3_markov_decision_process.md)
-- [第4章：动态规划](docs/Contents/4_dynamic_programming.md)
+
+- [第 2 章：多臂老虎机](docs/Contents_zh/2_多臂老虎机问题.md)
+- [第 3 章：马尔可夫决策过程](docs/Contents_zh/3_马尔可夫决策过程.md)
+- [第 4 章：动态规划](docs/Contents_zh/4_动态规划.md)
 
 #### 基于采样的学习方法
-- [第5章：蒙特卡洛方法](docs/Contents/5_monte_carlo_methods.md)
-- [第6章：时序差分学习](docs/Contents/6_temporal_difference_learning.md)
-- [第7章：规划、学习与行动](docs/Contents/7_planning_learning_acting.md)
+
+- [第 5 章：蒙特卡洛方法](docs/Contents_zh/5_蒙特卡洛方法.md)
+- [第 6 章：时序差分学习](docs/Contents_zh/6_时序差分学习.md)
+- [第 7 章：规划、学习与执行](docs/Contents_zh/7_规划_学习_执行.md)
 
 ### 🤖 近似解决方法
+
 #### 价值函数近似
-- [第8章：基于近似的on-policy预测](docs/Contents/8_on_policy_prediction_with_approximation.md)
-- [第9章：基于近似的on-policy控制](docs/Contents/9_on_policy_control_with_approximation.md)
+
+- [第 8 章：使用近似方法进行同策略预测](docs/Contents_zh/8_使用近似方法进行同策略预测.md)
+- [第 9 章：基于函数近似的同策略控制](docs/Contents_zh/9_基于函数近似的同策略控制.md)
 
 #### 策略近似
-- [第10章：策略梯度方法](docs/Contents/10_policy_gradient_methods.md)
-- [第11章：现代策略梯度方法](docs/Contents/11_modern_policy_gradient_methods.md)
+
+- [第 10 章：策略梯度方法](docs/Contents_zh/10_策略梯度方法.md)
+- [第 11 章：现代策略梯度方法](docs/Contents_zh/11_现代策略梯度方法.md)
 
 ---
 
-## 🤝 贡献
+## 🤝 参与贡献
 
-欢迎大家为改进这个教程做出贡献！以下是可以提供帮助的方式：
+英文版和中文版已完成。欢迎通过以下方式让任何一个版本更清晰、更易于阅读：
 
-- **报告问题**：发现拼写错误或解释不清楚的地方可以直接在github提交issue或PR
-- **传播分享**：与可能会觉得这个教程有用的人分享，多谢各位dai佬
-- **需要翻译**：在未来某个时候我可能(但可能性不高嘿嘿嘿)翻译这本书的中文版本，如果有兴趣可以和我一起
+- **报告问题：** 提交拼写错误、失效链接或表述不清之处。
+- **建议改进：** 通过 Pull Request 提交范围明确的修正。
+- **帮助更多学习者发现它：** 分享对你最有帮助的章节。
 
----
+如果 DistilRL 帮你节省了学习时间，欢迎[为仓库加星](https://github.com/datawhalechina/distil-rl-introduction)：方便以后找回来，也能帮助下一位学习者发现它。
 
 ## 📜 许可证
 
-本项目采用MIT许可证。详情请参阅[LICENSE](LICENSE)文件。
+本项目使用 [Apache License 2.0](LICENSE)。

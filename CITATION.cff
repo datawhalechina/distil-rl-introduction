@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: >-
+  If DistilRL supports your learning, teaching, or research, please cite the
+  project using the metadata below.
+title: "DistilRL: A Condensed Introduction to Reinforcement Learning"
+type: book
+authors:
+  - family-names: Dong
+    given-names: Youxiang
+repository-code: "https://github.com/datawhalechina/distil-rl-introduction"
+url: "https://datawhalechina.github.io/distil-rl-introduction/"
+license: Apache-2.0
+abstract: >-
+  A visual, bilingual, 12-chapter learning path that condenses core ideas from
+  Sutton and Barto's Reinforcement Learning: An Introduction and the University
+  of Alberta reinforcement learning specialization, then connects those
+  foundations to policy gradients, PPO, and GRPO.
+keywords:
+  - reinforcement learning
+  - Sutton and Barto
+  - policy gradient
+  - PPO
+  - GRPO
+  - bilingual education

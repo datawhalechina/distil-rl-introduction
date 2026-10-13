@@ -1,2 +1,4 @@
 .DS_Store
-docs/_build
+docs/_build/
+__pycache__/
+*.py[cod]
