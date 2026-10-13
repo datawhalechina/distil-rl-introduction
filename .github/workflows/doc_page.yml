@@ -1,65 +1,93 @@
-name: Build and Deploy Documentation
+name: Verify and Deploy Documentation
 
-# Trigger this workflow on pushes to the main branch
 on:
+  pull_request:
   push:
     branches:
       - main
 
+concurrency:
+  group: documentation-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-and-deploy-docs:
-    name: Build and Deploy Docs
+  verify:
+    name: Build and verify documentation
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-      # Step 1: Check out the repository code
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Check out repository with history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # Step 2: Set up Python environment
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10.15'  # Adjust to match your Python version if needed
+          python-version: "3.10.15"
+          cache: pip
+          cache-dependency-path: docs/requirements.txt
 
-      # Step 3: Install dependencies
-      - name: Install Python Dependencies
+      - name: Protect chapter text and original learning images
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BASE_SHA: ${{ github.event.before }}
         run: |
-          pip install -U pip
-          pip install sphinx
-          pip install myst-parser
-          pip install sphinx-book-theme
-          pip install ablog
-          pip install sphinx-copybutton
-          pip install sphinx-design
-          pip install sphinx-tabs
-          pip install sphinx-thebe
-          pip install sphinx-togglebutton
-          pip install sphinx-examples
-          pip install sphinxcontrib-pseudocode
-          pip install linkify-it-py
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            python scripts/check_protected_content.py --base "$PR_BASE_SHA"
+          elif git rev-parse --verify "$PUSH_BASE_SHA^{commit}" >/dev/null 2>&1; then
+            python scripts/check_protected_content.py --base "$PUSH_BASE_SHA"
+          else
+            python scripts/check_protected_content.py
+          fi
 
-      # Step 4: Build the Sphinx documentation
-      - name: Build Docs
+      - name: Install documentation dependencies
         run: |
-          cd docs
-          make clean html
-      
-      # Step 4.1 Debug build process
-      - name: Debug Build Output
-        run: ls -R docs/_build/html
+          python -m pip install --upgrade pip
+          python -m pip install --requirement docs/requirements.txt
 
-      # Step 5: Add .nojekyll file (to disable Jekyll processing)
-      - name: Add .nojekyll File
+      - name: Clean-build documentation with warnings as errors
         run: |
-          cd docs/_build/html/
-          touch .nojekyll
+          python -m sphinx -M clean docs docs/_build
+          python -m sphinx -W --keep-going -b html docs docs/_build/html
+          touch docs/_build/html/.nojekyll
 
-      # Step 6: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        if: success()
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Verify rendered SEO and internal links
+        run: |
+          python scripts/check_seo.py \
+            --build-dir docs/_build/html \
+            --metadata docs/_seo/pages.json
+
+      - name: Upload verified site artifact
+        uses: actions/upload-artifact@v4
         with:
-          publish_branch: gh-pages  # Branch where the static site will be hosted
+          name: distilrl-site-${{ github.sha }}
+          path: docs/_build/html
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    name: Deploy verified site
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download verified site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: distilrl-site-${{ github.sha }}
+          path: site
+
+      - name: Deploy to GitHub Pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html  # Directory containing the generated HTML files
+          publish_branch: gh-pages
+          publish_dir: site
