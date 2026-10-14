@@ -1,104 +1,114 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
+"""Sphinx configuration for the DistilRL documentation site."""
+
+from pathlib import Path
+import sys
+
+
+DOCS_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(DOCS_DIR / "_ext"))
 
 # -- Project information -----------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'DistilRLIntro'
-copyright = '2025, Youxiang Dong'
-author = 'Youxiang Dong'
-release = '0.1'
+project = "DistilRL"
+author = "Youxiang Dong"
+copyright = "2025–2026, Youxiang Dong and DistilRL contributors"
+
+# Keep the historical source version until the project owner publishes v1.0.
+# The public HTML title is configured separately and does not expose this value.
+version = "0.1"
+release = "0.1"
 
 # -- General configuration ---------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
     "myst_parser",
-    "sphinx.ext.duration",
+    "sphinx.ext.todo",
     "sphinx.ext.mathjax",
-    "ablog",
-    "sphinx.ext.autodoc",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.viewcode",
-    "sphinx_copybutton",
-    "sphinx_design",
-    "sphinx_examples",
-    "sphinx_tabs.tabs",
-    "sphinx_thebe",
-    "sphinx_togglebutton",
-    "sphinxcontrib.pseudocode",
-    "sphinx.ext.todo",  
     "sphinx.ext.githubpages",
+    "sphinx_copybutton",
+    "seo_metadata",
+]
+
+myst_enable_extensions = [
+    "dollarmath",
+    "colon_fence",
+    "linkify",
+    "substitution",
+    "deflist",
+]
+
+source_suffix = {
+    ".rst": "restructuredtext",
+    ".txt": "restructuredtext",
+    ".md": "markdown",
+}
+
+root_doc = "index"
+language = "en"
+myst_heading_anchors = 3
+templates_path = ["_templates"]
+exclude_patterns = [
+    "_build",
+    "html",
+    "requirements.txt",
+    "robots.txt",
+    "Thumbs.db",
+    ".DS_Store",
 ]
 
 todo_include_todos = True
 
-myst_enable_extensions = [
-    "dollarmath",
-    "colon_fence",  # for supporting ::: directives
-    "linkify",      # for automatic link detection
-    "substitution", # for substitutions
-    "deflist",      # for definition lists
-]
+# -- SEO configuration -------------------------------------------------------
 
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'restructuredtext',
-    '.md': 'markdown',
-}
+seo_site_url = "https://datawhalechina.github.io/distil-rl-introduction/"
+seo_registry_path = "_seo/pages.json"
+seo_utility_pages = ["search", "genindex", "py-modindex", "blog", "blog/drafts"]
 
-myst_heading_anchors = 3
+# -- HTML output -------------------------------------------------------------
 
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
-
-# -- Options for HTML output -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
-
-html_theme = 'sphinx_book_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_book_theme"
+html_title = "DistilRL"
+html_short_title = "DistilRL"
+# Canonicals are emitted by the registry-backed SEO extension.  Leaving this
+# empty prevents Sphinx from adding a second, generic canonical URL.
+html_baseurl = ""
+html_static_path = ["_static"]
+html_extra_path = ["robots.txt"]
 html_logo = "_static/img/logo.png"
-
+html_favicon = "_static/img/logo.png"
+html_copy_source = False
+html_show_sourcelink = False
+html_last_updated_fmt = None
 
 html_theme_options = {
-
-}
-
-html_theme_options = {
-    "show_navbar_depth": 3,  # Controls the depth of the navigation bar
-    "show_toc_level": 3,     # Controls the depth of the table of contents in the sidebar
-    "toc_title": "Contents", # Optional: Customize the title of the sidebar TOC
-    "repository_url": "https://github.com/Dong237/DistilRLIntroduction",
+    "show_navbar_depth": 3,
+    "show_toc_level": 3,
+    "toc_title": "Contents",
+    "repository_url": "https://github.com/datawhalechina/distil-rl-introduction",
+    "repository_branch": "main",
+    "path_to_docs": "docs",
     "use_repository_button": True,
     "use_edit_page_button": True,
-    "use_fullscreen_button": True,
-    "repository_branch": "master",
-    "launch_buttons": {
-        "binderhub_url": "https://mybinder.org",
-        "colab_url": "https://colab.research.google.com/",
-        "deepnote_url": "https://deepnote.com/",
-        "notebook_interface": "jupyterlab",
-        "thebe": True,
-        # "jupyterhub_url": "https://datahub.berkeley.edu",  # For testing
-    },
-    "use_source_button": True,
     "use_issues_button": True,
-    "use_download_button": True,
+    "use_source_button": False,
+    "use_download_button": False,
+    "use_fullscreen_button": True,
     "use_sidenotes": True,
 }
 
 html_sidebars = {
     "**": [
-        "navbar-logo.html",
-        "search-field.html",
-        "ablog/postcard.html",
-        "ablog/recentposts.html",
-        "ablog/tagcloud.html",
-        "ablog/categories.html",
-        "ablog/archives.html",
-        "sbt-sidebar-nav.html",
-    ]
+        "language-aware-logo.html",
+        "language-aware-search.html",
+        "language-switcher.html",
+        "language-aware-nav.html",
+        "github-cta.html",
+    ],
 }
+
+
+def setup(app):
+    """Register project-owned static assets."""
+
+    app.add_css_file("seo/site.css")
+    app.add_js_file("seo/site.js", loading_method="defer")

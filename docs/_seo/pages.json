@@ -1,0 +1,623 @@
+{
+  "schema_version": 1,
+  "site_url": "https://datawhalechina.github.io/distil-rl-introduction/",
+  "canonical_root_convention": "An empty canonical_path denotes the canonical project root URL declared by site_url.",
+  "pages": [
+    {
+      "id": "home-en",
+      "pair_id": "home",
+      "pagename": "index",
+      "language": "en",
+      "seo_title": "DistilRL: Reinforcement Learning from Sutton & Barto to PPO/GRPO",
+      "description": "A visual, bilingual reinforcement learning guide in 12 chapters, from Sutton and Barto, bandits and MDPs to policy gradients, PPO, GRPO and LLM post-training.",
+      "canonical_path": "",
+      "alternate_pagename": "index_zh",
+      "og_type": "website",
+      "og_image": "_static/seo/social-card.png",
+      "previous": null,
+      "next": "chapter-0-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        }
+      ]
+    },
+    {
+      "id": "chapter-0-en",
+      "pair_id": "chapter-0",
+      "pagename": "Contents/0_prelude",
+      "language": "en",
+      "seo_title": "How to Learn Reinforcement Learning | DistilRL",
+      "description": "Choose a 12-chapter reinforcement learning path, understand DistilRL's scope and optional sections, and use it alongside Sutton and Barto.",
+      "canonical_path": "Contents/0_prelude.html",
+      "alternate_pagename": "Contents_zh/0_前言",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "home-en",
+      "next": "chapter-1-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 0: Prelude",
+          "pagename": "Contents/0_prelude"
+        }
+      ]
+    },
+    {
+      "id": "chapter-1-en",
+      "pair_id": "chapter-1",
+      "pagename": "Contents/1_intro",
+      "language": "en",
+      "seo_title": "Reinforcement Learning: Agents, Rewards and Value | DistilRL",
+      "description": "Learn reinforcement learning through agents, environments, trial and error, delayed rewards, exploration, policies, value functions and models.",
+      "canonical_path": "Contents/1_intro.html",
+      "alternate_pagename": "Contents_zh/1_强化学习简介",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-0-en",
+      "next": "chapter-2-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 1: Introduction to RL",
+          "pagename": "Contents/1_intro"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-en",
+      "pair_id": "chapter-2",
+      "pagename": "Contents/2_multi_armed_bandits",
+      "language": "en",
+      "seo_title": "Multi-Armed Bandits: Epsilon-Greedy and UCB | DistilRL",
+      "description": "Learn multi-armed bandits, exploration versus exploitation, action-value estimates, epsilon-greedy, optimistic initialization and UCB.",
+      "canonical_path": "Contents/2_multi_armed_bandits.html",
+      "alternate_pagename": "Contents_zh/2_多臂老虎机问题",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-1-en",
+      "next": "chapter-3-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 2: Multi-Armed Bandits",
+          "pagename": "Contents/2_multi_armed_bandits"
+        }
+      ]
+    },
+    {
+      "id": "chapter-3-en",
+      "pair_id": "chapter-3",
+      "pagename": "Contents/3_markov_decision_process",
+      "language": "en",
+      "seo_title": "Markov Decision Processes and Bellman Equations | DistilRL",
+      "description": "Learn finite Markov decision processes through dynamics, rewards, returns, policies, value functions, Bellman equations and optimality.",
+      "canonical_path": "Contents/3_markov_decision_process.html",
+      "alternate_pagename": "Contents_zh/3_马尔可夫决策过程",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-2-en",
+      "next": "chapter-4-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 3: Finite Markov Decision Processes",
+          "pagename": "Contents/3_markov_decision_process"
+        }
+      ]
+    },
+    {
+      "id": "chapter-4-en",
+      "pair_id": "chapter-4",
+      "pagename": "Contents/4_dynamic_programming",
+      "language": "en",
+      "seo_title": "Dynamic Programming: Policy and Value Iteration | DistilRL",
+      "description": "Use a complete environment model for policy evaluation, policy improvement, policy iteration, value iteration and generalized policy iteration.",
+      "canonical_path": "Contents/4_dynamic_programming.html",
+      "alternate_pagename": "Contents_zh/4_动态规划",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-3-en",
+      "next": "chapter-5-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 4: Dynamic Programming",
+          "pagename": "Contents/4_dynamic_programming"
+        }
+      ]
+    },
+    {
+      "id": "chapter-5-en",
+      "pair_id": "chapter-5",
+      "pagename": "Contents/5_monte_carlo_methods",
+      "language": "en",
+      "seo_title": "Monte Carlo RL: Prediction, Control and Sampling | DistilRL",
+      "description": "Learn Monte Carlo prediction and control for episodic tasks, including first-visit estimates, on-policy exploration, off-policy learning and importance sampling.",
+      "canonical_path": "Contents/5_monte_carlo_methods.html",
+      "alternate_pagename": "Contents_zh/5_蒙特卡洛方法",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-4-en",
+      "next": "chapter-6-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 5: Monte Carlo Methods",
+          "pagename": "Contents/5_monte_carlo_methods"
+        }
+      ]
+    },
+    {
+      "id": "chapter-6-en",
+      "pair_id": "chapter-6",
+      "pagename": "Contents/6_temporal_difference_learning",
+      "language": "en",
+      "seo_title": "TD Learning: Sarsa, Q-Learning and Expected Sarsa | DistilRL",
+      "description": "See how temporal-difference learning combines experience and bootstrapping; compare TD prediction, Sarsa, Q-learning and Expected Sarsa.",
+      "canonical_path": "Contents/6_temporal_difference_learning.html",
+      "alternate_pagename": "Contents_zh/6_时序差分学习",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-5-en",
+      "next": "chapter-7-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 6: Temporal-Difference Learning",
+          "pagename": "Contents/6_temporal_difference_learning"
+        }
+      ]
+    },
+    {
+      "id": "chapter-7-en",
+      "pair_id": "chapter-7",
+      "pagename": "Contents/7_planning_learning_acting",
+      "language": "en",
+      "seo_title": "Dyna-Q and Planning: Model-Based vs Model-Free RL | DistilRL",
+      "description": "Connect model-based planning and model-free learning through simulated experience, Dyna-Q, changing environments and Dyna-Q+ exploration.",
+      "canonical_path": "Contents/7_planning_learning_acting.html",
+      "alternate_pagename": "Contents_zh/7_规划_学习_执行",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-6-en",
+      "next": "chapter-8-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 7: Planning and Learning with Tabular Methods",
+          "pagename": "Contents/7_planning_learning_acting"
+        }
+      ]
+    },
+    {
+      "id": "chapter-8-en",
+      "pair_id": "chapter-8",
+      "pagename": "Contents/8_on_policy_prediction_with_approximation",
+      "language": "en",
+      "seo_title": "Value Function Approximation and Tile Coding | DistilRL",
+      "description": "Move beyond tables with parameterized value functions, gradient Monte Carlo, semi-gradient TD, linear models, coarse coding and tile coding.",
+      "canonical_path": "Contents/8_on_policy_prediction_with_approximation.html",
+      "alternate_pagename": "Contents_zh/8_使用近似方法进行同策略预测",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-7-en",
+      "next": "chapter-9-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 8: On-Policy Prediction with Approximation",
+          "pagename": "Contents/8_on_policy_prediction_with_approximation"
+        }
+      ]
+    },
+    {
+      "id": "chapter-9-en",
+      "pair_id": "chapter-9",
+      "pagename": "Contents/9_on_policy_control_with_approximation",
+      "language": "en",
+      "seo_title": "Semi-Gradient Sarsa and Average Reward | DistilRL",
+      "description": "Extend on-policy control with semi-gradient Sarsa, action-value features, continuing tasks, average rewards and differential value functions.",
+      "canonical_path": "Contents/9_on_policy_control_with_approximation.html",
+      "alternate_pagename": "Contents_zh/9_基于函数近似的同策略控制",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-8-en",
+      "next": "chapter-10-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 9: On-Policy Control with Approximation",
+          "pagename": "Contents/9_on_policy_control_with_approximation"
+        }
+      ]
+    },
+    {
+      "id": "chapter-10-en",
+      "pair_id": "chapter-10",
+      "pagename": "Contents/10_policy_gradient_methods",
+      "language": "en",
+      "seo_title": "Policy Gradients, REINFORCE and Actor-Critic | DistilRL",
+      "description": "Learn policy parameterization and the policy gradient theorem, then REINFORCE with baselines, actor-critic methods and Gaussian policies.",
+      "canonical_path": "Contents/10_policy_gradient_methods.html",
+      "alternate_pagename": "Contents_zh/10_策略梯度方法",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-9-en",
+      "next": "chapter-11-en",
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 10: Policy Gradient Methods",
+          "pagename": "Contents/10_policy_gradient_methods"
+        }
+      ]
+    },
+    {
+      "id": "chapter-11-en",
+      "pair_id": "chapter-11",
+      "pagename": "Contents/11_modern_policy_gradient_methods",
+      "language": "en",
+      "seo_title": "PPO, GRPO, GAE, A2C and A3C Explained | DistilRL",
+      "description": "Connect advantage estimation and GAE to A3C, A2C, PPO and GRPO, including objectives, trade-offs and relevance to LLM post-training.",
+      "canonical_path": "Contents/11_modern_policy_gradient_methods.html",
+      "alternate_pagename": "Contents_zh/11_现代策略梯度方法",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-10-en",
+      "next": null,
+      "breadcrumb": [
+        {
+          "name": "DistilRL",
+          "pagename": "index"
+        },
+        {
+          "name": "Chapter 11: Modern Policy Gradient Methods",
+          "pagename": "Contents/11_modern_policy_gradient_methods"
+        }
+      ]
+    },
+    {
+      "id": "home-zh",
+      "pair_id": "home",
+      "pagename": "index_zh",
+      "language": "zh-CN",
+      "seo_title": "DistilRL 强化学习简明导论：从 Sutton & Barto 到 PPO 与 GRPO",
+      "description": "一份可视化双语强化学习指南，将 Sutton 与 Barto 教材及阿尔伯塔大学课程的核心知识浓缩为 12 章，学习路径从多臂老虎机、MDP 延伸至 PPO 与 GRPO。",
+      "canonical_path": "index_zh.html",
+      "alternate_pagename": "index",
+      "og_type": "website",
+      "og_image": "_static/seo/social-card.png",
+      "previous": null,
+      "next": "chapter-0-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        }
+      ]
+    },
+    {
+      "id": "chapter-0-zh",
+      "pair_id": "chapter-0",
+      "pagename": "Contents_zh/0_前言",
+      "language": "zh-CN",
+      "seo_title": "强化学习怎么学：Sutton & Barto 精简阅读指南 | DistilRL",
+      "description": "了解 DistilRL 的内容取舍、12 章组织方式、选读标记与阅读方法，并学习如何把本指南与 Sutton 和 Barto 教材及其他强化学习资源配合使用。",
+      "canonical_path": "Contents_zh/0_前言.html",
+      "alternate_pagename": "Contents/0_prelude",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "home-zh",
+      "next": "chapter-1-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 0 章：前言",
+          "pagename": "Contents_zh/0_前言"
+        }
+      ]
+    },
+    {
+      "id": "chapter-1-zh",
+      "pair_id": "chapter-1",
+      "pagename": "Contents_zh/1_强化学习简介",
+      "language": "zh-CN",
+      "seo_title": "强化学习是什么：智能体、奖励、策略与价值函数 | DistilRL",
+      "description": "从智能体与环境交互出发理解强化学习，认识试错学习、延迟奖励、探索与利用，以及策略、奖励、价值函数和环境模型等核心要素。",
+      "canonical_path": "Contents_zh/1_强化学习简介.html",
+      "alternate_pagename": "Contents/1_intro",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-0-zh",
+      "next": "chapter-2-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 1 章：强化学习简介",
+          "pagename": "Contents_zh/1_强化学习简介"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-zh",
+      "pair_id": "chapter-2",
+      "pagename": "Contents_zh/2_多臂老虎机问题",
+      "language": "zh-CN",
+      "seo_title": "多臂老虎机：ε-greedy、UCB 与探索利用权衡 | DistilRL",
+      "description": "理解多臂老虎机问题中的探索与利用权衡，学习动作价值估计、ε-greedy、乐观初始值、非平稳更新方法和上置信界 UCB。",
+      "canonical_path": "Contents_zh/2_多臂老虎机问题.html",
+      "alternate_pagename": "Contents/2_multi_armed_bandits",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-1-zh",
+      "next": "chapter-3-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 2 章：多臂老虎机问题",
+          "pagename": "Contents_zh/2_多臂老虎机问题"
+        }
+      ]
+    },
+    {
+      "id": "chapter-3-zh",
+      "pair_id": "chapter-3",
+      "pagename": "Contents_zh/3_马尔可夫决策过程",
+      "language": "zh-CN",
+      "seo_title": "马尔可夫决策过程与 Bellman 方程详解 | DistilRL",
+      "description": "通过智能体与环境动态、奖励与回报、策略、状态价值和动作价值，建立有限马尔可夫决策过程基础，并推导 Bellman 方程与最优方程。",
+      "canonical_path": "Contents_zh/3_马尔可夫决策过程.html",
+      "alternate_pagename": "Contents/3_markov_decision_process",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-2-zh",
+      "next": "chapter-4-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 3 章：有限马尔可夫决策过程",
+          "pagename": "Contents_zh/3_马尔可夫决策过程"
+        }
+      ]
+    },
+    {
+      "id": "chapter-4-zh",
+      "pair_id": "chapter-4",
+      "pagename": "Contents_zh/4_动态规划",
+      "language": "zh-CN",
+      "seo_title": "强化学习中的动态规划：策略迭代与值迭代 | DistilRL",
+      "description": "学习如何利用完整环境模型进行策略评估与策略改进，掌握策略迭代、值迭代、Bellman 更新和广义策略迭代的关系。",
+      "canonical_path": "Contents_zh/4_动态规划.html",
+      "alternate_pagename": "Contents/4_dynamic_programming",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-3-zh",
+      "next": "chapter-5-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 4 章：动态规划",
+          "pagename": "Contents_zh/4_动态规划"
+        }
+      ]
+    },
+    {
+      "id": "chapter-5-zh",
+      "pair_id": "chapter-5",
+      "pagename": "Contents_zh/5_蒙特卡洛方法",
+      "language": "zh-CN",
+      "seo_title": "蒙特卡洛方法：预测、控制与重要性采样 | DistilRL",
+      "description": "学习回合任务中基于经验的蒙特卡洛预测与控制，包括首次访问估计、同策略探索、异策略学习以及重要性采样。",
+      "canonical_path": "Contents_zh/5_蒙特卡洛方法.html",
+      "alternate_pagename": "Contents/5_monte_carlo_methods",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-4-zh",
+      "next": "chapter-6-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 5 章：蒙特卡洛方法",
+          "pagename": "Contents_zh/5_蒙特卡洛方法"
+        }
+      ]
+    },
+    {
+      "id": "chapter-6-zh",
+      "pair_id": "chapter-6",
+      "pagename": "Contents_zh/6_时序差分学习",
+      "language": "zh-CN",
+      "seo_title": "时序差分学习：Sarsa、Q-learning 与 Expected Sarsa | DistilRL",
+      "description": "理解时序差分学习如何结合经验与自举更新，并比较 TD 预测、同策略 Sarsa、异策略 Q-learning 和 Expected Sarsa。",
+      "canonical_path": "Contents_zh/6_时序差分学习.html",
+      "alternate_pagename": "Contents/6_temporal_difference_learning",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-5-zh",
+      "next": "chapter-7-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 6 章：时序差分学习",
+          "pagename": "Contents_zh/6_时序差分学习"
+        }
+      ]
+    },
+    {
+      "id": "chapter-7-zh",
+      "pair_id": "chapter-7",
+      "pagename": "Contents_zh/7_规划_学习_执行",
+      "language": "zh-CN",
+      "seo_title": "Dyna-Q 与强化学习规划：基于模型和无模型方法 | DistilRL",
+      "description": "通过模拟经验、Dyna 架构和表格型 Dyna-Q 连接基于模型的规划与无模型学习，并了解环境变化、错误模型和 Dyna-Q+ 探索。",
+      "canonical_path": "Contents_zh/7_规划_学习_执行.html",
+      "alternate_pagename": "Contents/7_planning_learning_acting",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-6-zh",
+      "next": "chapter-8-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 7 章：使用表格方法规划和学习",
+          "pagename": "Contents_zh/7_规划_学习_执行"
+        }
+      ]
+    },
+    {
+      "id": "chapter-8-zh",
+      "pair_id": "chapter-8",
+      "pagename": "Contents_zh/8_使用近似方法进行同策略预测",
+      "language": "zh-CN",
+      "seo_title": "价值函数近似：梯度方法、线性模型与瓦片编码 | DistilRL",
+      "description": "从表格预测过渡到参数化价值函数，学习梯度蒙特卡洛、半梯度 TD、线性模型、粗编码与瓦片编码中的泛化机制。",
+      "canonical_path": "Contents_zh/8_使用近似方法进行同策略预测.html",
+      "alternate_pagename": "Contents/8_on_policy_prediction_with_approximation",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-7-zh",
+      "next": "chapter-9-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 8 章：使用近似方法进行同策略预测",
+          "pagename": "Contents_zh/8_使用近似方法进行同策略预测"
+        }
+      ]
+    },
+    {
+      "id": "chapter-9-zh",
+      "pair_id": "chapter-9",
+      "pagename": "Contents_zh/9_基于函数近似的同策略控制",
+      "language": "zh-CN",
+      "seo_title": "同策略控制：半梯度 Sarsa 与平均奖励框架 | DistilRL",
+      "description": "将同策略控制扩展到函数近似，学习回合制半梯度 Sarsa、动作价值特征、持续任务的平均奖励框架以及差分价值函数。",
+      "canonical_path": "Contents_zh/9_基于函数近似的同策略控制.html",
+      "alternate_pagename": "Contents/9_on_policy_control_with_approximation",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-8-zh",
+      "next": "chapter-10-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 9 章：基于函数近似的同策略控制",
+          "pagename": "Contents_zh/9_基于函数近似的同策略控制"
+        }
+      ]
+    },
+    {
+      "id": "chapter-10-zh",
+      "pair_id": "chapter-10",
+      "pagename": "Contents_zh/10_策略梯度方法",
+      "language": "zh-CN",
+      "seo_title": "策略梯度、REINFORCE 与 Actor-Critic 原理 | DistilRL",
+      "description": "学习策略参数化与策略梯度定理，再逐步理解带基线的 REINFORCE、Actor-Critic 方法以及连续动作空间中的高斯策略。",
+      "canonical_path": "Contents_zh/10_策略梯度方法.html",
+      "alternate_pagename": "Contents/10_policy_gradient_methods",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-9-zh",
+      "next": "chapter-11-zh",
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 10 章：策略梯度方法",
+          "pagename": "Contents_zh/10_策略梯度方法"
+        }
+      ]
+    },
+    {
+      "id": "chapter-11-zh",
+      "pair_id": "chapter-11",
+      "pagename": "Contents_zh/11_现代策略梯度方法",
+      "language": "zh-CN",
+      "seo_title": "PPO 与 GRPO 原理及对比：GAE、A2C、A3C | DistilRL",
+      "description": "从优势函数估计与 GAE 延伸到 A3C、A2C、PPO 和 GRPO，理解其目标函数、算法步骤、特性对比以及与大模型后训练的联系。",
+      "canonical_path": "Contents_zh/11_现代策略梯度方法.html",
+      "alternate_pagename": "Contents/11_modern_policy_gradient_methods",
+      "og_type": "article",
+      "og_image": "_static/seo/social-card.png",
+      "previous": "chapter-10-zh",
+      "next": null,
+      "breadcrumb": [
+        {
+          "name": "DistilRL 中文",
+          "pagename": "index_zh"
+        },
+        {
+          "name": "第 11 章：现代策略梯度方法",
+          "pagename": "Contents_zh/11_现代策略梯度方法"
+        }
+      ]
+    }
+  ]
+}
